@@ -10,6 +10,7 @@ This ROS node will be used mainly in Hybrid Artificial Neural Network Systems, u
 
 This project serves as place for first types of algorithms used for designing hybrid systems, that is: designing topologies of Hybrid Artificial Neural Network Systems (HANNS).
 
+The first project - `basicea` implements basic Evolutionary Algorithm (EA), which optimizes vector of real-valued numbers. These numbers represent specific connection weights in an agent architecture. By modifying these weights, new HANNS topology is created - new agent architecture is designed. 
 
 Requirements
 ------------------
