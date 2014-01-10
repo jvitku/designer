@@ -24,7 +24,6 @@ import gridworld
 net=nef.Network('HandWired parameters of RL node to bias')
 net.add_to_nengo()  
 
-
 rl = rl_sarsa.qlambdaProsperity("RL",2,4,20)	# define neural modules
 world = gridworld.benchmark("map");
 net.add(rl)									# place them into the network
@@ -34,31 +33,23 @@ net.add(world)
 net.connect(world.getOrigin(QLambda.topicDataIn), rl.newTerminationFor(QLambda.topicDataIn))
 net.connect(rl.getOrigin(QLambda.topicDataOut), world.getTermination(QLambda.topicDataOut))
 
+# set the values of the parameters
 alpha = QLambda.DEF_ALPHA
 gamma = QLambda.DEF_GAMMA
 lambdaa = QLambda.DEF_LAMBDA
 importance = QLambda.DEF_IMPORTANCE
 
-# define the configuration
+# define the parameter sources (controllable from the simulation window)
 net.make_input('alpha',[alpha])
 net.make_input('gamma',[gamma])
 net.make_input('lambda',[lambdaa])
 net.make_input('importance',[importance])
 
-# wire it
+# connect signal sources to the RL node
 net.connect('alpha', rl.getTermination(QLambda.topicAlpha))
 net.connect('gamma', rl.getTermination(QLambda.topicGamma))
 net.connect('lambda', rl.getTermination(QLambda.topicLambda))
 net.connect('importance', rl.getTermination(QLambda.topicImportance))
-
-
-# define parameters of the RL algorithm
-#ba = Bias('AlphaBias' ,0.12)
-#ba = WeightedBias('AlphaBias')
-#ba.setW(0.6)
-#bias = net.add(ba)
-#bias.setW(0.6)
-#net.connect(bias.getOrigin('output'),rl.getTermination(QLambda.topicAlpha));
 
 
 
