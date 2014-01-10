@@ -15,7 +15,7 @@ from ca.nengo.model import Units
 from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
-from org.hanns.rl.discrete.ros.sarsa import HannsQLambdaVisProsperity as QLambda
+from org.hanns.rl.discrete.ros.sarsa import HannsQLambdaVis as QLambda
 
 import rl_sarsa
 import gridworld
