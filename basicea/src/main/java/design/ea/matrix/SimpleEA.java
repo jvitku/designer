@@ -1,9 +1,7 @@
 package design.ea.matrix;
 
 import tools.utils.LU;
-import design.ea.matrix.ann.impl.Ind;
 import design.ea.matrix.hnn.impl.HNNInd;
-import design.ea.matrix.hnn.impl.HNNWMatrix;
 import design.ea.matrix.individual.Individual;
 import design.ea.strategies.Crossover;
 import design.ea.strategies.TwoGenomes;

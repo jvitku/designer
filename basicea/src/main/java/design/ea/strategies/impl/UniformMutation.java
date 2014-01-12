@@ -1,7 +1,6 @@
 package design.ea.strategies.impl;
 
 import java.util.Random;
-import design.ea.matrix.encoding.matrix.MatrixEncoder;
 import design.ea.strategies.Mutation;
 import design.ea.strategies.TwoGenomes;
 
