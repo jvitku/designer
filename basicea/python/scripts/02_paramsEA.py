@@ -24,9 +24,9 @@ def buildSimulation(alpha, gamma, lambdaa):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	rl = rl_sarsa.qlambdaProsperity("RL",2,4,10,10)	# define neural modules
-	world = gridworld.benchmark("map",1000);
-	net.add(rl)									# place them into the network
+	rl = rl_sarsa.qlambdaDelay("RL", 2, 4, 10, 10)	# define the neural modules
+	world = gridworld.benchmark("map", 1000);
+	net.add(rl)									    # place them into the network
 	net.add(world)
 
 	# connect them together
