@@ -148,7 +148,7 @@ def evalInd(ind):
     error = runExperiment(net,t,dt);
     ind.setFitness(error[0]);
     return error[0]
-    
+  
 
 # experiment setup - constants
 mr = 25;
@@ -252,4 +252,4 @@ print 'best fitness is:'
 print ind.getFitness().get();
 
 print 'done\n\n\n'
-
+`

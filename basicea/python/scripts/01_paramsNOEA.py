@@ -1,9 +1,10 @@
 # Architecture containing gridWorld simulator and RL nodes. 
 # The RL node has configuration connected by weighted connections to bias. 
 #
-# The values of the paramters will be determined by the EA, based on the prosperity measure.
-# The values of parameters (alpha, gamma, lambda) are searched for the fixed value of importance=0.3
+# In this script, the default values of parameters are used.
 #
+# The values of the paramters will be determined by the EA, based on the prosperity measure.
+# 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
 import nef
@@ -13,19 +14,19 @@ from ca.nengo.model import Units
 from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
-from org.hanns.rl.discrete.ros.sarsa import HannsQLambdaVis as QLambda
+from org.hanns.rl.discrete.ros.sarsa import QLambda as QLambda
 
 import rl_sarsa
 import gridworld
 
 
-def buildSimulation(alpha, gamma, lambdaa):
+def buildSimulation(alpha, gamma, lambdaa, importance):
 	################################################### script goes here:
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	rl = rl_sarsa.qlambdaDelay("RL", 2, 4, 10, 10)	# define the neural modules
-	world = gridworld.benchmark("map", 1000);
+	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=30,logPeriod=2000)
+	world = gridworld.benchmarkA("map_30x30","BenchmarkGridWorldNodeA",5000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
 
@@ -37,7 +38,7 @@ def buildSimulation(alpha, gamma, lambdaa):
 	#alpha = QLambda.DEF_ALPHA
 	#gamma = QLambda.DEF_GAMMA
 	#lambdaa = QLambda.DEF_LAMBDA
-	importance = QLambda.DEF_IMPORTANCE
+	#importance = QLambda.DEF_IMPORTANCE
 
 	# define the parameter sources (controllable from the simulation window)
 	net.make_input('alpha',[alpha])
@@ -53,8 +54,16 @@ def buildSimulation(alpha, gamma, lambdaa):
 	return net
 
 
-net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA)
-print 'defalpha '+str(QLambda.DEF_ALPHA)
+net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,0.001)#QLambda.DEF_IMPORTANCE)
+
+time = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
+step = 0.001
+print 'running the network for '+str(time)+' with step '+str(step)
+net.run(time,step)
+
+print 'done, the value is TODO'
+
+
 
 
 

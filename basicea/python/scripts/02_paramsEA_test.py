@@ -1,9 +1,10 @@
 # Architecture containing gridWorld simulator and RL nodes. 
 # The RL node has configuration connected by weighted connections to bias. 
 #
-# The values of the paramters will be determined by the EA, based on the prosperity measure.
-# The values of parameters (alpha, gamma, lambda) are searched for the fixed value of importance=0.3
+# In this script, the default values of parameters are used.
 #
+# The values of the paramters will be determined by the EA, based on the prosperity measure.
+# 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
 import nef
@@ -61,7 +62,7 @@ simulateNet(net,2,0.01)
 
 # builds enire experiment
 def buildExperiment(ind):
-    net=nef.Network('EA designed recurrent SNN')  
+    net=nef.Network('RL - controlled agent with EA-designed parameters')  
     net.add_to_nengo();
     # generator
     # function .1 base freq, max freq 10 rad/s, and RMS of .5; 12 is a seed
@@ -94,6 +95,95 @@ def buildExperiment(ind):
     net.connect(err,mse.getTermination('error'))
     return net;
 
+
+# experiment setup - constants
+mr = 25;
+ii = 0;
+
+INdim = 2;
+OUTdim = 1;
+minw = -0.0;
+maxw = 0.3;
+
+
+t = 3;
+dt = 0.001;
+
+# which setup to use?
+config=4
+
+if config == 1: # no 4 from the 1annea file
+    useRecurrent = True
+    pMut = 0.15
+    pCross = 0.9
+    popsize = 25;
+    maxgen = 70;
+    N=4;
+
+numRuns=10;
+
+
+# runs the experiment and returns value of MSE
+def runExperiment(net,t,dt):
+    # see: http://nengo.ca/docs/html/nef.Network.html
+    net.reset()
+    net.run(t,dt)
+    mse = net.get('MSE')    # get MSE measuring node
+    return mse.getMse()     # read MSE
+
+def evalInd(ind):
+    net = buildExperiment(ind);
+    error = runExperiment(net,t,dt);
+    ind.setFitness(error[0]);
+    return error[0]
+
+
+for expNo in range(numRuns):
+
+  print '----------------------- experiment number %d'%expNo
+  # init EA
+  ea = EA(INdim, OUTdim, N, maxgen,popsize,minw,maxw);
+  ea.setProbabilities(pMut,pCross);
+  ea.initPop();
+  f = open('data/ea_%d.txt'%expNo, 'w');
+
+  # evolution insert here
+  while ea.wantsEval():
+      print 'Gen: '+repr(ea.generation())+'/'+repr(maxgen)+' actual ind is ' +repr(ea.actualOne())+'/'+repr(popsize)+' best so far: '+repr(ea.getBestFitness());
+
+      ind = ea.getInd();
+      #ind.printMatrix();        
+
+      error = evalInd(ind);
+      ind.getFitness().setError(error);
+
+      print 'Ind: '+repr(ea.actualOne())+' Error is: '+repr(error) +' fitness is: '+repr(ind.getFitness().get());
+
+      print ea.getActualWeights();
+
+      # evaluated the last individual in the generatio? write stats
+      if (ea.actualOne() == (popsize-1)):
+          print 'check: '+repr(ea.generation())
+          fit = ea.getBestInd().getFitness().get();
+          er = ea.getBestInd().getFitness().getError();
+          print '%d %.5f %.5f\n' % (ea.generation(),fit,er)
+          f.write('%d %.8f %.8f\n' % (ea.generation(),fit,er))
+          f.flush()
+          os.fsync(f.fileno()) # just write it to disk
+
+      # poc++ and check end of ea
+      ea.nextIndividual();
+
+
+  f.close()
+
+# load the best one found
+ind = ea.getIndNo(ea.getBest());
+net = buildExperiment(ind);
+print 'best fitness is:'
+print ind.getFitness().get();
+
+print 'done\n\n\n'
 
 
 
