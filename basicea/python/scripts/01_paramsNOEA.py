@@ -15,17 +15,28 @@ from ctu.nengoros.modules.impl import DefaultNeuralModule as NeuralModule
 from ctu.nengoros.comm.nodeFactory import NodeGroup as NodeGroup
 from ctu.nengoros.comm.rosutils import RosUtils as RosUtils
 from org.hanns.rl.discrete.ros.sarsa import QLambda as QLambda
+import ca.nengo.model.impl.RealOutputImpl
 
 import rl_sarsa
 import gridworld
 
+class ProsperitySaver(nef.SimpleNode):
+	def init(self):
+		self.val = [0];
+	def termination_data(self,values):
+		self.val = values;
+	def tick(self):
+		#f=file('data.txt','a+')
+		f=file(self.name,'a+')
+		f.write('%1.3f %s\n'%(self.t,' '.join(map(str, self.val))))
+		f.close()
 
-def buildSimulation(alpha, gamma, lambdaa, importance):
-	################################################### script goes here:
+# build configuration of the experiment with given RL parameters
+def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0'):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20,logPeriod=2000)
+	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
 	world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC",10000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
@@ -33,12 +44,6 @@ def buildSimulation(alpha, gamma, lambdaa, importance):
 	# connect them together
 	net.connect(world.getOrigin(QLambda.topicDataIn), rl.newTerminationFor(QLambda.topicDataIn))
 	net.connect(rl.getOrigin(QLambda.topicDataOut), world.getTermination(QLambda.topicDataOut))
-
-	# set the values of the parameters
-	#alpha = QLambda.DEF_ALPHA
-	#gamma = QLambda.DEF_GAMMA
-	#lambdaa = QLambda.DEF_LAMBDA
-	#importance = QLambda.DEF_IMPORTANCE
 
 	# define the parameter sources (controllable from the simulation window)
 	net.make_input('alpha',[alpha])
@@ -51,17 +56,38 @@ def buildSimulation(alpha, gamma, lambdaa, importance):
 	net.connect('gamma', rl.getTermination(QLambda.topicGamma))
 	net.connect('lambda', rl.getTermination(QLambda.topicLambda))
 	net.connect('importance', rl.getTermination(QLambda.topicImportance))
+	
+	saver = net.add(ProsperitySaver('data_'+expName+'.txt'))
+	net.connect(rl.getOrigin(QLambda.topicProsperity),saver.getTermination("data"));
 	return net
+	
+# build configuration and run the eperiment for given amount of time, return the prosperity
+def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
+	net = buildSimulation(alpha, gamma, lambdaa, importance,name)
+	
+	rl = net.get("RL_QLambda")
+	net.reset()
+	net.run(t,dt)
+	prosp = rl.getOrigin(QLambda.topicProsperity).getValues().getValues(); # read the prosperity
+	return prosp;
+
+#f = open('data/tmp/ea_%d.txt'%expNo, 'w');
+#sx = Saver('ea_%d_agents.txt'%expNo);		# saves best agent from actual generation during the evolution into a file
 
 
-net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,0.01)#QLambda.DEF_IMPORTANCE)
-
-time = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-step = 0.001
-print 'running the network for '+str(time)+' with step '+str(step)
-net.run(time,step)
-
-print 'done, the value is TODO'
+#t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
+t = 40
+dt = 0.001
+runs = 10
+base = 'noea'
+# run the experiment several times, plot average in the matlab
+for i in range(runs):
+	name = base + '_%d'%i;
+	print '----------------- starting experiment named: '+name
+	prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt,name)
+	print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
+	
+#prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
 
 
 

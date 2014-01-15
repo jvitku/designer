@@ -18,27 +18,19 @@ from org.hanns.rl.discrete.ros.sarsa import QLambda as QLambda
 
 import rl_sarsa
 import gridworld
-
-
-def buildConfiguration(alpha, gamma, lambdaa, importance):
-	################################################### script goes here:
+# build configuration of the experiment with given RL parameters
+def buildExperiment(alpha, gamma, lambdaa, importance):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	rl = rl_sarsa.qlambdaDelay("RL", 2, 4, 10, 10)	# define the neural modules
-	world = gridworld.benchmark("map", 1000);
+	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20, logPeriod=2000)
+	world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC",10000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
 
 	# connect them together
 	net.connect(world.getOrigin(QLambda.topicDataIn), rl.newTerminationFor(QLambda.topicDataIn))
 	net.connect(rl.getOrigin(QLambda.topicDataOut), world.getTermination(QLambda.topicDataOut))
-
-	# set the values of the parameters
-	# alpha = QLambda.DEF_ALPHA
-	# gamma = QLambda.DEF_GAMMA
-	# lambdaa = QLambda.DEF_LAMBDA
-	# importance = QLambda.DEF_IMPORTANCE
 
 	# define the parameter sources (controllable from the simulation window)
 	net.make_input('alpha',[alpha])
@@ -52,49 +44,25 @@ def buildConfiguration(alpha, gamma, lambdaa, importance):
 	net.connect('lambda', rl.getTermination(QLambda.topicLambda))
 	net.connect('importance', rl.getTermination(QLambda.topicImportance))
 	return net
+	
+# runs the simulation for given time, expects RL_QLambda node in given network, returns prosperity
+def runExperiment(net,t,dt):
+	
+	print 'running the network for '+str(t)+' with step '+str(dt)
+	net.reset()
+	net.run(t,dt)
+	
+	rl = net.get("RL_QLambda")
+	prosp = rl.getOrigin(QLambda.topicProsperity).getValues().getValues(); # read the prosperity
+	return prosp;
+	
 
-def simulateNet(net,t,dt):
-    net.run(t,dt)
-    
-net = buildConfiguration(QLambda.DEF_ALPHA, QLambda.DEF_GAMMA, QLambda.DEF_LAMBDA, QLambda.DEF_IMPORTANCE)
-simulateNet(net,2,0.01)
-
-
-# builds enire experiment
-def buildExperiment(ind):
-    net=nef.Network('RL - controlled agent with EA-designed parameters')  
-    net.add_to_nengo();
-    # generator
-    # function .1 base freq, max freq 10 rad/s, and RMS of .5; 12 is a seed
-    generator=FunctionInput('generator',[FourierFunction(.1, 5,.3, 12),
-        FourierFunction(.5, 7, .7, 112)],Units.UNK)
-    net.add(generator);
-
-    # model
-    model= buildModel(ind);
-    net.add(model.network); 
-
-    # plant
-    plant = net.add(modules.OR('Fuzzy OR'));
-    #plant = net.add(mathNodes.SUMABS('SUM'));
-    # error estimation
-    err = net.make('error',1,1,mode='direct');
-    mse = net.add(modules.mse('MSE'));
-
-    # wiring
-    modelIn = model.get('inputs');  # get the input model
-    model.network.exposeTermination(modelIn.getTermination('in'),'subInput'); # expose its termination
-    net.connect(generator,model.network.getTermination('subInput'),weight=1)  # generator to termination
-    net.connect(generator,plant.getTermination('inputs'))                     # generator to plant
-
-    modelOut = model.get('outputt');
-    model.network.exposeOrigin(modelOut.getOrigin('out'),'subOutput');        # expose its termination
-    net.connect(model.network.getOrigin('subOutput'), err, weight=-1)
-
-    net.connect(plant.getOrigin('output'),err)  
-    net.connect(err,mse.getTermination('error'))
-    return net;
-
+def evalInd(ind):
+	# TODO here get parameters from the ind
+    net = buildExperiment(alpha,gamma, lambdaa, importance);
+    prosperity = runExperiment(net,t,dt);
+    ind.setFitness(prosperity);
+    return prosperity
 
 # experiment setup - constants
 mr = 25;
@@ -104,10 +72,6 @@ INdim = 2;
 OUTdim = 1;
 minw = -0.0;
 maxw = 0.3;
-
-
-t = 3;
-dt = 0.001;
 
 # which setup to use?
 config=4
@@ -121,22 +85,6 @@ if config == 1: # no 4 from the 1annea file
     N=4;
 
 numRuns=10;
-
-
-# runs the experiment and returns value of MSE
-def runExperiment(net,t,dt):
-    # see: http://nengo.ca/docs/html/nef.Network.html
-    net.reset()
-    net.run(t,dt)
-    mse = net.get('MSE')    # get MSE measuring node
-    return mse.getMse()     # read MSE
-
-def evalInd(ind):
-    net = buildExperiment(ind);
-    error = runExperiment(net,t,dt);
-    ind.setFitness(error[0]);
-    return error[0]
-
 
 for expNo in range(numRuns):
 
