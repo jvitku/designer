@@ -25,8 +25,8 @@ def buildSimulation(alpha, gamma, lambdaa, importance):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
-	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=30,logPeriod=2000)
-	world = gridworld.benchmarkA("map_30x30","BenchmarkGridWorldNodeA",5000);
+	rl = rl_sarsa.qlambda("RL", noStateVars=2, noActions=4, noValues=20,logPeriod=2000)
+	world = gridworld.benchmarkA("map_20x20","BenchmarkGridWorldNodeC",10000);
 	net.add(rl)									    # place them into the network
 	net.add(world)
 
@@ -54,7 +54,7 @@ def buildSimulation(alpha, gamma, lambdaa, importance):
 	return net
 
 
-net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,0.001)#QLambda.DEF_IMPORTANCE)
+net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,0.01)#QLambda.DEF_IMPORTANCE)
 
 time = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
 step = 0.001
