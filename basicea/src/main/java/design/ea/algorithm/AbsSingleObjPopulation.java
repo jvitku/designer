@@ -26,7 +26,6 @@ public abstract class AbsSingleObjPopulation implements Population{
 
 	public void set(int i, Individual in){ pop[i] = in; }
 
-	// TODO
 	public double[] getArrayOfFitnessVals(){
 		double[] f = new double[pop.length];
 		for(int i=0; i<pop.length; i++){

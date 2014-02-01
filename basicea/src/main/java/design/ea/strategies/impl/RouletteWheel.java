@@ -2,10 +2,10 @@ package design.ea.strategies.impl;
 
 import java.util.Random;
 
+import design.ea.algorithm.Population;
 import design.ea.strategies.AbstractSelection;
+import design.ea.algorithm.AbsSingleObjPopulation;
 //import old.design.ea.vector.Population;
-//import old.design.ea.vector.Population;
-import design.ea.vector.Population;
 
 /**
  * Implements rouletteWheel selection. Call resetSelection each generation..
@@ -18,8 +18,8 @@ import design.ea.vector.Population;
  */
 public class RouletteWheel extends AbstractSelection{
 
-	float sumF;		// sum of all fitness values
-	float[] fits; 	// array of unsorted fitness values
+	double sumF;		// sum of all fitness values
+	double[] fits; 	// array of unsorted fitness values
 	Random r;
 	
 	public RouletteWheel(){
@@ -30,14 +30,14 @@ public class RouletteWheel extends AbstractSelection{
 	public void resetSelection(Population pop){
 		super.resetSelection(pop);
 		
-		fits = pop.getArrayOfFitnessVals();
+		fits = ((AbsSingleObjPopulation)pop).getArrayOfFitnessVals();
 		sumF = this.getSum(fits);
 	}
 
 	@Override
 	public int[] select(int howMany) {
 		int[] out = new int[howMany];
-		float rand;
+		double rand;
 		int chosen = 0;
 		while(chosen < out.length){
 			rand = sumF * r.nextFloat(); // pin a finger into the space divided propor.to f 
@@ -51,7 +51,7 @@ public class RouletteWheel extends AbstractSelection{
 		return out;
 	}
 	
-	private float getSum(float[] fits){
+	private double getSum(double[] fits){
 		float sum = 0;
 		for(int i=0; i<pop.size(); i++){
 			sum+=fits[i];
@@ -66,7 +66,7 @@ public class RouletteWheel extends AbstractSelection{
 	 * @param fits array of fitness values
 	 * @return index of selected individual
 	 */
-	private int findInd(float randNum, float[] fits){
+	private int findInd(double randNum, double[] fits){
 		float actual = 0;
 		int poc = 0;
 		
@@ -77,6 +77,5 @@ public class RouletteWheel extends AbstractSelection{
 			poc-=1;
 		return poc;
 	}
-
 
 }

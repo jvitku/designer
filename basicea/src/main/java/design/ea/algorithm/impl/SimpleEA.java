@@ -11,12 +11,14 @@ import design.ea.strategies.Selection;
 import design.ea.strategies.impl.OnePointCrossover;
 import design.ea.strategies.impl.RouletteWheel;
 import design.ea.strategies.impl.UniformMutation;
+import design.ea.ind.fitness.simple.impl.RealValFitness;
 
 public abstract class SimpleEA extends AbstractEA{
 	
 	Selection select;
 	Mutation mutate;
 	Crossover cross; 
+	
 	public SimpleEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
 	//public SimpleEA(int INdim, int OUTdim, int generations, int popSize, float maxw, float minw) {
 		super(vectorLength, generations, popSize, maxw, minw);
@@ -36,8 +38,8 @@ public abstract class SimpleEA extends AbstractEA{
 		select.resetSelection(pop);
 		
 		System.out.println("----------------------------------\n'+" +
-				"Best ind is no: "+bestOne+", fitness is: "+pop.get(bestOne).getFitness().get()+
-				" error: "+pop.get(bestOne).getFitness().getError());
+				"Best ind is no: "+bestOne+", fitness is: "+
+				((RealValFitness)pop.get(bestOne)).getFitness());
 		
 		// TODO print out
 		/*
@@ -46,11 +48,13 @@ public abstract class SimpleEA extends AbstractEA{
 		else if(!(tmp instanceof old.design.ea.vector.hnn.simple.HNNInd))
 			System.out.println(LU.toStr(tmp.getWeights())+"\n");
 		*/
+		
 		int copied = 1;
 		float[] a,b;
 		int[] selected = new int[2];
 		TwoGenomes two;
-		while(copied<destiny.size){
+		
+		while(copied<destiny.size()){
 			selected = select.select(2);
 			a = pop.get(selected[0]).getMatrixEncoder().getVector();
 			b = pop.get(selected[1]).getMatrixEncoder().getVector();

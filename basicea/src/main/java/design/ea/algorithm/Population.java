@@ -27,6 +27,12 @@ public interface Population extends Cloneable, Resettable{
 	 */
 	public Individual get(int i);
 	
+	/**
+	 * Number of individuals in the population.
+	 * @return size of the population
+	 */
+	public int size();
+	
 	public Population clone();
 	
 }

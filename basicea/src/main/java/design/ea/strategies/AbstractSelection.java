@@ -1,6 +1,8 @@
 package design.ea.strategies;
 
-import design.ea.vector.Population;
+import design.ea.algorithm.AbsSingleObjPopulation;
+import design.ea.algorithm.Population;
+
 
 public abstract class AbstractSelection implements Selection{
 
@@ -8,11 +10,11 @@ public abstract class AbstractSelection implements Selection{
 	protected boolean[] selected;
 	protected Population pop;
 	protected boolean repeatSelection = true;	// can be one ind selected more times?
-	
+
 	public void selectedCanRepeat(boolean can){
 		this.repeatSelection = can;
 	}
-	
+
 	public void resetSelection(Population pop){
 		this.pop = pop;
 		sorted = this.sort();
@@ -28,14 +30,14 @@ public abstract class AbstractSelection implements Selection{
 			selected[i] = false;
 		return selected;
 	}
-	
+
 	/**
 	 * sort them according to their fitness values
 	 */
 	public int[] sort(){
 		int[] sorted = new int[pop.size()];
-		float[] fits = pop.getArrayOfFitnessVals();
-		
+		double[] fits = ((AbsSingleObjPopulation)pop).getArrayOfFitnessVals();
+
 		boolean swapped = true;
 
 		for( int i=0; i<pop.size(); i++){
@@ -47,9 +49,9 @@ public abstract class AbstractSelection implements Selection{
 			for( int i=1; i<pop.size(); i++){
 				double a = fits[sorted[i-1]];
 				double b = fits[sorted[i]];
-				
+
 				if(a < b){
-					
+
 					swapped = true;
 					tmp = sorted[i-1];
 					sorted[i-1] = sorted[i];
@@ -59,7 +61,7 @@ public abstract class AbstractSelection implements Selection{
 		}
 		return sorted;
 	}
-	
+
 	public float[] getSortedVals(float[] fits, int[] sorted){
 		float[] srt = new float[fits.length];
 		for(int i=0; i<fits.length; i++){
@@ -67,7 +69,7 @@ public abstract class AbstractSelection implements Selection{
 		}
 		return srt;
 	}
-	
+
 	public abstract int[] select(int howMany);
 }
 

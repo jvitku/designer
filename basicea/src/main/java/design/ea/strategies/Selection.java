@@ -1,6 +1,6 @@
 package design.ea.strategies;
 
-import design.ea.vector.Population;
+import design.ea.algorithm.Population;
 
 public interface Selection {
 	
@@ -15,10 +15,15 @@ public interface Selection {
 	 */
 	public int[] sort(); 
 	
+	/**
+	 * Select array of individuals by this selection method
+	 * @param howMany how many individuals to select
+	 * @return array of indexes in a given population
+	 */
 	public int[] select(int howMany);
 	
 	/**
-	 * call this each generation, before selecting individuals
+	 * Call this each generation, before selecting individuals
 	 */
 	public void resetSelection(Population pop);
 	

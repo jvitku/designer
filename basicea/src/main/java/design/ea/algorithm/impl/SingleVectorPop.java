@@ -32,14 +32,12 @@ public class SingleVectorPop extends AbsSingleObjPopulation{
 	}
 	
 	public Population clone(){
-		
 		SingleVectorPop op = new SingleVectorPop(this.size, 
 				this.vectorLength, this.minVal, this.maxVal);
 		
 		for(int i=0; i<pop.length; i++){
 			op.setInd(i, pop[i].clone());
 		}
-
 		return op;
 	}
 }
