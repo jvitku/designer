@@ -1,4 +1,4 @@
-package design.ea.strategies;
+package old.design.ea.strategies;
 
 import java.util.Random;
 

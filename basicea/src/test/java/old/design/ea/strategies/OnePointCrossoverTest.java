@@ -1,8 +1,9 @@
-package design.ea.strategies;
+package old.design.ea.strategies;
 
+import old.design.ea.TestUtil;
 import tools.utils.DU;
 import tools.utils.LU;
-import design.ea.TestUtil;
+import design.ea.strategies.TwoGenomes;
 import design.ea.strategies.impl.OnePointCrossover;
 import design.ea.vector.Population;
 

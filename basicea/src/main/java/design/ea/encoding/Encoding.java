@@ -1,5 +1,7 @@
 package design.ea.encoding;
 
+import design.ea.ind.genome.Genome;
+
 /**
  * Encoding transforms genotype to phenotype and the other way. 
  * 
@@ -16,13 +18,13 @@ public interface Encoding {
 	 * @param phenotype representation of solution (architecture)
 	 * @return genotype representation of given phenotype (to be used by the EA)
 	 */
-	public Structure encode(Structure phenotype);
+	public Genome encode(Phenotype phenotype);
 	
 	/**
 	 * Decode genotype and return a representation of the solution
 	 * @param genotype genotype to be decoded
 	 * @return representation of some solution, e.g. architecture
 	 */
-	public Structure decode(Structure genotype);
+	public Phenotype decode(Genome genotype);
 
 }

@@ -5,4 +5,4 @@
  * @author Jaroslav Vitku
  *
  */
-package design.ea.matrix.encoding;
+package old.design.ea.hea;

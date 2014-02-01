@@ -1,12 +1,9 @@
 package design.ea.ind.genome;
 
-import design.ea.encoding.Encoding;
-import design.ea.encoding.Structure;
+import tools.utils.Resettable;
 
-public interface Genome extends Structure{
-
-	public Encoding getMyEncoding();
+public interface Genome extends Resettable{
 	
-	public void setEncoding(Encoding e);
+	public String toString();
 	
 }

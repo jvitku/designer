@@ -1,6 +1,8 @@
 package design.ea.ind.fitness;
 
-public interface Fitness {
+import tools.utils.Resettable;
+
+public interface Fitness extends Resettable{
 	
 	/**
 	 * The fitness can be marked as valid or not valid.

@@ -3,8 +3,8 @@ package design.ea.strategies.impl;
 import java.util.Random;
 
 import design.ea.strategies.AbstractSelection;
-//import design.ea.vector.Population;
-//import design.ea.vector.Population;
+//import old.design.ea.vector.Population;
+//import old.design.ea.vector.Population;
 import design.ea.vector.Population;
 
 /**

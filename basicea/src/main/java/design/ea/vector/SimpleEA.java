@@ -43,7 +43,7 @@ public abstract class SimpleEA extends EA{
 		/*
 		if(tmp instanceof HNNInd)
 			((HNNInd)tmp).printMatrix();
-		else if(!(tmp instanceof design.ea.vector.hnn.simple.HNNInd))
+		else if(!(tmp instanceof old.design.ea.vector.hnn.simple.HNNInd))
 			System.out.println(LU.toStr(tmp.getWeights())+"\n");
 		*/
 		int copied = 1;

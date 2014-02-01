@@ -1,4 +1,4 @@
-package design.ea.strategies;
+package old.design.ea.strategies;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import tools.utils.DU;
+import design.ea.strategies.AbstractSelection;
 import design.ea.vector.Population;
 import design.ea.vector.real.impl.Ind;
 

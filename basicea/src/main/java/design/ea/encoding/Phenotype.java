@@ -1,5 +1,5 @@
 package design.ea.encoding;
 
-public interface Structure {
+public interface Phenotype {
 
 }

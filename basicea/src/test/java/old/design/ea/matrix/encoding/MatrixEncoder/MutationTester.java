@@ -1,7 +1,7 @@
-package design.ea.matrix.encoding.MatrixEncoder;
+package old.design.ea.matrix.encoding.MatrixEncoder;
 
+import old.design.ea.TestUtil;
 import tools.utils.DU;
-import design.ea.TestUtil;
 import design.ea.strategies.impl.UniformMutation;
 import design.ea.vector.Population;
 import design.ea.vector.encoding.matrix.MatrixEncoder;
