@@ -3,14 +3,12 @@ package design.ea;
 import java.util.Random;
 
 import tools.utils.DU;
-
-import design.ea.matrix.Population;
-import design.ea.matrix.ann.impl.Ind;
-import design.ea.matrix.hnn.impl.HNNInd;
-import design.ea.matrix.individual.Individual;
+import design.ea.vector.Population;
+import design.ea.vector.individual.Individual;
+import design.ea.vector.real.impl.Ind;
 
 public class TestUtil {
-	
+	/*
 	public static Population initHNNPop(){
 		// EA setup
 		int INdim = 2; int OUTdim = 1;
@@ -29,7 +27,7 @@ public class TestUtil {
 
 		TestUtil.randomizeFitness(p);
 		return p;
-	}
+	}*/
 	
 	public static Population initPop(){
 		// EA setup

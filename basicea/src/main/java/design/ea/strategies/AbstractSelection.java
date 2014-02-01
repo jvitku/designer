@@ -1,6 +1,6 @@
 package design.ea.strategies;
 
-import design.ea.matrix.Population;
+import design.ea.vector.Population;
 
 public abstract class AbstractSelection implements Selection{
 

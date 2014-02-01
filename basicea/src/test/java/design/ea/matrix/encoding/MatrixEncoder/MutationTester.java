@@ -2,9 +2,9 @@ package design.ea.matrix.encoding.MatrixEncoder;
 
 import tools.utils.DU;
 import design.ea.TestUtil;
-import design.ea.matrix.Population;
-import design.ea.matrix.encoding.matrix.MatrixEncoder;
 import design.ea.strategies.impl.UniformMutation;
+import design.ea.vector.Population;
+import design.ea.vector.encoding.matrix.MatrixEncoder;
 
 public class MutationTester {
 

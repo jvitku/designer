@@ -3,8 +3,8 @@ package design.ea.strategies;
 import tools.utils.DU;
 import tools.utils.LU;
 import design.ea.TestUtil;
-import design.ea.matrix.Population;
 import design.ea.strategies.impl.OnePointCrossover;
+import design.ea.vector.Population;
 
 public class OnePointCrossoverTest {
 	public static void main(String[] args){

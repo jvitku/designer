@@ -4,10 +4,9 @@ import java.util.Random;
 
 import tools.utils.DU;
 import tools.utils.LU;
-
-import design.ea.matrix.Population;
-import design.ea.matrix.ann.impl.Ind;
 import design.ea.strategies.impl.RouletteWheel;
+import design.ea.vector.Population;
+import design.ea.vector.real.impl.Ind;
 
 public class RouletteWheelTest {
 

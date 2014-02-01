@@ -3,10 +3,12 @@ package design.ea.strategies;
 import static org.junit.Assert.*;
 
 import java.util.Random;
+
 import org.junit.Test;
+
 import tools.utils.DU;
-import design.ea.matrix.Population;
-import design.ea.matrix.ann.impl.Ind;
+import design.ea.vector.Population;
+import design.ea.vector.real.impl.Ind;
 
 public class AbstractSelectionTest {
 	

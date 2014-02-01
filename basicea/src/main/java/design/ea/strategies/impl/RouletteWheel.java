@@ -2,8 +2,10 @@ package design.ea.strategies.impl;
 
 import java.util.Random;
 
-import design.ea.matrix.Population;
 import design.ea.strategies.AbstractSelection;
+//import design.ea.vector.Population;
+//import design.ea.vector.Population;
+import design.ea.vector.Population;
 
 /**
  * Implements rouletteWheel selection. Call resetSelection each generation..

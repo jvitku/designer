@@ -3,9 +3,9 @@ package design.ea.hea;
 import tools.utils.DU;
 import tools.utils.LU;
 import design.ea.TestUtil;
-import design.ea.matrix.Population;
-import design.ea.matrix.ann.impl.Ind;
-import design.ea.matrix.individual.Individual;
+import design.ea.vector.Population;
+import design.ea.vector.individual.Individual;
+import design.ea.vector.real.impl.Ind;
 
 /**
  * 
@@ -13,7 +13,7 @@ import design.ea.matrix.individual.Individual;
  *
  */
 public class FloatMatrixEncoderTest {
-
+/*
 	public static void main(String[] args){
 		FloatMatrixEncoderTest fmet = new FloatMatrixEncoderTest();
 		Population p = TestUtil.initHNNPop();
@@ -26,7 +26,7 @@ public class FloatMatrixEncoderTest {
 		p.get(0).getMatrixEncoder().setVector(vec);
 		DU.pl("bbbbbbbbb: "+LU.toStr(p.get(0).getMatrixEncoder().getVector()));
 	}
-	
+	*/
 	/*
 	public static void main(String [] args){
 		FloatMatrixEncoderTest fmet = new FloatMatrixEncoderTest();
@@ -38,7 +38,7 @@ public class FloatMatrixEncoderTest {
 			DU.pl("testing done");
 		
 	}*/
-
+/*
 	//TODO: no testing so far..
 	public boolean testTestClass(){
 		Population p = TestUtil.initHNNPop();
@@ -52,7 +52,7 @@ public class FloatMatrixEncoderTest {
 			return false;
 		}
 		return true;
-	}
+	}*//*
 
 	//TODO: no testing so far..
 	public boolean testEncoding(){
@@ -77,6 +77,6 @@ public class FloatMatrixEncoderTest {
 			}
 		}
 		return true;
-	}
+	}*/
 	
 }
