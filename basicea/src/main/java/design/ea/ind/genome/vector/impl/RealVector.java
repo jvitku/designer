@@ -1,16 +1,23 @@
 package design.ea.ind.genome.vector.impl;
 
 import ctu.nengoros.util.SL;
+import design.ea.ind.genome.Genome;
 import design.ea.ind.genome.vector.AbsVectorGenome;
-
+/**
+ * Vector of float values. 
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public class RealVector extends AbsVectorGenome<Float>{
 
 	public static float DEF_VAL = 0.0f;
 	private Float[] vals;
+	private float minVal, maxVal;
 
-	public RealVector(int size, Float minVal, Float maxVal) {
-		super(size, minVal, maxVal);
-		
+	public RealVector(int size, float minVal, float maxVal) {
+		super(size);
+
 		this.vals = new Float[this.size];
 		this.reset(true);
 	}
@@ -40,12 +47,30 @@ public class RealVector extends AbsVectorGenome<Float>{
 			}
 		}
 	}
-	
+
 	public float getValidRandVal(){
 		double diff = (double)maxVal-(double)minVal;
 		return (float) (minVal+r.nextDouble()*diff);
 	}
-	
+
 	@Override
 	public String toString(){ return SL.toStr(vals); }
+
+	@Override
+	public Genome clone(){
+		RealVector out = new RealVector(size, minVal, maxVal);
+		for(int i=0; i<vals.length; i++){
+			out.vals[i] = vals[i].floatValue();
+		}
+		return out;
+	}
+	
+	public void setMaxVal(float maxVal) { this.maxVal = maxVal; }
+
+	public void setMinVal(float minVal) { this.minVal = minVal; }
+
+	public float getMaxVal() { return this.maxVal; }
+
+	public float getMinVal() { return this.minVal; }
+
 }

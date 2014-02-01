@@ -17,10 +17,5 @@ public interface VectorGenome<E> extends Genome{
 	
 	public E[] getVector();
 	
-	public void setMaxVal(E maxVal);
-	public void setMinVal(E minVal);
-	
-	public E getMaxVal();
-	public E getMinVal();
 	
 }

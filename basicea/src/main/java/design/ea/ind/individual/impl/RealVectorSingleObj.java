@@ -3,12 +3,13 @@ package design.ea.ind.individual.impl;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.AbsIndividual;
+import design.ea.ind.individual.Individual;
 
 /**
  * An individual with:
  * <ul>
- * <li>genome: vector of real values</li>
- * <li>fitness: one real value</li>
+ * <li>Genome: vector of real values</li>
+ * <li>Fitness: one real value</li>
  * </ul>
  *  
  * @author Jaroslav Vitku
@@ -16,11 +17,26 @@ import design.ea.ind.individual.AbsIndividual;
  */
 public class RealVectorSingleObj extends AbsIndividual{
 
+	private int genomeSize;
+	private float minVal, maxVal;
+	
 	public RealVectorSingleObj(int genomeSize, 
-			float maxVal,float minVal){
+			float minVal,float maxVal){
 		
+		this.genomeSize = genomeSize;
+		this.minVal = minVal;
+		this.maxVal = maxVal;
+
 		this.fitness = new RealValFitness();
 		this.genome = new RealVector(genomeSize, minVal,maxVal);
 	}
-
+	
+	@Override
+	public Individual clone(){
+		RealVectorSingleObj out = new RealVectorSingleObj(genomeSize,
+				maxVal, minVal);
+		out.genome = this.genome.clone();
+		out.fitness = this.fitness.clone();
+		return out;
+	}
 }

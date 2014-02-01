@@ -1,10 +1,11 @@
 package design.ea.ind.genome.vector.impl;
 
 import ctu.nengoros.util.SL;
+import design.ea.ind.genome.Genome;
 import design.ea.ind.genome.vector.AbsVectorGenome;
 
 /**
- * Genome represented by the vector of boolean variables.
+ * Vector of boolean values.
  * 
  * @author Jaroslav Vitku
  *
@@ -14,8 +15,8 @@ public class BinaryVector  extends AbsVectorGenome<Boolean>{
 	public static boolean DEF_VAL = false;
 	private Boolean[] vals;
 
-	public BinaryVector(int size, Boolean minVal, Boolean maxVal) {
-		super(size, minVal, maxVal);
+	public BinaryVector(int size) {
+		super(size);
 
 		this.vals = new Boolean[this.size];
 		this.reset(true);
@@ -50,4 +51,12 @@ public class BinaryVector  extends AbsVectorGenome<Boolean>{
 	@Override
 	public String toString(){ return SL.toStr(vals); }
 
+	@Override
+	public Genome clone(){
+		BinaryVector out = new BinaryVector(size);
+		for(int i=0; i<vals.length; i++){
+			out.vals[i] = vals[i].booleanValue();
+		}
+		return out;
+	}
 }

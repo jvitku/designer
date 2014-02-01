@@ -1,4 +1,4 @@
-package design.ea.vector.encoding.matrix;
+package design.ea.encoding.matrix;
 
 public interface MatrixEncoder {
 	

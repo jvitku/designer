@@ -4,12 +4,12 @@ import design.ea.encoding.Encoding;
 import design.ea.ind.fitness.Fitness;
 import design.ea.ind.genome.Genome;
 
-public class AbsIndividual implements Individual{
+public abstract class AbsIndividual implements Individual{
 
 	protected Genome genome;
 	protected Fitness fitness;
 	protected Encoding e;
-	
+
 	@Override
 	public Genome getGenome() { return this.genome; }
 
@@ -27,5 +27,14 @@ public class AbsIndividual implements Individual{
 
 	@Override
 	public Encoding getEncoding() { return this.e; }
+
+	@Override
+	public void reset(boolean randomize) {
+		genome.reset(randomize);
+		fitness.reset(randomize);
+	}
+	
+	@Override
+	public abstract Individual clone();
 
 }

@@ -1,6 +1,9 @@
-package design.ea.vector;
+package design.ea.algorithm.impl;
 
 import tools.utils.LU;
+import design.ea.algorithm.AbsSingleObjPopulation;
+import design.ea.algorithm.AbstractEA;
+import design.ea.ind.individual.Individual;
 import design.ea.strategies.Crossover;
 import design.ea.strategies.TwoGenomes;
 import design.ea.strategies.Mutation;
@@ -8,10 +11,8 @@ import design.ea.strategies.Selection;
 import design.ea.strategies.impl.OnePointCrossover;
 import design.ea.strategies.impl.RouletteWheel;
 import design.ea.strategies.impl.UniformMutation;
-import design.ea.vector.individual.Individual;
 
-public abstract class SimpleEA extends EA{
-
+public abstract class SimpleEA extends AbstractEA{
 	
 	Selection select;
 	Mutation mutate;
@@ -63,7 +64,7 @@ public abstract class SimpleEA extends EA{
 	}
 	
 	public String getActualWeights(){
-		return LU.toStr(pop.get(super.actual).getWeights());
+		return LU.toStr(pop.get(super.current).getWeights());
 	}
 	
 
@@ -72,7 +73,7 @@ public abstract class SimpleEA extends EA{
 		
 	}
 	
-	private int storeThemTo(Population pop, int startIndex, TwoGenomes tg, Individual tmp){
+	private int storeThemTo(AbsSingleObjPopulation pop, int startIndex, TwoGenomes tg, Individual tmp){
 		
 		if(startIndex<pop.size){
 			Individual ta = tmp.clone();

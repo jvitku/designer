@@ -1,5 +1,6 @@
 package design.ea.ind.individual;
 
+import tools.utils.Resettable;
 import design.ea.encoding.Encoding;
 import design.ea.ind.fitness.Fitness;
 import design.ea.ind.genome.Genome;
@@ -11,7 +12,7 @@ import design.ea.ind.genome.Genome;
  * @author Jaroslav Vitku
  *
  */
-public interface Individual {
+public interface Individual extends Resettable, Cloneable{
 
 	public Genome getGenome();
 	public void setGenome(Genome g);
@@ -21,4 +22,6 @@ public interface Individual {
 	
 	public void setEncoding(Encoding e);
 	public Encoding getEncoding();
+	
+	public Individual clone();
 }

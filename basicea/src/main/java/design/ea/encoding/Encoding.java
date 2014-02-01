@@ -16,7 +16,7 @@ public interface Encoding {
 	/**
 	 * Encode phenotype to genotype
 	 * @param phenotype representation of solution (architecture)
-	 * @return genotype representation of given phenotype (to be used by the EA)
+	 * @return genotype representation of given phenotype (to be used by the AbstractEA)
 	 */
 	public Genome encode(Phenotype phenotype);
 	

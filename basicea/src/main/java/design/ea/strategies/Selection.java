@@ -10,7 +10,7 @@ public interface Selection {
 	 * 
 	 * should be called from resetSelection()
 	 * 
-	 * @param pop Population of individuals
+	 * @param pop AbsSingleObjPopulation of individuals
 	 * @return array of indexes with sorted inds
 	 */
 	public int[] sort(); 

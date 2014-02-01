@@ -2,6 +2,7 @@ package design.ea.ind.fitness.simple.impl;
 
 import java.util.Random;
 
+import design.ea.ind.fitness.Fitness;
 import design.ea.ind.fitness.simple.SingleObjectiveFitness;
 
 /**
@@ -56,5 +57,22 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 			this.myVal = r.nextDouble();
 		}
 		this.setValid(false);
+	}
+
+	@Override
+	public boolean betterThan(Fitness f) {
+		if(f instanceof RealValFitness){
+			System.err.println("ERROR: cannot compare given fitness with RealValFitness");
+			return false;
+		}
+		return this.myVal.doubleValue() > ((RealValFitness)f).getFitness().doubleValue();
+	}
+	
+	@Override
+	public Fitness clone(){
+		RealValFitness out = new RealValFitness();
+		out.myVal = this.myVal;
+		out.isValid = this.isValid;
+		return (Fitness)out;
 	}
 }
