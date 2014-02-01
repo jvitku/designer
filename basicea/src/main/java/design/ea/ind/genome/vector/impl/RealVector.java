@@ -47,7 +47,5 @@ public class RealVector extends AbsVectorGenome<Float>{
 	}
 	
 	@Override
-	public String toString(){
-		return SL.toStr(vals);
-	}
+	public String toString(){ return SL.toStr(vals); }
 }

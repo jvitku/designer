@@ -1,5 +1,6 @@
 package design.ea.ind.genome.vector.impl;
 
+import ctu.nengoros.util.SL;
 import design.ea.ind.genome.vector.AbsVectorGenome;
 
 /**
@@ -45,5 +46,8 @@ public class BinaryVector  extends AbsVectorGenome<Boolean>{
 			}
 		}
 	}
+	
+	@Override
+	public String toString(){ return SL.toStr(vals); }
 
 }

@@ -12,20 +12,27 @@ import design.ea.ind.fitness.simple.SingleObjectiveFitness;
  */
 public class RealValFitness implements SingleObjectiveFitness<Double>{
 
-	public static final double DEF_VAL = -1.0;
 	private boolean isValid = false;
 	private Double myVal;
 
 	Random r = new Random();
 
+	/**
+	 * Create fitness with specified initial which is valid. 
+	 * @param initVal initial value of the fitness
+	 */
 	public RealValFitness(Double initVal){
 		this.isValid = true;
 		this.myVal = initVal;
 	}
 
+	/**
+	 * Creates fitness with randomized value in the interval
+	 * [0,1], which is not valid.
+	 */
 	public RealValFitness(){
 		this.isValid = false;
-		this.myVal = DEF_VAL;
+		this.reset(true);
 	}
 
 	@Override

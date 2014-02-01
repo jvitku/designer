@@ -4,10 +4,17 @@ import design.ea.encoding.Encoding;
 import design.ea.ind.fitness.Fitness;
 import design.ea.ind.genome.Genome;
 
+/**
+ * An individual holds own genome, corresponding fitness
+ * and a way how to convert genotype to phenotype.
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public interface Individual {
 
 	public Genome getGenome();
-	public void setGenome();
+	public void setGenome(Genome g);
 	
 	public Fitness getFitness();
 	public void setFitness(Fitness f);
