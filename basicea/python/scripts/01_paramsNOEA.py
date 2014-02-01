@@ -76,7 +76,7 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 
 
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-t = 40
+t = 80
 dt = 0.001
 runs = 10
 base = 'noea'
