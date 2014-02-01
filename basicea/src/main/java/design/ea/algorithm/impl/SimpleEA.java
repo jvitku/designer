@@ -17,9 +17,9 @@ public abstract class SimpleEA extends AbstractEA{
 	Selection select;
 	Mutation mutate;
 	Crossover cross; 
-	public SimpleEA(int INdim, int OUTdim, int generations, int popSize,
-			float maxw, float minw) {
-		super(INdim, OUTdim, generations, popSize, maxw, minw);
+	public SimpleEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
+	//public SimpleEA(int INdim, int OUTdim, int generations, int popSize, float maxw, float minw) {
+		super(vectorLength, generations, popSize, maxw, minw);
 
 		select = new RouletteWheel();
 		mutate = new UniformMutation();
@@ -27,7 +27,6 @@ public abstract class SimpleEA extends AbstractEA{
 		mutate.setPMut(super.pMut);
 		cross.setPCross(super.pCross);
 	}
-
 
 	@Override
 	protected void applyEAOperators() {

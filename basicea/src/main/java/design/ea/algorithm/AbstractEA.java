@@ -8,7 +8,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	public static final String name = "AbstractEA"; 
 	protected String me = "["+name+"] ";
 	
-	protected int INdim, OUTdim;
+	protected final int vectorLength;
 	protected int maxGen, popSize;
 	
 	protected AbsSingleObjPopulation pop;		// source population (eval-select)
@@ -22,19 +22,19 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	protected double pMut = 0.05;
 	protected double pCross = 0.9;
 	
-	public AbstractEA(int INdim, int OUTdim, int generations, int popSize,
-			float maxw, float minw){
+	
+	public AbstractEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
+	//public AbstractEA(int INdim, int OUTdim, int generations, int popSize, float maxw, float minw){
 		
-		this.INdim = INdim;
-		this.OUTdim = OUTdim;
+		this.vectorLength = vectorLength;
 		maxGen = generations;
 		this.popSize = popSize;
 		this.bestOne = 0;		// bestInd
 		max = maxw;
 		min = minw;
 		gen = 0;
-		pop = new SingleVectorPop(popSize);	//TODO
-		destiny = new SingleVectorPop(popSize);
+		pop = new SingleVectorPop(popSize, vectorLength, min, max);		
+		destiny = new SingleVectorPop(popSize, vectorLength, min, max);
 		
 		wantsEval = true;
 	}
