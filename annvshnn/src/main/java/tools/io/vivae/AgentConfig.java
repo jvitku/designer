@@ -1,4 +1,4 @@
-package tools.io;
+package tools.io.vivae;
 
 /**
  * Holds info about generation, fitness and genome
