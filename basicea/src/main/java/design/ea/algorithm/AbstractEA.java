@@ -13,6 +13,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	
 	protected AbsSingleObjPopulation pop;		// source population (eval-select)
 	protected AbsSingleObjPopulation destiny;	// target population (mutate-cross-save)
+	
 	protected int current = 0;
 	protected int gen;
 	protected float min,max;
@@ -22,10 +23,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	protected double pMut = 0.05;
 	protected double pCross = 0.9;
 	
-	
 	public AbstractEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
-	//public AbstractEA(int INdim, int OUTdim, int generations, int popSize, float maxw, float minw){
-		
 		this.vectorLength = vectorLength;
 		maxGen = generations;
 		this.popSize = popSize;
@@ -39,13 +37,24 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		wantsEval = true;
 	}
 
+	/**
+	 * Implement this in order to implement particular behaviour
+	 * of the operators (e.g. steady-state vs. generational etc).
+	 * 
+	 * After calling this method, the evaluation of Individuals
+	 * will start from the first one in the {@link #pop}.
+	 * 
+	 *  @see #nextIndividual()
+	 */
 	protected abstract void applyEAOperators();
 	
+	@Override
 	public void setProbabilities(double pMut, double pCross){
 		this.pMut = pMut;
 		this.pCross = pCross;
 	}
 	
+	@Override
 	public void nextIndividual(){
 		// remember the best individual
 		if(pop.get(current).getFitness().betterThan(pop.get(bestOne).getFitness())){
@@ -73,18 +82,25 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		bestOne = 0;		// reset this 
 	}
 	
+	@Override
 	public boolean wantsEval(){ return wantsEval; }
 
+	@Override
 	public int generation(){ return gen; }
 	
+	@Override
 	public int currentOne(){ return current; }
 	
+	@Override
 	public int bestOne(){ return bestOne; }
 	
+	@Override
 	public int getBest(){ return bestOne; }
 	
+	@Override
 	public Individual getIndNo(int no){ return pop.get(no); }
 	
+	@Override
 	public Individual getBestInd(){ return pop.get(this.bestOne); }
 	
 }

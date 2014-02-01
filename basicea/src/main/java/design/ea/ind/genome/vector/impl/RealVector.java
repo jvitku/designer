@@ -18,6 +18,8 @@ public class RealVector extends AbsVectorGenome<Float>{
 	public RealVector(int size, float minVal, float maxVal) {
 		super(size);
 
+		this.minVal = minVal;
+		this.maxVal = maxVal;
 		this.vals = new Float[this.size];
 		this.reset(true);
 	}

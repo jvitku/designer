@@ -10,7 +10,6 @@ import design.ea.ind.genome.Genome;
  * and a way how to convert genotype to phenotype.
  * 
  * @author Jaroslav Vitku
- *
  */
 public interface Individual extends Resettable, Cloneable{
 
@@ -24,4 +23,10 @@ public interface Individual extends Resettable, Cloneable{
 	public Encoding getEncoding();
 	
 	public Individual clone();
+	
+	/**
+	 * Convert to human-readable String 
+	 * @return human-readable String representation of this Individual
+	 */
+	public String toString();
 }

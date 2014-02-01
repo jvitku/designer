@@ -2,6 +2,20 @@ package design.ea.algorithm;
 
 import design.ea.ind.individual.Individual;
 
+/**
+ * Usage:
+ * <ul>
+ * <li>Initialize by the constructor</li> 
+ * <li>{@link #setProbabilities(double, double)}</li>
+ * <li>sequentially call the {@link #nextIndividual()} 
+ * and set fitness value for the {@link #currentOne()}.</li>
+ * </ul>
+ * Generations are increased automatically, evolutionary operators
+ * are applied between generations.
+ *  
+ * @author Jaroslav Vitku
+ *
+ */
 public interface EvolutionaryAlgorithm {
 
 	/**
@@ -18,7 +32,13 @@ public interface EvolutionaryAlgorithm {
 	public boolean wantsEval();
 
 	/**
-	 * Iterate to the next individual in the population
+	 * Iterate to the next individual in the population. This
+	 * typically serves for evaluating the fitness. 
+	 * When the iterator points to the last individual in the 
+	 * population and the {@link #nextIndividual()} is called, 
+	 * one evolutionary step is taken. Operators are applied until 
+	 * new population is filled, populations are swapped and 
+	 * the iterator is pointed back to the first individual.
 	 */
 	public void nextIndividual();
 

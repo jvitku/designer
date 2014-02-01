@@ -20,7 +20,6 @@ public abstract class SimpleEA extends AbstractEA{
 	Crossover cross; 
 	
 	public SimpleEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
-	//public SimpleEA(int INdim, int OUTdim, int generations, int popSize, float maxw, float minw) {
 		super(vectorLength, generations, popSize, maxw, minw);
 
 		select = new RouletteWheel();
