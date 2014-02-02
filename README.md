@@ -6,7 +6,7 @@ Author Jaroslav Vitku [vitkujar@fel.cvut.cz]
 About
 ------
 
-This ROS node will be used mainly in Hybrid Artificial Neural Network Systems, used in the ROS network or the [Nengoros simulator](http://nengoros.wordpress.com). 
+This `Designer` is used for optimization of topology of in Hybrid Artificial Neural Network Systems, used in the [Nengoros simulator](http://nengoros.wordpress.com). 
 
 This project serves as place for first types of algorithms used for designing hybrid systems, that is: designing topologies of Hybrid Artificial Neural Network Systems (HANNS).
 

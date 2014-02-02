@@ -12,7 +12,9 @@ This `Designer` is used for optimization of topology of in Hybrid Artificial Neu
 Purpose
 ---------
 
-Mainly historical, was used in [1] for comparing design of ANNs vs Hybrid ANNs. Now, this is reworked to the Basicea project, which is more domain independent and features nicer implementation. 
+This is newer version of `annvshnn` project, which is more domain independent and features nicer implementation. 
+
+The project `annvshnn` was used in [1] for comparing design of ANNs vs Hybrid ANNs. 
 
 The project implements basic Evolutionary Algorithm (EA), which optimizes vector of real-valued numbers. These numbers represent specific connection weights in an agent architecture. By modifying these weights, new HANNS topology is created - new agent architecture is designed. 
 
