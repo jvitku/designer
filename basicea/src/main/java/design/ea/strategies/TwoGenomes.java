@@ -8,9 +8,9 @@ package design.ea.strategies;
  */
 public class TwoGenomes {
 	
-	public float[] a,b;
+	public Float[] a,b;
 	
-	public TwoGenomes(float[]a, float[]b){
+	public TwoGenomes(Float[]a, Float[]b){
 		this.a = a;
 		this.b = b;
 	}

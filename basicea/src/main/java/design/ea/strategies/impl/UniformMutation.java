@@ -16,9 +16,9 @@ public class UniformMutation implements Mutation{
 	}
 	
 	@Override
-	public float[] mutate(float[] m, boolean isBinary) {
-		float[] out = new float[m.length];
-		float[] source = m;
+	public Float[] mutate(Float[] a, boolean isBinary) {
+		Float[] out = new Float[a.length];
+		Float[] source = a;
 		for(int i=0; i<source.length; i++){
 			if(r.nextDouble()<p){
 				if(isBinary){

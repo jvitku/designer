@@ -53,5 +53,4 @@ public class RealVectorSingleObj extends AbsIndividual{
 		return out +" G: "+SL.toStr(((RealVector)genome).getVector());
 	}
 
-
 }

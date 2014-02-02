@@ -1,6 +1,5 @@
 package design.ea.algorithm.impl;
 
-import tools.utils.LU;
 import design.ea.algorithm.AbsSingleObjPopulation;
 import design.ea.algorithm.AbstractEA;
 import design.ea.ind.individual.Individual;
@@ -12,6 +11,7 @@ import design.ea.strategies.impl.OnePointCrossover;
 import design.ea.strategies.impl.RouletteWheel;
 import design.ea.strategies.impl.UniformMutation;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
+import design.ea.ind.genome.vector.impl.RealVector;
 
 public abstract class SimpleEA extends AbstractEA{
 	
@@ -33,48 +33,56 @@ public abstract class SimpleEA extends AbstractEA{
 	protected void applyEAOperators() {
 
 		Individual tmp = pop.get(bestOne).clone();
-		destiny.setInd(0, pop.get(bestOne).clone());	// copy the best one (elitism)
+		destiny.setInd(0, pop.get(bestOne).clone());	// copy the best one (elitism=1)
 		select.resetSelection(pop);
 		
 		System.out.println("----------------------------------\n'+" +
 				"Best ind is no: "+bestOne+", fitness is: "+
 				((RealValFitness)pop.get(bestOne)).getFitness());
 		
-		// TODO print out
-		/*
-		if(tmp instanceof HNNInd)
-			((HNNInd)tmp).printMatrix();
-		else if(!(tmp instanceof old.design.ea.vector.hnn.simple.HNNInd))
-			System.out.println(LU.toStr(tmp.getWeights())+"\n");
-		*/
+		System.out.println("best ind: "+pop.get(bestOne).toString());
 		
 		int copied = 1;
-		float[] a,b;
+		Float[] a;
+		Float[] b;
 		int[] selected = new int[2];
 		TwoGenomes two;
 		
 		while(copied<destiny.size()){
-			selected = select.select(2);
-			a = pop.get(selected[0]).getMatrixEncoder().getVector();
-			b = pop.get(selected[1]).getMatrixEncoder().getVector();
+			selected = select.select(2);							// select two guys
+			a = ((RealVector)pop.get(selected[0]).getGenome()).getVector();
+			b = ((RealVector)pop.get(selected[1]).getGenome()).getVector();
+			//b = pop.get(selected[1]).getMatrixEncoder().getVector();
 			two = cross.cross(a, b);
-			two = mutate.mutate(two, pop.get(selected[0]).getMatrixEncoder().isBinary());
+			two = mutate.mutate(two, false);
+			//two = mutate.mutate(two, pop.get(selected[0]).getMatrixEncoder().isBinary());
 			
-			copied = this.storeThemTo(destiny, copied, two, tmp);
+			copied = this.storeThemTo(destiny, copied, two, tmp); //TODO
 		}
 		pop = destiny;
 	}
-	
-	public String getActualWeights(){
-		return LU.toStr(pop.get(super.current).getWeights());
-	}
-	
 
-	public float getBestFitness(){
-		return pop.get(this.bestOne).getFitness().get();
+	
+	private int storeThemTo(AbsSingleObjPopulation pop, int startIndex, TwoGenomes tg, Individual tmp){
 		
+		if(startIndex<pop.size()){
+			Individual first = pop.get(startIndex);
+			RealVector rv = (RealVector)first.getGenome();
+			rv.setVector(tg.a);
+			first.getFitness().setValid(false);	// TODO move this into the coross and mutate methods
+			startIndex++;
+		}
+		if(startIndex<pop.size()){
+			Individual second = pop.get(startIndex);
+			RealVector rv = (RealVector)second.getGenome();
+			rv.setVector(tg.b);
+			second.getFitness().setValid(false);	// TODO move this into the coross and mutate methods
+			startIndex++;
+		}
+		return startIndex;
 	}
 	
+	/*
 	private int storeThemTo(AbsSingleObjPopulation pop, int startIndex, TwoGenomes tg, Individual tmp){
 		
 		if(startIndex<pop.size){
@@ -90,6 +98,6 @@ public abstract class SimpleEA extends AbstractEA{
 			startIndex++;
 		}
 		return startIndex;
-	}
+	}*/
 
 }

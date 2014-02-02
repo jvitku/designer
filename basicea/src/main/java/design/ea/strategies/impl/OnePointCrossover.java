@@ -3,14 +3,23 @@ package design.ea.strategies.impl;
 import design.ea.strategies.AbstractCrossover;
 import design.ea.strategies.TwoGenomes;
 
+/**
+ * Crosses two given genomes in randomly chosen point with a given probability.
+ * 
+ * TODO: make this more general (use the Genome interface)
+ * TODO: pass here entire individuals, if crossed, discard their fitness values
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public class OnePointCrossover extends AbstractCrossover {
 
-	public TwoGenomes cross(float[] a, float[] b) {
+	public TwoGenomes cross(Float[] a, Float[] b) {
 		if(a.length != b.length){
 			System.err.println("OnePointCrossover: ERROR: vectors have different lengths");
 		}
-		float[] outA = a.clone();
-		float[] outB = b.clone();
+		Float[] outA = a.clone();
+		Float[] outB = b.clone();
 		
 		// should apply crossover at all?
 		if(r.nextDouble()<pCross){
@@ -23,4 +32,5 @@ public class OnePointCrossover extends AbstractCrossover {
 		}
 		return new TwoGenomes(outA,outB);
 	}
+	
 }
