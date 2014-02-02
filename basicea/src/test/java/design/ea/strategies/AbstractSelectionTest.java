@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import design.ea.TestUtil;
 import design.ea.algorithm.Population;
 import design.ea.algorithm.impl.SingleVectorPop;
 
@@ -19,9 +20,8 @@ public class AbstractSelectionTest {
 		// pop setup
 		int num = 10;
 		Population p = new SingleVectorPop(num, len, min, max);
-		this.randomizeFitness(p);
+		TestUtil.randomizeFitness(p);
 		
-
 		T t = new T();
 		t.resetSelection(p);
 		int [] sorted = t.sort();
@@ -41,14 +41,6 @@ public class AbstractSelectionTest {
 	private void ps(Population p, int[] sorted){
 		for(int i=0; i<p.size(); i++){
 			System.out.println(i+" "+ p.get(sorted[i]).toString());
-		}
-	}
-
-	private void randomizeFitness(Population pop){
-		for(int i=0;i<pop.size(); i++){
-			pop.get(i).getFitness().reset(true);
-			// just not to receive warnings:
-			pop.get(i).getFitness().setValid(true);	
 		}
 	}
 

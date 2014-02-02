@@ -6,6 +6,7 @@ import design.ea.ind.individual.Individual;
 import design.ea.ind.individual.impl.RealVectorSingleObj;
 
 public class SingleVectorPop extends AbsSingleObjPopulation{
+	
 	private int vectorLength;
 	private float minVal, maxVal;
 

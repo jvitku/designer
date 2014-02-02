@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import design.ea.TestUtil;
 import design.ea.algorithm.Population;
 import design.ea.algorithm.impl.SingleVectorPop;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
@@ -17,6 +18,13 @@ import design.ea.strategies.impl.RouletteWheel;
  */
 public class RouletteWheelTest {
 
+	/**
+	 * Generate population of random individuals with random fitness vals.
+	 * Select many times from the population. 
+	 * Sort individuals according to the fitness and check:
+	 * 	-fitness is decreasing 
+	 *  -number of selections is decreasing
+	 */
 	@Test
 	public void checkRoulette(){
 		// EA setup
@@ -26,8 +34,7 @@ public class RouletteWheelTest {
 		// pop setup
 		int num = 10;
 		Population p = new SingleVectorPop(num, len, min, max);
-
-		this.randomizeFitness(p);
+		TestUtil.randomizeFitness(p);
 
 		// make many selections
 		RouletteWheel s = new RouletteWheel();
@@ -62,14 +69,6 @@ public class RouletteWheelTest {
 			assertTrue(
 					numSelected[sorted[i+1]] <= numSelected[sorted[i]]);
 			
-		}
-	}
-
-	private void randomizeFitness(Population pop){
-		for(int i=0;i<pop.size(); i++){
-			pop.get(i).getFitness().reset(true);
-			// just not to receive warnings:
-			pop.get(i).getFitness().setValid(true);	
 		}
 	}
 }
