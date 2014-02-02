@@ -61,7 +61,7 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 
 	@Override
 	public boolean betterThan(Fitness f) {
-		if(f instanceof RealValFitness){
+		if(!(f instanceof RealValFitness)){
 			System.err.println("ERROR: cannot compare given fitness with RealValFitness");
 			return false;
 		}
