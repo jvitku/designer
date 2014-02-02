@@ -23,7 +23,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	protected double pMut = 0.05;
 	protected double pCross = 0.9;
 	
-	public AbstractEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
+	public AbstractEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
 		this.vectorLength = vectorLength;
 		maxGen = generations;
 		this.popSize = popSize;

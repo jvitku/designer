@@ -13,14 +13,14 @@ import design.ea.strategies.impl.UniformMutation;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 
-public abstract class SimpleEA extends AbstractEA{
+public class SimpleEA extends AbstractEA{
 	
 	Selection select;
 	Mutation mutate;
 	Crossover cross; 
 	
-	public SimpleEA(int  vectorLength, int generations, int popSize, float maxw, float minw){
-		super(vectorLength, generations, popSize, maxw, minw);
+	public SimpleEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
+		super(vectorLength, generations, popSize, minw, maxw);
 
 		select = new RouletteWheel();
 		mutate = new UniformMutation();
