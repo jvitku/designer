@@ -78,5 +78,11 @@ public interface EvolutionaryAlgorithm {
 	 * @return individual with the highest fitness in the population
 	 */
 	public Individual getBestInd();
+	
+	/**
+	 * Return the current individual.
+	 * @return the current individual
+	 */
+	public Individual getCurrentInd();
 
 }

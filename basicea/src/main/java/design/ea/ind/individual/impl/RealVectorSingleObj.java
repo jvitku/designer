@@ -1,6 +1,5 @@
 package design.ea.ind.individual.impl;
 
-import ctu.nengoros.util.SL;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.AbsIndividual;
@@ -20,22 +19,24 @@ public class RealVectorSingleObj extends AbsIndividual{
 
 	private int genomeSize;
 	private float minVal, maxVal;
+	private final boolean minimize;
 
 	public RealVectorSingleObj(int genomeSize, 
-			float minVal,float maxVal){
+			boolean minimize, float minVal,float maxVal){
 
+		this.minimize = minimize;
 		this.genomeSize = genomeSize;
 		this.minVal = minVal;
 		this.maxVal = maxVal;
 
-		this.fitness = new RealValFitness();
+		this.fitness = new RealValFitness(minimize);
 		this.genome = new RealVector(genomeSize, minVal,maxVal);
 	}
 
 	@Override
 	public Individual clone(){
 		RealVectorSingleObj out = new RealVectorSingleObj(genomeSize,
-				maxVal, minVal);
+				minimize, maxVal, minVal);
 		out.genome = this.genome.clone();
 		out.fitness = this.fitness.clone();
 		return out;
@@ -43,14 +44,8 @@ public class RealVectorSingleObj extends AbsIndividual{
 
 	@Override
 	public String toString(){
-		String out = "F";
-		if(this.fitness.isValid())
-			out+="[ok]=";
-		else
-			out+="[xx]=";
-		
-		out +=((RealValFitness)fitness).getFitness();
-		return out +" G: "+SL.toStr(((RealVector)genome).getVector());
+		return " G: "+fitness.toString()+" "+genome.toString();
+		//return out +" G: "+SL.toStr(((RealVector)genome).getVector());
 	}
 
 }

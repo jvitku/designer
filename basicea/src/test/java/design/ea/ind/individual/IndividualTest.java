@@ -14,7 +14,7 @@ public class IndividualTest {
 		int len=3;
 		float min=0,max=1;
 		
-		Individual ind = new RealVectorSingleObj(len,min,max);
+		Individual ind = new RealVectorSingleObj(len,true,min,max);
 		Individual cloned = ind.clone();
 		String str = cloned.toString();
 		

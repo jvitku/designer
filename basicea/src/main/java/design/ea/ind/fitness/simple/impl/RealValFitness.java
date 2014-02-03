@@ -15,6 +15,7 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 
 	private boolean isValid = false;
 	private Double myVal;
+	private final boolean minimize;
 
 	Random r = new Random();
 
@@ -22,7 +23,8 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 	 * Create fitness with specified initial which is valid. 
 	 * @param initVal initial value of the fitness
 	 */
-	public RealValFitness(Double initVal){
+	public RealValFitness(boolean minimize, Double initVal){
+		this.minimize = minimize;
 		this.isValid = true;
 		this.myVal = initVal;
 	}
@@ -31,16 +33,17 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 	 * Creates fitness with randomized value in the interval
 	 * [0,1], which is not valid.
 	 */
-	public RealValFitness(){
+	public RealValFitness(boolean minimize){
+		this.minimize = minimize;
 		this.isValid = false;
 		this.reset(true);
 	}
 
 	@Override
-	public Double getFitness() { return this.myVal; }
+	public Double getValue() { return this.myVal; }
 
 	@Override
-	public void setFitness(Double value) {
+	public void setValue(Double value) {
 		this.myVal = value;
 		this.setValid(true);
 	}
@@ -65,14 +68,28 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 			System.err.println("ERROR: cannot compare given fitness with RealValFitness");
 			return false;
 		}
-		return this.myVal.doubleValue() > ((RealValFitness)f).getFitness().doubleValue();
+		if(this.minimize){
+			return this.myVal.doubleValue() < ((RealValFitness)f).getValue().doubleValue();
+		}else{
+			return this.myVal.doubleValue() > ((RealValFitness)f).getValue().doubleValue();
+		}
 	}
-	
+
 	@Override
 	public Fitness clone(){
-		RealValFitness out = new RealValFitness();
+		RealValFitness out = new RealValFitness(this.minimize);
 		out.myVal = this.myVal;
 		out.isValid = this.isValid;
 		return (Fitness)out;
+	}
+
+	@Override
+	public String toString(){
+		String out = "F";
+		if(this.isValid())
+			out+="[ok]=";
+		else
+			out+="[xx]=";
+		return out +this.myVal;
 	}
 }

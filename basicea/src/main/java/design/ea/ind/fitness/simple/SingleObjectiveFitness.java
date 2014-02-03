@@ -11,8 +11,8 @@ import design.ea.ind.fitness.Fitness;
  */
 public interface SingleObjectiveFitness<E> extends Fitness{
 	
-	public E getFitness();
+	public E getValue();
 	
-	public void setFitness(E value);
+	public void setValue(E value);
 
 }

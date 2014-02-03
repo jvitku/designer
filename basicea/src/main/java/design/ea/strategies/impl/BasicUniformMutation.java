@@ -4,13 +4,13 @@ import java.util.Random;
 import design.ea.strategies.Mutation;
 import design.ea.strategies.TwoGenomes;
 
-public class UniformMutation implements Mutation{
+public class BasicUniformMutation implements Mutation{
 
 	double p;
 	double stdev = 1;	// standard deviation for float vectors
 	Random r;
 	
-	public UniformMutation(){
+	public BasicUniformMutation(){
 		p = 0;
 		r = new Random();
 	}

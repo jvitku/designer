@@ -9,8 +9,7 @@ import design.ea.strategies.Mutation;
 import design.ea.strategies.Selection;
 import design.ea.strategies.impl.OnePointCrossover;
 import design.ea.strategies.impl.RouletteWheel;
-import design.ea.strategies.impl.UniformMutation;
-import design.ea.ind.fitness.simple.impl.RealValFitness;
+import design.ea.strategies.impl.BasicUniformMutation;
 import design.ea.ind.genome.vector.impl.RealVector;
 
 public class SimpleEA extends AbstractEA{
@@ -18,12 +17,22 @@ public class SimpleEA extends AbstractEA{
 	Selection select;
 	Mutation mutate;
 	Crossover cross; 
+
+	public SimpleEA(int  vectorLength, boolean minimize, int generations, int popSize, float minw, float maxw){
+		super(vectorLength, minimize, generations, popSize, minw, maxw);
+
+		this.init();
+	}
 	
 	public SimpleEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
 		super(vectorLength, generations, popSize, minw, maxw);
-
+		
+		this.init();
+	}
+	
+	private void init(){
 		select = new RouletteWheel();
-		mutate = new UniformMutation();
+		mutate = new BasicUniformMutation();
 		cross = new OnePointCrossover();
 		mutate.setPMut(super.pMut);
 		cross.setPCross(super.pCross);
@@ -36,11 +45,8 @@ public class SimpleEA extends AbstractEA{
 		destiny.setInd(0, pop.get(bestOne).clone());	// copy the best one (elitism=1)
 		select.resetSelection(pop);
 		
-		System.out.println("----------------------------------\n'+" +
-				"Best ind is no: "+bestOne+", fitness is: "+
-				((RealValFitness)pop.get(bestOne)).getFitness());
-		
-		System.out.println("best ind: "+pop.get(bestOne).toString());
+		System.out.println("GEN: "+gen+" best ind("+
+		this.bestOne+"): "+pop.get(bestOne).toString());
 		
 		int copied = 1;
 		Float[] a;
@@ -69,14 +75,14 @@ public class SimpleEA extends AbstractEA{
 			Individual first = pop.get(startIndex);
 			RealVector rv = (RealVector)first.getGenome();
 			rv.setVector(tg.a);
-			first.getFitness().setValid(false);	// TODO move this into the coross and mutate methods
+			first.getFitness().setValid(false);	// TODO move this into the cross and mutate methods
 			startIndex++;
 		}
 		if(startIndex<pop.size()){
 			Individual second = pop.get(startIndex);
 			RealVector rv = (RealVector)second.getGenome();
 			rv.setVector(tg.b);
-			second.getFitness().setValid(false);	// TODO move this into the coross and mutate methods
+			second.getFitness().setValid(false);// TODO move this into the cross and mutate methods
 			startIndex++;
 		}
 		return startIndex;

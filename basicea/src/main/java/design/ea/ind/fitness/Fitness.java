@@ -2,6 +2,13 @@ package design.ea.ind.fitness;
 
 import tools.utils.Resettable;
 
+/**
+ * The constructor should contain final information whether we are 
+ * searching for the smallest value or for the biggest one.
+ * 
+ * @author Jaroslav Vitku
+ *
+ */
 public interface Fitness extends Resettable, Cloneable{
 	
 	/**
@@ -27,6 +34,12 @@ public interface Fitness extends Resettable, Cloneable{
 	 * @return true if the fitness value is valid
 	 */
 	public boolean isValid();
-
+	
 	public Fitness clone();
+	
+	/**
+	 * Human-readable fitness value.
+	 * @return string representing the fitness value (and state)
+	 */
+	public String toString();
 }

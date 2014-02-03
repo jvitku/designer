@@ -11,11 +11,19 @@ import design.ea.ind.individual.Individual;
  */
 public abstract class AbsSingleObjPopulation implements Population{
 
+	public static final boolean DEF_MIN = false;
 	protected Individual [] pop;
+	protected final boolean minimize;
 	protected int size;
 
 	public AbsSingleObjPopulation(int size){
 		this.size = size;
+		this.minimize = DEF_MIN;
+	}
+	
+	public AbsSingleObjPopulation(int size, boolean minimize){
+		this.size = size;
+		this.minimize = minimize;
 	}
 
 	public void setInd(int no, Individual ind){ pop[no] = ind; }
@@ -33,7 +41,7 @@ public abstract class AbsSingleObjPopulation implements Population{
 				System.err.println("WARNING: the Fitness value of individual no: "
 						+i+" is not valid!");
 			}
-			f[i] = ((RealValFitness)pop[i].getFitness()).getFitness();
+			f[i] = ((RealValFitness)pop[i].getFitness()).getValue();
 		}
 		return f;
 	}

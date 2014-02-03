@@ -61,8 +61,8 @@ public class RouletteWheelTest {
 			
 			// check that number of selections is decreasing too
 			System.out.println("Fitness vals: "+
-			((RealValFitness)p.get(sorted[i+1]).getFitness()).getFitness()+" <= "+
-			((RealValFitness)p.get(sorted[i  ]).getFitness()).getFitness()+
+			((RealValFitness)p.get(sorted[i+1]).getFitness()).getValue()+" <= "+
+			((RealValFitness)p.get(sorted[i  ]).getFitness()).getValue()+
 			"\tnum selections: "+numSelected[sorted[i+1]] +" <= "+
 			numSelected[sorted[i]]);
 			
