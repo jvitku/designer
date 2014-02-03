@@ -14,9 +14,9 @@ import design.ea.ind.genome.vector.impl.RealVector;
 
 public class SimpleEA extends AbstractEA{
 	
-	Selection select;
-	Mutation mutate;
-	Crossover cross; 
+	public Selection select;
+	public Mutation mutate;
+	public Crossover cross; 
 
 	public SimpleEA(int  vectorLength, boolean minimize, int generations, int popSize, float minw, float maxw){
 		super(vectorLength, minimize, generations, popSize, minw, maxw);
