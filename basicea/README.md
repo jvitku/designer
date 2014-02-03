@@ -36,3 +36,13 @@ Installation can be obtained by running the following command
 
 In case of any problems, the best way how to use these nodes is by means of the NengoRos project (see: [https://github.com/jvitku/nengoros](https://github.com/jvitku/nengoros) )
 
+
+TODO
+---------
+
+* Add mutation support for binary vectors
+* Implement and use interface Encoding
+
+
+Chagelog 
+---------------------
