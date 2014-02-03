@@ -1,6 +1,5 @@
-package design.ea.strategies.impl;
+package design.ea.strategies.crossover;
 
-import design.ea.strategies.AbstractCrossover;
 import design.ea.strategies.TwoGenomes;
 
 /**

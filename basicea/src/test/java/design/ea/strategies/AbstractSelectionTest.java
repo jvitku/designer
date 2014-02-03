@@ -7,6 +7,7 @@ import org.junit.Test;
 import design.ea.TestUtil;
 import design.ea.algorithm.Population;
 import design.ea.algorithm.impl.SingleVectorPop;
+import design.ea.strategies.selection.AbstractSelection;
 
 public class AbstractSelectionTest {
 

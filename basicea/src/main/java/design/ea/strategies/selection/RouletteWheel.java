@@ -1,9 +1,8 @@
-package design.ea.strategies.impl;
+package design.ea.strategies.selection;
 
 import java.util.Random;
 
 import design.ea.algorithm.Population;
-import design.ea.strategies.AbstractSelection;
 import design.ea.algorithm.AbsSingleObjPopulation;
 //import old.design.ea.vector.Population;
 

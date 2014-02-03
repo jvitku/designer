@@ -1,4 +1,4 @@
-package design.ea.strategies.impl;
+package design.ea.strategies.mutation;
 
 import java.util.Random;
 import design.ea.strategies.Mutation;

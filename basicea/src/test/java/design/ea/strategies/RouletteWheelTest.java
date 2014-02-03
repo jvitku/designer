@@ -8,7 +8,7 @@ import design.ea.TestUtil;
 import design.ea.algorithm.Population;
 import design.ea.algorithm.impl.SingleVectorPop;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
-import design.ea.strategies.impl.RouletteWheel;
+import design.ea.strategies.selection.RouletteWheel;
 
 /**
  * Note: precondition of this test is the AbstractSelectionTest passed

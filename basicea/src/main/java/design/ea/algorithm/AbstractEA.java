@@ -39,7 +39,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	 * Note that parameters {@link #min} and {@link #max} are respected
 	 * by the algorithm, but are not respected by the mutation operator, 
 	 * therefore these boundaries may be slightly violated when using 
-	 * the {@link design.ea.strategies.impl.BasicUniformMutation}. 
+	 * the {@link design.ea.strategies.mutation.BasicUniformMutation}. 
 	 *  
 	 * @param vectorLength length of genome vector
 	 * @param minimize whether to find max. vs. min. value of fitness?

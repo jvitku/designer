@@ -1,7 +1,8 @@
-package design.ea.strategies;
+package design.ea.strategies.selection;
 
 import design.ea.algorithm.AbsSingleObjPopulation;
 import design.ea.algorithm.Population;
+import design.ea.strategies.Selection;
 
 
 public abstract class AbstractSelection implements Selection{

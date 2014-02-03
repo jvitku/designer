@@ -7,9 +7,9 @@ import design.ea.strategies.Crossover;
 import design.ea.strategies.TwoGenomes;
 import design.ea.strategies.Mutation;
 import design.ea.strategies.Selection;
-import design.ea.strategies.impl.OnePointCrossover;
-import design.ea.strategies.impl.RouletteWheel;
-import design.ea.strategies.impl.BasicUniformMutation;
+import design.ea.strategies.crossover.OnePointCrossover;
+import design.ea.strategies.mutation.BasicUniformMutation;
+import design.ea.strategies.selection.RouletteWheel;
 import design.ea.ind.genome.vector.impl.RealVector;
 
 public class SimpleEA extends AbstractEA{

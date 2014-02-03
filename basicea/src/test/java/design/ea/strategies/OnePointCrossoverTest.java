@@ -10,7 +10,7 @@ import design.ea.TestUtil;
 import design.ea.algorithm.Population;
 import design.ea.algorithm.impl.SingleVectorPop;
 import design.ea.ind.genome.vector.impl.RealVector;
-import design.ea.strategies.impl.OnePointCrossover;
+import design.ea.strategies.crossover.OnePointCrossover;
 
 public class OnePointCrossoverTest {
 
