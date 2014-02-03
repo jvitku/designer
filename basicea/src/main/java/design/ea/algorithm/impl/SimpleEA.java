@@ -8,7 +8,7 @@ import design.ea.strategies.TwoGenomes;
 import design.ea.strategies.Mutation;
 import design.ea.strategies.Selection;
 import design.ea.strategies.crossover.OnePointCrossover;
-import design.ea.strategies.mutation.BasicUniformMutation;
+import design.ea.strategies.mutation.RealGaussianUniformMutation;
 import design.ea.strategies.selection.RouletteWheel;
 import design.ea.ind.genome.vector.impl.RealVector;
 
@@ -32,7 +32,7 @@ public class SimpleEA extends AbstractEA{
 	
 	private void init(){
 		select = new RouletteWheel();
-		mutate = new BasicUniformMutation();
+		mutate = new RealGaussianUniformMutation();
 		cross = new OnePointCrossover();
 		mutate.setPMut(super.pMut);
 		cross.setPCross(super.pCross);
@@ -60,7 +60,7 @@ public class SimpleEA extends AbstractEA{
 			b = ((RealVector)pop.get(selected[1]).getGenome()).getVector();
 			//b = pop.get(selected[1]).getMatrixEncoder().getVector();
 			two = cross.cross(a, b);
-			two = mutate.mutate(two, false);
+			two = mutate.mutate(two);
 			//two = mutate.mutate(two, pop.get(selected[0]).getMatrixEncoder().isBinary());
 			
 			copied = this.storeThemTo(destiny, copied, two, tmp); //TODO

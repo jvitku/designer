@@ -11,6 +11,8 @@ import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
 import design.ea.tasks.Rosenbrock;
 
+import design.ea.strategies.mutation.RealGaussianUniformMutation;
+
 /**
  * Just test whether the evolution goes the right direction. 
  * 
@@ -20,8 +22,7 @@ import design.ea.tasks.Rosenbrock;
 public class RosenbrockTask {
 
 	/**
-	 * Try to find Rosenbrocks maximum (in given range), which 
-	 * is pretty simple.
+	 * Try to find Rosenbrocks maximum (in given range), which is pretty simple.
 	 */
 	@Ignore
 	@Test
@@ -69,7 +70,7 @@ public class RosenbrockTask {
 		float minw = -2, maxw = 2;	
 
 		SimpleEA ea = new SimpleEA(len, true, gens, popSize, minw, maxw);
-		ea.mutate.setStdev(2.5);
+		((RealGaussianUniformMutation)ea.mutate).setStdev(2.5);
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
@@ -92,7 +93,7 @@ public class RosenbrockTask {
 		assertTrue(fitness < 4);
 		System.out.println("==== The result is: "+ea.getBestInd().toString());
 	}
-	
+
 	/**
 	 * Try to find Rosenbrock minimum with better encoding
 	 */
@@ -106,7 +107,7 @@ public class RosenbrockTask {
 		float minw = -2, maxw = 2;	
 
 		SimpleEA ea = new SimpleEA(len, true, gens, popSize, minw, maxw);
-		ea.mutate.setStdev(0.5);
+		((RealGaussianUniformMutation)ea.mutate).setStdev(0.5);
 		//ea.mutate.setStdev(2.5);
 		ea.setProbabilities(0.5, 0.8);
 		assertTrue(ea.wantsEval());
@@ -118,7 +119,7 @@ public class RosenbrockTask {
 			Individual ind = ea.getCurrentInd();
 			Float[] val = ((RealVector)ind.getGenome()).getVector();
 			float[] decoded = decodeGenmoe(val);
-			
+
 			double f = Rosenbrock.eval(decoded[0], decoded[1]);
 			((RealValFitness)ind.getFitness()).setValue(f);
 
@@ -128,7 +129,7 @@ public class RosenbrockTask {
 		Float[] genome = ((RealVector)ea.getBestInd().getGenome()).getVector();
 		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
 		float[] decoded = decodeGenmoe(genome);
-		
+
 		assertTrue(fitness < 4);
 		System.out.println("==== The result is: "+ea.getBestInd().toString());
 		System.out.println("Found value is: "+decoded[0]+","+decoded[1]);
