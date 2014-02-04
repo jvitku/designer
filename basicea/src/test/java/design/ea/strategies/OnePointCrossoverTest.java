@@ -22,20 +22,19 @@ public class OnePointCrossoverTest {
 		int num = 5;
 		Population p = new SingleVectorPop(num, len, min, max);
 		TestUtil.randomizeFitness(p);			// note: this sets fitness valid to true
-		Population pp = p.clone();
 
 		OnePointCrossover<Double> opc = new OnePointCrossover<Double>();
 
 		System.out.println("\n00000000000000000000000000 PCross = 0");
 		// do not cross at all
 		opc.setPCross(0);
-		this.crossPopulation(p, opc);
+		Population target = this.crossPopulation(p, opc);
 
-		assertTrue(TestUtil.genomesAreEqual(p, pp));
+		assertTrue(TestUtil.genomesAreEqual(p, target));
 
 		// all Individuals remain unchanged, so their fitness values are valid
-		for(int i=0; i<p.size(); i++){
-			assertTrue(p.get(i).getFitness().isValid());
+		for(int i=0; i<target.size(); i++){
+			assertTrue(target.get(i).getFitness().isValid());
 		}
 
 		/*
@@ -48,37 +47,37 @@ public class OnePointCrossoverTest {
 		System.out.println("\n00000000000000000000000000 PCross = 1");
 		// cross all
 		opc.setPCross(1);
-		this.crossPopulation(p, opc);
 
-		assertTrue(TestUtil.genesAllDiffer(p, pp));
+		target = this.crossPopulation(p, opc);
+
+		assertTrue(TestUtil.genesAllDiffer(p, target));
 
 		// all Individuals are changed, so their fitness values are invalid
-		for(int i=0; i<p.size(); i++){
-			assertTrue(p.get(i).getFitness().isValid());
+		for(int i=0; i<target.size(); i++){
+			assertFalse(target.get(i).getFitness().isValid());
 		}
 	}
 
-	private void crossPopulation(Population p, OnePointCrossover<?> opc){
-		//Float[] a;
-		//Float[] b;
+	private Population crossPopulation(Population p, OnePointCrossover<?> opc){
+		Population out = p.clone();			// init the target population
+
 		Individual a,b;
 		for(int i=0; i<p.size()-1; i++){
-			//a = ((RealVector)p.get(i).getGenome()).getVector();
-			//b = ((RealVector)p.get(i+1).getGenome()).getVector();
-			a = p.get(i);
-			b = p.get(i+1);
+			a = p.get(i).clone();			// select two individuals and clone them (selection method)
+			b = p.get(i+1).clone();
 
 			DU.pl("-------");
 			DU.pl("Crossed this: "+a.toString());
 			DU.pl("Wiiith this:  "+b.toString());
 
-			/*TwoGenomes *cr =*/ opc.cross(a, b);
+			opc.cross(a, b);				// cross them with the pCross
 
 			DU.pl("and got this: "+a.toString());
 			DU.pl("and     this: "+b.toString());
 
-			//((RealVector)p.get(i).getGenome()).setVector(cr.a);
-			//((RealVector)p.get(i+1).getGenome()).setVector(cr.b);
+			out.set(i, a);					// place them to the target population
+			out.set(i+1, b);
 		}
+		return out;
 	}
 }
