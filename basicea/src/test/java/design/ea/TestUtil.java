@@ -40,8 +40,6 @@ public class TestUtil {
 		Float[] wa = ((RealVector)a.getGenome()).getVector();
 		Float[] wb = ((RealVector)b.getGenome()).getVector();
 		
-//		Float[] wa = a.getMatrixEncoder().getVector();
-	//	Float[] wb = b.getMatrixEncoder().getVector();
 		for(int i=0; i<wa.length; i++){
 			if(wa[i].floatValue() != wb[i].floatValue())
 				return false;

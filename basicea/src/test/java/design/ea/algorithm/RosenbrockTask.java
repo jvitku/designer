@@ -24,7 +24,7 @@ public class RosenbrockTask {
 	/**
 	 * Try to find Rosenbrocks maximum (in given range), which is pretty simple.
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void maximize(){
 		// EA setup
@@ -65,7 +65,7 @@ public class RosenbrockTask {
 	public void minimize(){
 		// EA setup
 		int len = 2;
-		int popSize = 50;
+		int popSize = 250;
 		int gens = 70;
 		float minw = -2, maxw = 2;	
 
@@ -97,12 +97,12 @@ public class RosenbrockTask {
 	/**
 	 * Try to find Rosenbrock minimum with better encoding
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void minimizeBetter(){
 		// EA setup
 		int len = 4;
-		int popSize = 50;
+		int popSize = 250;
 		int gens = 70;
 		float minw = -2, maxw = 2;	
 

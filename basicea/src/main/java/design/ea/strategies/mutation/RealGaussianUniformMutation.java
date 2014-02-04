@@ -43,7 +43,7 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 			for(int i=0; i<vec.length; i++){
 				if(r.nextDouble() < super.pMut){
 					vec[i] = (float) (vec[i] + r.nextGaussian()*stdev);
-					individuals[i].getFitness().setValid(false);
+					individuals[j].getFitness().setValid(false);
 				}
 			}
 		}

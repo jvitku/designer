@@ -47,26 +47,4 @@ public class OnePointCrossover<E> extends AbstractCrossover {
 			bb.getVector()[i] = tmp.getVector()[i];
 		}
 	}
-
-
-	/*
-	public TwoGenomes cross(Float[] a, Float[] b) {
-		if(a.length != b.length){
-			System.err.println("OnePointCrossover: ERROR: vectors have different lengths");
-		}
-		Float[] outA = a.clone();
-		Float[] outB = b.clone();
-
-		// should apply crossover at all?
-		if(r.nextDouble()<pCross){
-			// randomly select crossover point 
-			int point = r.nextInt(a.length);
-			for(int i=0; i<point; i++){
-				outA[i] = b[i];	// flip values
-				outB[i] = a[i];
-			}
-		}
-		return new TwoGenomes(outA,outB);
-	}*/
-
 }
