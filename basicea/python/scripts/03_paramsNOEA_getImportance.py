@@ -1,5 +1,7 @@
 # THe same as previous one, but here, the experiments are made for different values of importance
-# with default alpha, gamma, lambda parameters
+# with default alpha, gamma, lambda parameters. 
+#
+# Everything is printed to files,
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -78,8 +80,7 @@ dt = 0.001
 runs = 5
 base = 'noea_importance'
 #vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.9, 1]
-#vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
 # run the experiment several times, plot average in the matlab
 for j in range(len(vals)):
 	print 'xxxxxxx testing the value: '+str(vals[j])

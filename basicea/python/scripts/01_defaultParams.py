@@ -1,9 +1,10 @@
 # Architecture containing gridWorld simulator and RL nodes. 
-# The RL node has configuration connected by weighted connections to bias. 
+#
+# The RL node has values on configuration inputs defined by weighted connections to bias (1). 
 #
 # In this script, the default values of parameters are used.
 #
-# The values of the paramters will be determined by the EA, based on the prosperity measure.
+# The values of the paramters can be optimized by an external elgorithm based on the prosperity measure.
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
@@ -20,6 +21,7 @@ import ca.nengo.model.impl.RealOutputImpl
 import rl_sarsa
 import gridworld
 
+# log data into the file
 class ProsperitySaver(nef.SimpleNode):
 	def init(self):
 		self.val = [0];
@@ -71,14 +73,10 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 	prosp = rl.getOrigin(QLambda.topicProsperity).getValues().getValues(); # read the prosperity
 	return prosp;
 
-#f = open('data/tmp/ea_%d.txt'%expNo, 'w');
-#sx = Saver('ea_%d_agents.txt'%expNo);		# saves best agent from actual generation during the evolution into a file
-
-
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-t = 80
+t = 20
 dt = 0.001
-runs = 10
+runs = 1
 base = 'noea'
 # run the experiment several times, plot average in the matlab
 for i in range(runs):
@@ -87,9 +85,7 @@ for i in range(runs):
 	prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt,name)
 	print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
 	
-#prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
-
-
+net = buildSimulation(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,expName='01_defaultParams'):
 
 
 

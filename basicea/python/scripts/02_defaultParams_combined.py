@@ -1,4 +1,6 @@
-# the same as previous, but here, the coverage and reward are combined into the prosperity
+# The same as the previous one, but here, the coverage and reward are combined into the prosperity.
+#
+# All values are printed into files.
 # 
 # by Jaroslav Vitku [vitkujar@fel.cvut.cz]
 
