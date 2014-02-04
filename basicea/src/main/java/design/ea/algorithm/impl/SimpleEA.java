@@ -39,8 +39,6 @@ public class SimpleEA extends AbstractEA{
 	@Override
 	protected void applyEAOperators() {
 
-		//Individual tmp = pop.get(bestOne).clone();
-		// TODO check cloning here!
 		destiny.setInd(0, pop.get(bestOne).clone());	// copy the best one (elitism=1)
 		select.resetSelection(pop);
 
@@ -54,7 +52,7 @@ public class SimpleEA extends AbstractEA{
 			sel = select.select(2);
 			cross.cross(sel[0], sel[1]);
 			mutate.mutate(sel);
-			copied = this.storeThemTo(pop, copied,sel);
+			copied = this.storeThemTo(pop, copied, sel);
 		}
 		pop = destiny;
 	}
