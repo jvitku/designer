@@ -4,11 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import design.ea.algorithm.impl.RealVectorEA;
+import design.ea.algorithm.impl.BinaryVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
-import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
-import design.ea.tasks.Rosenbrock;
+import design.ea.ind.genome.vector.impl.BinaryVector;
 
 /**
  * Just test whether the evolution goes the right direction. 
@@ -18,43 +17,76 @@ import design.ea.tasks.Rosenbrock;
  */
 public class BinaryVectorTask {
 
+	public static Boolean[] solution = new Boolean[]{
+		false, true, false, true, false, true, false, true,
+		false, true, false, true, false, true, false, true,
+		false, true, false, true, false, true, false, true,
+		false, true, false, true, false, true, false, true
+	};
+
 	/**
-	 * Try to find Rosenbrocks maximum (in given range), which is pretty simple.
+	 * Try to find the boolean vector solution: {@link #solution}
 	 */
 	//@Ignore
 	@Test
 	public void maximize(){
+
 		// EA setup
-		int len = 2;
+		int len = solution.length;
 		int popSize = 50;
 		int gens = 70;
-		float minw = -2, maxw = 2;	
 
-		RealVectorEA ea = new RealVectorEA(len, false, gens, popSize, minw, maxw);
+		BinaryVectorEA ea = new BinaryVectorEA(len, false, gens, popSize);
+
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
 		assertTrue(ea.currentOne()==0);
 
 		while(ea.wantsEval()){
-
 			Individual ind = ea.getCurrentInd();
-			Float[] val = ((RealVector)ind.getGenome()).getVector();
-			double f = Rosenbrock.eval(val[0], val[1]);
-			((RealValFitness)ind.getFitness()).setValue(f);
+			Boolean[] val = ((BinaryVector)ind.getGenome()).getVector();
 
+			double f = this.computeFitness(val, solution);
+			((RealValFitness)ind.getFitness()).setValue(f);
 			ea.nextIndividual();
 		}
-
-		// Should be something about 2-3000
+		// The optimum is 32
 		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
-		assertTrue(fitness>1000);
+		assertTrue(fitness>25);
 
 		System.out.println("==== The result is: "+ea.getBestInd().toString());
 	}
 
+	@Test
+	public void minimize(){
 
+		// EA setup
+		int len = solution.length;
+		int popSize = 50;
+		int gens = 70;
 
+		BinaryVectorEA ea = new BinaryVectorEA(len, true, gens, popSize);
+
+		ea.setProbabilities(0.05, 0.8);
+		assertTrue(ea.wantsEval());
+		assertTrue(ea.generation()==0);
+		assertTrue(ea.currentOne()==0);
+
+		while(ea.wantsEval()){
+			Individual ind = ea.getCurrentInd();
+			Boolean[] val = ((BinaryVector)ind.getGenome()).getVector();
+
+			double f = this.computeFitness(val, solution);
+			((RealValFitness)ind.getFitness()).setValue(f);
+			ea.nextIndividual();
+		}
+		// The optimum is 0 here
+		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		assertTrue(fitness<10);
+
+		System.out.println("==== The result is: "+ea.getBestInd().toString());
+	}
 
 	/**
 	 * Fitness is given as number of correct binary values in the genome.
