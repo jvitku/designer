@@ -25,11 +25,23 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 
 	protected double pMut = 0.05;
 	protected double pCross = 0.9;
-
+	
+	public AbstractEA(int  vectorLength, int generations, int popSize){
+		this.minimize = DEF_MINIMIZE;
+		this.vectorLength = vectorLength;
+		this.init(generations, popSize, 0,1); // min and max not used here
+	}
+	
+	public AbstractEA(int  vectorLength, boolean minimize, int generations, int popSize){
+		this.vectorLength = vectorLength;
+		this.minimize = minimize;
+		this.init(generations, popSize, 0, 1);// min and max not used here
+	}
+	
+	
 	public AbstractEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
 		this.vectorLength = vectorLength;
 		this.minimize = DEF_MINIMIZE;
-		
 		this.init(generations, popSize, minw, maxw);
 	}
 

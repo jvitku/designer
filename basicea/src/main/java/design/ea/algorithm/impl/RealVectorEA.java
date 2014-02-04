@@ -10,19 +10,19 @@ import design.ea.strategies.crossover.OnePointCrossover;
 import design.ea.strategies.mutation.RealGaussianUniformMutation;
 import design.ea.strategies.selection.RouletteWheel;
 
-public class SimpleEA extends AbstractEA{
+public class RealVectorEA extends AbstractEA{
 
 	public Selection select;
 	public Mutation mutate;
 	public Crossover cross; 
 
-	public SimpleEA(int  vectorLength, boolean minimize, int generations, int popSize, float minw, float maxw){
+	public RealVectorEA(int  vectorLength, boolean minimize, int generations, int popSize, float minw, float maxw){
 		super(vectorLength, minimize, generations, popSize, minw, maxw);
 
 		this.init();
 	}
 
-	public SimpleEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
+	public RealVectorEA(int  vectorLength, int generations, int popSize, float minw, float maxw){
 		super(vectorLength, generations, popSize, minw, maxw);
 
 		this.init();

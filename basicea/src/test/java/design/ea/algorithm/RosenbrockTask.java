@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import design.ea.algorithm.impl.SimpleEA;
+import design.ea.algorithm.impl.RealVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
@@ -32,7 +32,7 @@ public class RosenbrockTask {
 		int gens = 70;
 		float minw = -2, maxw = 2;	
 
-		SimpleEA ea = new SimpleEA(len, false, gens, popSize, minw, maxw);
+		RealVectorEA ea = new RealVectorEA(len, false, gens, popSize, minw, maxw);
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
@@ -68,7 +68,7 @@ public class RosenbrockTask {
 		int gens = 70;
 		float minw = -2, maxw = 2;	
 
-		SimpleEA ea = new SimpleEA(len, true, gens, popSize, minw, maxw);
+		RealVectorEA ea = new RealVectorEA(len, true, gens, popSize, minw, maxw);
 		((RealGaussianUniformMutation)ea.mutate).setStdev(2.5);
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
@@ -105,7 +105,7 @@ public class RosenbrockTask {
 		int gens = 70;
 		float minw = -2, maxw = 2;	
 
-		SimpleEA ea = new SimpleEA(len, true, gens, popSize, minw, maxw);
+		RealVectorEA ea = new RealVectorEA(len, true, gens, popSize, minw, maxw);
 		((RealGaussianUniformMutation)ea.mutate).setStdev(0.5);
 		//ea.mutate.setStdev(2.5);
 		ea.setProbabilities(0.5, 0.8);
