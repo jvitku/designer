@@ -33,7 +33,7 @@ public class SimpleEA extends AbstractEA{
 	private void init(){
 		select = new RouletteWheel();
 		mutate = new RealGaussianUniformMutation();
-		cross = new OnePointCrossover();
+		cross = new OnePointCrossover<Float>();
 		mutate.setPMut(super.pMut);
 		cross.setPCross(super.pCross);
 	}

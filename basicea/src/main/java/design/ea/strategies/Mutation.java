@@ -1,6 +1,6 @@
 package design.ea.strategies;
 
-import design.ea.ind.genome.Genome;
+import design.ea.ind.individual.Individual;
 
 /**
  * Mutation of {@link design.ea.ind.genome.Genome}.
@@ -19,11 +19,12 @@ public interface Mutation {
 	public double getPMut();
 
 	/**
-	 * Mutate all Genomes in the given array.
-	 * @param genomes Genomes to be mutated, each gene with the
-	 * probability set by the {@link #setPMut(double)}
+	 * Mutate all Individuals in the given array.
+	 * @param individuals {@link design.ea.ind.individual.Individual} whose 
+	 * {@link design.ea.ind.genome.Genome}s will be mutated. Each gene is
+	 * mutated with the probability set by the {@link #setPMut(double)}
 	 */
-	public void mutate(Genome[] genomes);
+	public void mutate(Individual[] genomes);
 
 	/*
 	public void setStdev(double stdev);	//set standard deviation

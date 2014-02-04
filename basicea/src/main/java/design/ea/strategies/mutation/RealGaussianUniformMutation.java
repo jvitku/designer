@@ -1,7 +1,7 @@
 package design.ea.strategies.mutation;
 
-import design.ea.ind.genome.Genome;
 import design.ea.ind.genome.vector.impl.RealVector;
+import design.ea.ind.individual.Individual;
 
 /**
  * Mutate {@link design.ea.ind.genome.vector.impl.Realvector} Genomes.
@@ -18,7 +18,7 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 	public RealGaussianUniformMutation(){
 		this.stdev = DEF_STDEV;
 	}
-	
+
 	public void setStdev(double stdev) {
 		if(stdev<0){
 			System.err.println("ERROR: will not set stdev<0");
@@ -26,27 +26,30 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 		}	
 		this.stdev = stdev;
 	}
-	
+
 	public double getStdev(){ return this.stdev; }
-	
+
 	@Override
-	public void mutate(Genome[] genomes){
+	public void mutate(Individual[] individuals){
 		Float[] vec;
-		for(int j=0; j<genomes.length; j++){
-			if(genomes[j] instanceof RealVector){
-				System.err.println("ERROR Mutation: genome "+j+
+		for(int j=0; j<individuals.length; j++){
+			if(!(individuals[j].getGenome() instanceof RealVector)){
+				System.err.println("ERROR Mutation: genome of the individual no "+j+
 						" not an instance of RealVector, ignoring!");
 				continue;
 			}
-			vec = ((RealVector)genomes[j]).getVector();
+			vec = ((RealVector)individuals[j].getGenome()).getVector();
 			// add a Gaussian for each gene with pMut
 			for(int i=0; i<vec.length; i++){
-				if(r.nextDouble() < super.pMut)
+				if(r.nextDouble() < super.pMut){
 					vec[i] = (float) (vec[i] + r.nextGaussian()*stdev);
+					individuals[i].getFitness().setValid(false);
+				}
 			}
 		}
 	}
-	
+
+	/*
 	public Float[] mutate(Float[] a, boolean isBinary) {
 		Float[] out = new Float[a.length];
 		Float[] source = a;
@@ -63,5 +66,5 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 			}
 		}
 		return out;
-	}
+	}*/
 }

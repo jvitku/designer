@@ -29,7 +29,9 @@ public interface Selection {
 	public int[] select(int howMany);
 
 	/**
-	 * Call this each generation, before selecting individuals
+	 * Call this each generation, before selecting individuals. This also 
+	 * deletes the list of selected individuals.
+	 * @see #selectedCanRepeat(boolean)
 	 */
 	public void resetSelection(Population pop);
 

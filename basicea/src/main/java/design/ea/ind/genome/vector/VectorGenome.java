@@ -17,5 +17,4 @@ public interface VectorGenome<E> extends Genome{
 	
 	public E[] getVector();
 	
-	
 }
