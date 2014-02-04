@@ -3,30 +3,23 @@ package design.ea.algorithm.impl;
 import design.ea.algorithm.AbsSingleObjPopulation;
 import design.ea.algorithm.Population;
 import design.ea.ind.individual.Individual;
-import design.ea.ind.individual.impl.RealVectorSingleObj;
+import design.ea.ind.individual.impl.BinaryVectorSingleObj;
 
 public class SingleBinaryVectorPop extends AbsSingleObjPopulation{
 
 	private int vectorLength;
-	private float minVal, maxVal;
 
-	public SingleBinaryVectorPop(int size, int vectorLength, float minVal, float maxVal) {
+	public SingleBinaryVectorPop(int size, int vectorLength) {
 		super(size);
-		this.init(size, vectorLength, minVal, maxVal);
+		this.init(size, vectorLength);
 	}
 
-	public SingleBinaryVectorPop(int size, int vectorLength, boolean minimize, float minVal, float maxVal) {
+	public SingleBinaryVectorPop(int size, int vectorLength, boolean minimize) {
 		super(size, minimize);
-		this.init(size, vectorLength, minVal, maxVal);
+		this.init(size, vectorLength);
 	}
 
-	private void init(int size, int vectorLength, float minVal, float maxVal){
-		if(minVal>maxVal){
-			System.err.println("ERROR: minVal and maxVal have incorrect values");
-			float tmp = minVal;
-			minVal = maxVal;
-			maxVal = tmp;
-		}
+	private void init(int size, int vectorLength){
 		if(vectorLength<1){
 			System.err.println("ERROR: vectorLength has to be >= 1");
 			vectorLength = 1;
@@ -35,14 +28,14 @@ public class SingleBinaryVectorPop extends AbsSingleObjPopulation{
 		this.vectorLength = vectorLength;
 		pop = new Individual[size];
 		for(int i=0; i<pop.length; i++){
-			pop[i] = new RealVectorSingleObj(vectorLength, minimize,minVal, maxVal);
+			pop[i] = new BinaryVectorSingleObj(vectorLength, minimize);
 		}
 		this.reset(true);
 	}
 
 	public Population clone(){
 		SingleBinaryVectorPop op = new SingleBinaryVectorPop(this.size, 
-				this.vectorLength, this.minimize, this.minVal, this.maxVal);
+				this.vectorLength, this.minimize);
 
 		for(int i=0; i<pop.length; i++){
 			op.setInd(i, pop[i].clone());

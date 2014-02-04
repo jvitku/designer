@@ -40,6 +40,8 @@ public class OnePointCrossover<E> extends AbstractCrossover {
 		int point = r.nextInt(aa.size()-1)+1;
 		VectorGenome<E> tmp = (VectorGenome<E>) aa.clone();
 
+		System.out.println("point is: "+point);
+		
 		for(int i=0; i<point; i++){
 			// switch values in the first part of Genomes
 			tmp.getVector()[i] = aa.getVector()[i];	

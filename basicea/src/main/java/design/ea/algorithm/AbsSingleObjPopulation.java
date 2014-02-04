@@ -46,7 +46,6 @@ public abstract class AbsSingleObjPopulation implements Population{
 		return f;
 	}
 
-
 	@Override
 	public void reset(boolean randomize) {
 		for(int i=0; i<pop.length; i++){

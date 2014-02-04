@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import design.ea.TestUtil;
 import design.ea.algorithm.Population;
-import design.ea.algorithm.impl.SingleRealVectorPop;
+import design.ea.algorithm.impl.SingleBinaryVectorPop;
 
 public class OnePointBinaryCrossover {
 
@@ -17,9 +17,8 @@ public class OnePointBinaryCrossover {
 		// EA setup
 		//int len = 20;
 		int len = 5;
-		float max = 100; float min = -100;
 		int num = 5;
-		Population p = new SingleRealVectorPop(num, len, min, max);
+		Population p = new SingleBinaryVectorPop(num, len);
 		TestUtil.randomizeFitness(p);			// note: this sets fitness valid to true
 
 		OnePointCrossover<Double> opc = new OnePointCrossover<Double>();
@@ -49,7 +48,8 @@ public class OnePointBinaryCrossover {
 
 		target = OnePointCrossoverTest.crossPopulation(p, opc);
 
-		assertTrue(TestUtil.genesAllDiffer(p, target));
+		// this checking is not suitable for binary genomes:
+		//assertTrue(TestUtil.genesAllDiffer(p, target));
 
 		// all Individuals are changed, so their fitness values are invalid
 		for(int i=0; i<target.size(); i++){

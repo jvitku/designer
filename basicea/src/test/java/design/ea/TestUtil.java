@@ -3,6 +3,7 @@ package design.ea;
 import design.ea.algorithm.Population;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
+import design.ea.ind.genome.vector.impl.BinaryVector;
 
 public class TestUtil {
 
@@ -13,7 +14,7 @@ public class TestUtil {
 			pop.get(i).getFitness().setValid(true);	
 		}
 	}
-	
+
 	/*
 	// TODO this could be implemented for testing the encoding
 	public static boolean weightsAreEqual(Population a, Population b){
@@ -25,12 +26,30 @@ public class TestUtil {
 		}
 		return true;
 	}
-	*/
+	 */
 	public static boolean genomesAreEqual(Population a, Population b){
 		if(a.size() != b.size())
 			return false;
 		for(int i=0; i<a.size(); i++){
-			if(!genomesAreEqual((Individual)a.get(i) ,(Individual)b.get(i)))
+			if(a.get(i).getGenome() instanceof RealVector){
+				if(!genomesAreEqual((Individual)a.get(i) ,(Individual)b.get(i)))
+					return false;
+			}else if(a.get(i).getGenome() instanceof BinaryVector){
+				if(!binaryGenomesAreEqual((Individual)a.get(i) ,(Individual)b.get(i)))
+					return false;
+			}else{
+				System.err.println("Unrecognized type of genome!");
+			}
+		}
+		return true;
+	}
+
+	public static boolean binaryGenomesAreEqual(Individual a, Individual b){
+		Boolean[] wa = ((BinaryVector)a.getGenome()).getVector();
+		Boolean[] wb = ((BinaryVector)b.getGenome()).getVector();
+
+		for(int i=0; i<wa.length; i++){
+			if(wa[i] != wb[i])
 				return false;
 		}
 		return true;
@@ -39,14 +58,14 @@ public class TestUtil {
 	public static boolean genomesAreEqual(Individual a, Individual b){
 		Float[] wa = ((RealVector)a.getGenome()).getVector();
 		Float[] wb = ((RealVector)b.getGenome()).getVector();
-		
+
 		for(int i=0; i<wa.length; i++){
 			if(wa[i].floatValue() != wb[i].floatValue())
 				return false;
 		}
 		return true;
 	}
-	
+
 	public static boolean genesAllDiffer(Population a, Population b){
 		if(a.size() != b.size())
 			return false;
@@ -56,11 +75,27 @@ public class TestUtil {
 		}
 		return true;
 	}
-	
+	/**
+	 * Return true if all genes in genome differ
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static boolean binaryGenesAllDiffer(Individual a, Individual b){
+		Boolean[] wa = ((BinaryVector)a.getGenome()).getVector();
+		Boolean[] wb = ((BinaryVector)b.getGenome()).getVector();
+
+		for(int i=0; i<wa.length; i++){
+			if(wa[i] == wb[i])
+				return false;
+		}
+		return true;
+	}
+
 	public static boolean genesAllDiffer(Individual a, Individual b){
 		Float[] wa = ((RealVector)a.getGenome()).getVector();
 		Float[] wb = ((RealVector)b.getGenome()).getVector();
-		
+
 		for(int i=0; i<wa.length; i++){
 			if(wa[i] == wb[i])
 				return false;
@@ -82,7 +117,7 @@ public class TestUtil {
 		}
 		return true;
 	}*/
-	
+
 	/*
 	public static boolean weightsAllDiffer(Individual a, Individual b){
 		float[][] wa = a.getWeights();
@@ -97,7 +132,7 @@ public class TestUtil {
 		}
 		return true;
 	}
-	
+
 
 	public static boolean weightsAllDiffer(Population a, Population b){
 		if(a.size() != b.size())
@@ -108,6 +143,6 @@ public class TestUtil {
 		}
 		return true;
 	}*/
-	
-	
+
+
 }
