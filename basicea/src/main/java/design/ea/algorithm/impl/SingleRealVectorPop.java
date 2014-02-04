@@ -5,6 +5,18 @@ import design.ea.algorithm.Population;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.individual.impl.RealVectorSingleObj;
 
+/**
+ * EA with individuals that have:
+ * <ul>
+ * <li>single-objective fitness function </li>
+ * <li>genome composed of real-valued genes</li>
+ * </ul>
+ * 
+ *  For usage see the {@link design.ea.algorithm.EvolutionaryAlgorithm}.
+ *   
+ * @author Jaroslav Vitku
+ *
+ */
 public class SingleRealVectorPop extends AbsSingleObjPopulation{
 
 	private int vectorLength;

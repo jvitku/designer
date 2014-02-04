@@ -70,17 +70,12 @@ def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name):
 	prosp = rl.getOrigin(QLambda.topicProsperity).getValues().getValues(); # read the prosperity
 	return prosp;
 
-#f = open('data/tmp/ea_%d.txt'%expNo, 'w');
-#sx = Saver('ea_%d_agents.txt'%expNo);		# saves best agent from actual generation during the evolution into a file
-
-
 #t = 20	# 20/0.001= 20 000 steps ~ 10 000 RL steps 
-t = 80
+t = 50
 dt = 0.001
 runs = 5
-base = 'noea_importance'
-#vals = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-vals = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+base = 'ea_params'
+
 # run the experiment several times, plot average in the matlab
 for j in range(len(vals)):
 	print 'xxxxxxx testing the value: '+str(vals[j])
@@ -89,7 +84,6 @@ for j in range(len(vals)):
 		print '----------------- starting experiment named: '+name
 		prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,vals[j],t,dt,name+"_"+str(vals[j]))
 		print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
-		
 	
 #prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
 

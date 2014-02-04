@@ -5,6 +5,18 @@ import design.ea.algorithm.Population;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.individual.impl.BinaryVectorSingleObj;
 
+/**
+ * EA with individuals that have:
+ * <ul>
+ * <li>single-objective fitness function </li>
+ * <li>genome composed of boolean-valued genes</li>
+ * </ul>
+ * 
+ *  For usage see the {@link design.ea.algorithm.EvolutionaryAlgorithm}.
+ *   
+ * @author Jaroslav Vitku
+ *
+ */
 public class SingleBinaryVectorPop extends AbsSingleObjPopulation{
 
 	private int vectorLength;

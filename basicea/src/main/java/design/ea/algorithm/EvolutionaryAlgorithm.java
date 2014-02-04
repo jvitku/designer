@@ -7,10 +7,14 @@ import design.ea.ind.individual.Individual;
  * <ul>
  * <li>Initialize by the constructor</li> 
  * <li>{@link #setProbabilities(double, double)}</li>
- * <li>sequentially call the {@link #nextIndividual()} 
- * and set fitness value for the {@link #currentOne()}.</li>
+ * <li>sequentially call the {@link #nextIndividual()}</li>
+ * <li>obtain genome by {@link #getCurrentInd()}</li>
+ * <li>evaluate</li>
+ * <li>set the fitness by means of the {@link #getCurrentInd()}</li>
  * </ul>
- * Generations are increased automatically, evolutionary operators
+ * Finally, obtain the best individual by calling the {@link #getBestInd()}.
+ * 
+ * Note: Generations are increased automatically, evolutionary operators
  * are applied between generations.
  *  
  * @author Jaroslav Vitku
@@ -25,6 +29,18 @@ public interface EvolutionaryAlgorithm {
 	 */
 	public void setProbabilities(double pMut, double pCross);
 
+	/**
+	 * Return the current individual.
+	 * @return the current individual
+	 */
+	public Individual getCurrentInd();
+
+	/**
+	 * Get the best individual
+	 * @return individual with the highest fitness in the population
+	 */
+	public Individual getBestInd();
+	
 	/**
 	 * Indicates whether the evolution should continue.
 	 * @return false if the current generation is the last one 
@@ -72,17 +88,5 @@ public interface EvolutionaryAlgorithm {
 	 * @return individual with the given index
 	 */
 	public Individual getIndNo(int no);
-
-	/**
-	 * Get the best individual
-	 * @return individual with the highest fitness in the population
-	 */
-	public Individual getBestInd();
-	
-	/**
-	 * Return the current individual.
-	 * @return the current individual
-	 */
-	public Individual getCurrentInd();
 
 }
