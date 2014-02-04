@@ -75,6 +75,18 @@ public class TestUtil {
 		}
 		return true;
 	}
+
+
+	public static boolean binaryGenesAllDiffer(Population a, Population b){
+		if(a.size() != b.size())
+			return false;
+		for(int i=0; i<a.size(); i++){
+			if(!binaryGenesAllDiffer((Individual)a.get(i) ,(Individual)b.get(i)))
+				return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Return true if all genes in genome differ
 	 * @param a

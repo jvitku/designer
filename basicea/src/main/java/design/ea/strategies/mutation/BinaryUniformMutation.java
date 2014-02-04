@@ -31,7 +31,7 @@ public class BinaryUniformMutation extends AbstractUniformMutation{
 						vec[i] = true;
 					}
 					// indicate that this individual needs to be re-evaluated
-					individuals[i].getFitness().setValid(false);
+					individuals[j].getFitness().setValid(false);
 				}
 			}
 		}
