@@ -55,7 +55,7 @@ public class SimpleEA extends AbstractEA{
 		TwoGenomes two;
 		
 		while(copied<destiny.size()){
-			selected = select.select(2);							// select two guys
+			selected = select.selectIndexes(2);							// select two guys
 			a = ((RealVector)pop.get(selected[0]).getGenome()).getVector();
 			b = ((RealVector)pop.get(selected[1]).getGenome()).getVector();
 			//b = pop.get(selected[1]).getMatrixEncoder().getVector();

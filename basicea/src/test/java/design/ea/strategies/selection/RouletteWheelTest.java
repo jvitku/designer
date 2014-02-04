@@ -1,4 +1,4 @@
-package design.ea.strategies;
+package design.ea.strategies.selection;
 
 import static org.junit.Assert.*;
 
@@ -40,35 +40,35 @@ public class RouletteWheelTest {
 		RouletteWheel s = new RouletteWheel();
 		s.resetSelection(p);
 		int poc = 1000000;
-		
+
 		int[] numSelected = new int[p.size()];	// how many times is i selected?
 		for(int i=0; i<numSelected.length; i++)
 			numSelected[i] = 0;
-		
+
 		for(int i=0; i<=poc; i++){				// select someone poc-times
-			numSelected[s.select(1)[0]]++;
+			numSelected[s.selectIndexes(1)[0]]++;
 		}
-		
+
 		// now sort the population according to the fitness
-		int [] sorted = s.sort();
-		
+		int [] sorted = s.sortIndexes();
+
 		for(int i=0; i<p.size()-1; i++){			// for all sorted individuals
-			
+
 			// just re-check whether fitness is decreasing
 			assertFalse(
 					p.get(sorted[i+1]).getFitness().betterThan(
-					p.get(sorted[i]).getFitness()));
-			
+							p.get(sorted[i]).getFitness()));
+
 			// check that number of selections is decreasing too
 			System.out.println("Fitness vals: "+
-			((RealValFitness)p.get(sorted[i+1]).getFitness()).getValue()+" <= "+
-			((RealValFitness)p.get(sorted[i  ]).getFitness()).getValue()+
-			"\tnum selections: "+numSelected[sorted[i+1]] +" <= "+
-			numSelected[sorted[i]]);
-			
+					((RealValFitness)p.get(sorted[i+1]).getFitness()).getValue()+" <= "+
+					((RealValFitness)p.get(sorted[i  ]).getFitness()).getValue()+
+					"\tnum selections: "+numSelected[sorted[i+1]] +" <= "+
+					numSelected[sorted[i]]);
+
 			assertTrue(
 					numSelected[sorted[i+1]] <= numSelected[sorted[i]]);
-			
+
 		}
 	}
 }

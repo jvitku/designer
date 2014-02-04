@@ -2,6 +2,7 @@ package design.ea.strategies.selection;
 
 import design.ea.algorithm.AbsSingleObjPopulation;
 import design.ea.algorithm.Population;
+import design.ea.ind.individual.Individual;
 import design.ea.strategies.Selection;
 
 
@@ -18,7 +19,7 @@ public abstract class AbstractSelection implements Selection{
 
 	public void resetSelection(Population pop){
 		this.pop = pop;
-		sorted = this.sort();
+		sorted = this.sortIndexes();
 		selected = this.selectedNone();
 	}
 	/**
@@ -35,7 +36,7 @@ public abstract class AbstractSelection implements Selection{
 	/**
 	 * sort them according to their fitness values
 	 */
-	public int[] sort(){
+	public int[] sortIndexes(){
 		int[] sorted = new int[pop.size()];
 		double[] fits = ((AbsSingleObjPopulation)pop).getArrayOfFitnessVals();
 
@@ -63,7 +64,7 @@ public abstract class AbstractSelection implements Selection{
 		return sorted;
 	}
 
-	public float[] getSortedVals(float[] fits, int[] sorted){
+	protected float[] getSortedVals(float[] fits, int[] sorted){
 		float[] srt = new float[fits.length];
 		for(int i=0; i<fits.length; i++){
 			srt[i] = fits[sorted[i]];
@@ -71,6 +72,23 @@ public abstract class AbstractSelection implements Selection{
 		return srt;
 	}
 
-	public abstract int[] select(int howMany);
+	@Override
+	public Individual[] select(int howMany) {
+		int[] selected = this.selectIndexes(howMany);
+		Individual[] out = new Individual[howMany];
+		for(int i=0; i<howMany; i++){
+			out[i] = pop.get(selected[i]).clone();
+		}
+		return out;
+	}
+
+	/**
+	 * Select indexes of individuals in the population. The method 
+	 * {@link #select(int)} is used to clone selected individuals 
+	 * and return in one array.
+	 * @param howMany how many individuals to select
+	 * @return array of individuals' indexes in the population
+	 */
+	protected abstract int[] selectIndexes(int howMany);
 }
 

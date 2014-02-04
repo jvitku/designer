@@ -1,9 +1,14 @@
 package design.ea.strategies;
 
 import design.ea.algorithm.Population;
+import design.ea.ind.individual.Individual;
 
 /**
- * Selection strategy for the EA.
+ * <p>Selection strategy for the EA.</p> 
+ * 
+ * <p>Note that all EA strategies directly modify Individuals passed to them. 
+ * The only actual copying of individuals should is done in the beginning
+ * by the selection strategy in the method {@link #select(int)}.</p>    
  * 
  * @author Jaroslav Vitku
  *
@@ -19,14 +24,17 @@ public interface Selection {
 	 * @param pop AbsSingleObjPopulation of individuals
 	 * @return array of indexes with sorted inds
 	 */
-	public int[] sort(); 
+	public int[] sortIndexes(); 
 
 	/**
-	 * Select array of individuals by this selection method
+	 * Select given number of individuals from the population, clone them
+	 * and return them in the newly created array. Note: cloning does not
+	 * occur anywhere else, so the only copying could be done in this method.
+	 * 
 	 * @param howMany how many individuals to select
-	 * @return array of indexes in a given population
+	 * @return array of Individuals cloned from the source population 
 	 */
-	public int[] select(int howMany);
+	public Individual[] select(int howMany);
 
 	/**
 	 * Call this each generation, before selecting individuals. This also 

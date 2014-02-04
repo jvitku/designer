@@ -1,4 +1,4 @@
-package design.ea.strategies;
+package design.ea.strategies.selection;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +25,7 @@ public class AbstractSelectionTest {
 		
 		T t = new T();
 		t.resetSelection(p);
-		int [] sorted = t.sort();
+		int [] sorted = t.sortIndexes();
 		this.ps(p, sorted);
 
 		// check sorted individuals
@@ -48,7 +48,7 @@ public class AbstractSelectionTest {
 	private class T extends AbstractSelection{
 
 		@Override
-		public int[] select(int howMany) {
+		public int[] selectIndexes(int howMany) {
 			// Auto-generated method stub
 			return null;
 		}

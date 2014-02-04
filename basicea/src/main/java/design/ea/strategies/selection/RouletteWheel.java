@@ -4,7 +4,6 @@ import java.util.Random;
 
 import design.ea.algorithm.Population;
 import design.ea.algorithm.AbsSingleObjPopulation;
-//import old.design.ea.vector.Population;
 
 /**
  * Implements rouletteWheel selection. Call resetSelection each generation..
@@ -34,7 +33,7 @@ public class RouletteWheel extends AbstractSelection{
 	}
 
 	@Override
-	public int[] select(int howMany) {
+	protected int[] selectIndexes(int howMany) {
 		int[] out = new int[howMany];
 		double rand;
 		int chosen = 0;
@@ -76,5 +75,4 @@ public class RouletteWheel extends AbstractSelection{
 			poc-=1;
 		return poc;
 	}
-
 }
