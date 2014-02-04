@@ -4,7 +4,8 @@ import design.ea.ind.genome.vector.impl.BinaryVector;
 import design.ea.ind.individual.Individual;
 
 /**
- * Uniform mutation of the {@link design.ea.ind.genome.vector.impl.BinaryVector} Genome.
+ * Uniform mutation of the {@link design.ea.ind.genome.vector.impl.BinaryVector} 
+ * Genome.
  * 
  * @author Jaroslav Vitku
  *
@@ -35,25 +36,4 @@ public class BinaryUniformMutation extends AbstractUniformMutation{
 			}
 		}
 	}
-
-	/*
-	public Float[] mutate(Float[] a, boolean isBinary) {
-		Float[] out = new Float[a.length];
-		Float[] source = a;
-		for(int i=0; i<source.length; i++){
-			if(r.nextDouble()<pMut){
-				if(isBinary){
-					Math.abs(source[i]-1);	// flip the bit
-				}else{
-					out[i] = (float) (source[i] + r.nextGaussian()*stdev);
-					//DU.pl("doing from this: "+source[i]+" this: "+out[i]);
-				}
-			}else{
-				out[i] = source[i];
-			}
-		}
-		return out;
-	}
-	 */
-
 }

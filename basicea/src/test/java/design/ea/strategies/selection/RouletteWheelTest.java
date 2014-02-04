@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import design.ea.TestUtil;
 import design.ea.algorithm.Population;
-import design.ea.algorithm.impl.SingleVectorPop;
+import design.ea.algorithm.impl.SingleRealVectorPop;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.strategies.selection.RouletteWheel;
 
@@ -33,7 +33,7 @@ public class RouletteWheelTest {
 
 		// pop setup
 		int num = 10;
-		Population p = new SingleVectorPop(num, len, min, max);
+		Population p = new SingleRealVectorPop(num, len, min, max);
 		TestUtil.randomizeFitness(p);
 
 		// make many selections

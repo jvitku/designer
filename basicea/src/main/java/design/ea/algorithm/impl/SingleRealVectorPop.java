@@ -5,17 +5,17 @@ import design.ea.algorithm.Population;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.individual.impl.RealVectorSingleObj;
 
-public class SingleVectorPop extends AbsSingleObjPopulation{
+public class SingleRealVectorPop extends AbsSingleObjPopulation{
 
 	private int vectorLength;
 	private float minVal, maxVal;
 
-	public SingleVectorPop(int size, int vectorLength, float minVal, float maxVal) {
+	public SingleRealVectorPop(int size, int vectorLength, float minVal, float maxVal) {
 		super(size);
 		this.init(size, vectorLength, minVal, maxVal);
 	}
 
-	public SingleVectorPop(int size, int vectorLength, boolean minimize, float minVal, float maxVal) {
+	public SingleRealVectorPop(int size, int vectorLength, boolean minimize, float minVal, float maxVal) {
 		super(size, minimize);
 		this.init(size, vectorLength, minVal, maxVal);
 	}
@@ -41,7 +41,7 @@ public class SingleVectorPop extends AbsSingleObjPopulation{
 	}
 
 	public Population clone(){
-		SingleVectorPop op = new SingleVectorPop(this.size, 
+		SingleRealVectorPop op = new SingleRealVectorPop(this.size, 
 				this.vectorLength, this.minimize, this.minVal, this.maxVal);
 
 		for(int i=0; i<pop.length; i++){

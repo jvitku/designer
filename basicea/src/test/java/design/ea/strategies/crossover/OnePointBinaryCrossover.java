@@ -1,17 +1,16 @@
-package design.ea.strategies;
+package design.ea.strategies.crossover;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import tools.utils.DU;
 import design.ea.TestUtil;
 import design.ea.algorithm.Population;
-import design.ea.algorithm.impl.SingleVectorPop;
-import design.ea.ind.individual.Individual;
-import design.ea.strategies.crossover.OnePointCrossover;
+import design.ea.algorithm.impl.SingleRealVectorPop;
 
-public class OnePointCrossoverTest {
+public class OnePointBinaryCrossover {
+
 
 	@Test
 	public void testUniformCrossover(){
@@ -20,7 +19,7 @@ public class OnePointCrossoverTest {
 		int len = 5;
 		float max = 100; float min = -100;
 		int num = 5;
-		Population p = new SingleVectorPop(num, len, min, max);
+		Population p = new SingleRealVectorPop(num, len, min, max);
 		TestUtil.randomizeFitness(p);			// note: this sets fitness valid to true
 
 		OnePointCrossover<Double> opc = new OnePointCrossover<Double>();
@@ -28,7 +27,7 @@ public class OnePointCrossoverTest {
 		System.out.println("\n00000000000000000000000000 PCross = 0");
 		// do not cross at all
 		opc.setPCross(0);
-		Population target = this.crossPopulation(p, opc);
+		Population target = OnePointCrossoverTest.crossPopulation(p, opc);
 
 		assertTrue(TestUtil.genomesAreEqual(p, target));
 
@@ -48,7 +47,7 @@ public class OnePointCrossoverTest {
 		// cross all
 		opc.setPCross(1);
 
-		target = this.crossPopulation(p, opc);
+		target = OnePointCrossoverTest.crossPopulation(p, opc);
 
 		assertTrue(TestUtil.genesAllDiffer(p, target));
 
@@ -58,26 +57,4 @@ public class OnePointCrossoverTest {
 		}
 	}
 
-	private Population crossPopulation(Population p, OnePointCrossover<?> opc){
-		Population out = p.clone();			// init the target population
-
-		Individual a,b;
-		for(int i=0; i<p.size()-1; i++){
-			a = p.get(i).clone();			// select two individuals and clone them (selection method)
-			b = p.get(i+1).clone();
-
-			DU.pl("-------");
-			DU.pl("Crossed this: "+a.toString());
-			DU.pl("Wiiith this:  "+b.toString());
-
-			opc.cross(a, b);				// cross them with the pCross
-
-			DU.pl("and got this: "+a.toString());
-			DU.pl("and     this: "+b.toString());
-
-			out.set(i, a);					// place them to the target population
-			out.set(i+1, b);
-		}
-		return out;
-	}
 }

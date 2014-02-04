@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import design.ea.TestUtil;
 import design.ea.algorithm.Population;
-import design.ea.algorithm.impl.SingleVectorPop;
+import design.ea.algorithm.impl.SingleRealVectorPop;
 import design.ea.strategies.selection.AbstractSelection;
 
 public class AbstractSelectionTest {
@@ -20,7 +20,7 @@ public class AbstractSelectionTest {
 
 		// pop setup
 		int num = 10;
-		Population p = new SingleVectorPop(num, len, min, max);
+		Population p = new SingleRealVectorPop(num, len, min, max);
 		TestUtil.randomizeFitness(p);
 		
 		T t = new T();

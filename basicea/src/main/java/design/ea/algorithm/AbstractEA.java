@@ -1,6 +1,6 @@
 package design.ea.algorithm;
 
-import design.ea.algorithm.impl.SingleVectorPop;
+import design.ea.algorithm.impl.SingleRealVectorPop;
 import design.ea.ind.individual.Individual;
 
 public abstract class AbstractEA implements EvolutionaryAlgorithm{
@@ -63,8 +63,8 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		max = maxw;
 		min = minw;
 		gen = 0;
-		pop = new SingleVectorPop(popSize, vectorLength, minimize, min, max);		
-		destiny = new SingleVectorPop(popSize, vectorLength, minimize, min, max);
+		pop = new SingleRealVectorPop(popSize, vectorLength, minimize, min, max);		
+		destiny = new SingleRealVectorPop(popSize, vectorLength, minimize, min, max);
 
 		wantsEval = true;
 	}
