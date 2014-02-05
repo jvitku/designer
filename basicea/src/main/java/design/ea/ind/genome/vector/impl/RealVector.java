@@ -11,6 +11,7 @@ import design.ea.ind.genome.vector.AbsVectorGenome;
  */
 public class RealVector extends AbsVectorGenome<Float>{
 
+	private static final long serialVersionUID = -2247234427088451531L;
 	public static float DEF_VAL = 0.0f;
 	private Float[] vals;
 	private float minVal, maxVal;
@@ -66,7 +67,7 @@ public class RealVector extends AbsVectorGenome<Float>{
 		}
 		return out;
 	}
-	
+
 	public void setMaxVal(float maxVal) { this.maxVal = maxVal; }
 
 	public void setMinVal(float minVal) { this.minVal = minVal; }
@@ -75,4 +76,17 @@ public class RealVector extends AbsVectorGenome<Float>{
 
 	public float getMinVal() { return this.minVal; }
 
+	@Override
+	public boolean equalsTo(Genome target) {
+		if(!(target instanceof RealVector))
+			return false;
+		float a,b;
+		for(int i=0; i<vals.length; i++){
+			a = ((RealVector)target).getVector()[i].floatValue();
+			b = vals[i].floatValue();
+			if(a!=b)
+				return false;
+		}
+		return true;
+	}
 }

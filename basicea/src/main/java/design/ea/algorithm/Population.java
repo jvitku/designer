@@ -1,5 +1,7 @@
 package design.ea.algorithm;
 
+import java.io.Serializable;
+
 import tools.utils.Resettable;
 import design.ea.ind.individual.Individual;
 
@@ -11,7 +13,7 @@ import design.ea.ind.individual.Individual;
  * @author Jaroslav Vitku
  *
  */
-public interface Population extends Cloneable, Resettable{
+public interface Population extends Cloneable, Resettable, Serializable{
 	
 	/**
 	 * Place new individual into the population 
@@ -34,5 +36,21 @@ public interface Population extends Cloneable, Resettable{
 	public int size();
 	
 	public Population clone();
+	
+	/**
+	 * Compare two populations. Return true if values of all 
+	 * fields are equal. This should include all individuals' genomes
+	 * and fitness values and configuration of population.
+	 *  
+	 * @param target population to be compared with
+	 * @return true if all fields are equal
+	 */
+	public boolean equalsTo(Population target);
+	
+	/**
+	 * True if the minimum is searched for.
+	 * @return false if the max is searched for.
+	 */
+	public boolean minimizes();
 	
 }

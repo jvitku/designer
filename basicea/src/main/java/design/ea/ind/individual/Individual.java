@@ -4,6 +4,7 @@ import tools.utils.Resettable;
 import design.ea.encoding.Encoding;
 import design.ea.ind.fitness.Fitness;
 import design.ea.ind.genome.Genome;
+import java.io.*;
 
 /**
  * An individual holds own genome, corresponding fitness
@@ -11,7 +12,7 @@ import design.ea.ind.genome.Genome;
  * 
  * @author Jaroslav Vitku
  */
-public interface Individual extends Resettable, Cloneable{
+public interface Individual extends Resettable, Cloneable, Serializable{
 
 	public Genome getGenome();
 	public void setGenome(Genome g);
@@ -29,4 +30,11 @@ public interface Individual extends Resettable, Cloneable{
 	 * @return human-readable String representation of this Individual
 	 */
 	public String toString();
+	
+	/**
+	 * Return true if all fields of these two individuals have equal values.
+	 * @param target individual to be compared with
+	 * @return true if values of all fields are equal
+	 */
+	public boolean equalsTo(Individual target);
 }

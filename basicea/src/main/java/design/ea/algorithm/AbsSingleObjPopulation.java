@@ -11,6 +11,7 @@ import design.ea.ind.individual.Individual;
  */
 public abstract class AbsSingleObjPopulation implements Population{
 
+	private static final long serialVersionUID = 7980802051221222779L;
 	public static final boolean DEF_MIN = false;
 	protected Individual [] pop;
 	protected final boolean minimize;
@@ -54,5 +55,22 @@ public abstract class AbsSingleObjPopulation implements Population{
 	}
 	
 	@Override
+	public boolean minimizes(){ return this.minimize; }
+	
+	@Override
 	public abstract Population clone();
+	
+	@Override
+	public boolean equalsTo(Population target){
+		if(this.size()!=target.size())
+			return false;
+		if(this.minimize!=target.minimizes())
+			return false;
+		
+		for(int i=0; i<pop.length; i++){
+			if(!pop[i].equalsTo(target.get(i)))
+				return false;
+		}
+		return true;
+	}
 }

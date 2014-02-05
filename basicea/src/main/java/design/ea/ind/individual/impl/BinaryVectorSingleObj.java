@@ -17,6 +17,8 @@ import design.ea.ind.individual.Individual;
  */
 public class BinaryVectorSingleObj extends AbsIndividual{
 
+	private static final long serialVersionUID = 7720280379793214914L;
+	
 	private int genomeSize;
 	private final boolean minimize;
 

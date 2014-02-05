@@ -1,5 +1,7 @@
 package design.ea.ind.fitness;
 
+import java.io.Serializable;
+
 import tools.utils.Resettable;
 
 /**
@@ -9,7 +11,7 @@ import tools.utils.Resettable;
  * @author Jaroslav Vitku
  *
  */
-public interface Fitness extends Resettable, Cloneable{
+public interface Fitness extends Resettable, Cloneable, Serializable{
 	
 	/**
 	 * Compare this fitness to some other fitness value.
@@ -42,4 +44,11 @@ public interface Fitness extends Resettable, Cloneable{
 	 * @return string representing the fitness value (and state)
 	 */
 	public String toString();
+	
+	/**
+	 * Return true if this fitness equals to the target one.
+	 * @param target fitness to be compared this with
+	 * @return true if both Fitness are equal (have equal values)
+	 */
+	public boolean equalsTo(Fitness target);
 }

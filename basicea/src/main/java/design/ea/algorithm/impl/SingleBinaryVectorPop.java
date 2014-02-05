@@ -19,6 +19,7 @@ import design.ea.ind.individual.impl.BinaryVectorSingleObj;
  */
 public class SingleBinaryVectorPop extends AbsSingleObjPopulation{
 
+	private static final long serialVersionUID = 8429458292766807822L;
 	private int vectorLength;
 
 	public SingleBinaryVectorPop(int size, int vectorLength) {

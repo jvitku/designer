@@ -19,6 +19,7 @@ import design.ea.ind.individual.impl.RealVectorSingleObj;
  */
 public class SingleRealVectorPop extends AbsSingleObjPopulation{
 
+	private static final long serialVersionUID = -7416098434647344470L;
 	private int vectorLength;
 	private float minVal, maxVal;
 
@@ -27,7 +28,7 @@ public class SingleRealVectorPop extends AbsSingleObjPopulation{
 		this.init(size, vectorLength, minVal, maxVal);
 	}
 
-	public SingleRealVectorPop(int size, int vectorLength, boolean minimize, float minVal, float maxVal) {
+	public SingleRealVectorPop(int size, int vectorLength, boolean minimize, float minVal, float maxVal){
 		super(size, minimize);
 		this.init(size, vectorLength, minVal, maxVal);
 	}

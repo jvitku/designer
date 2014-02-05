@@ -17,6 +17,8 @@ import design.ea.ind.individual.Individual;
  */
 public class RealVectorSingleObj extends AbsIndividual{
 
+	private static final long serialVersionUID = 781574685031005234L;
+	
 	private int genomeSize;
 	private float minVal, maxVal;
 	private final boolean minimize;

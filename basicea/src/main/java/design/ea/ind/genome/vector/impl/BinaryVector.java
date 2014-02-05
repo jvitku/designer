@@ -10,8 +10,9 @@ import design.ea.ind.genome.vector.AbsVectorGenome;
  * @author Jaroslav Vitku
  *
  */
-public class BinaryVector  extends AbsVectorGenome<Boolean>{
+public class BinaryVector extends AbsVectorGenome<Boolean>{
 
+	private static final long serialVersionUID = 5136290466672292081L;
 	public static boolean DEF_VAL = false;
 	private Boolean[] vals;
 
@@ -47,7 +48,7 @@ public class BinaryVector  extends AbsVectorGenome<Boolean>{
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString(){ return SL.toStr(vals); }
 
@@ -58,5 +59,19 @@ public class BinaryVector  extends AbsVectorGenome<Boolean>{
 			out.vals[i] = vals[i].booleanValue();
 		}
 		return out;
+	}
+
+	@Override
+	public boolean equalsTo(Genome target) {
+		if(!(target instanceof BinaryVector))
+			return false;
+		boolean a,b;
+		for(int i=0; i<vals.length; i++){
+			a = ((BinaryVector)target).getVector()[i].booleanValue();
+			b = vals[i].booleanValue();
+			if(a!=b)
+				return false;
+		}
+		return true;
 	}
 }

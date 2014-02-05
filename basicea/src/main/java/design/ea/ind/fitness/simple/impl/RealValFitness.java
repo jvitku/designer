@@ -13,6 +13,7 @@ import design.ea.ind.fitness.simple.SingleObjectiveFitness;
  */
 public class RealValFitness implements SingleObjectiveFitness<Double>{
 
+	private static final long serialVersionUID = -1887499425864339970L;
 	private boolean isValid = false;
 	private Double myVal;
 	private final boolean minimize;
@@ -91,5 +92,20 @@ public class RealValFitness implements SingleObjectiveFitness<Double>{
 		else
 			out+="[xx]=";
 		return out +this.myVal;
+	}
+
+	@Override
+	public boolean equalsTo(Fitness target) {
+		if(!(target instanceof RealValFitness))
+			return false;
+		RealValFitness t = (RealValFitness) target;
+		if(t.minimize != this.minimize)
+			return false;
+		if(t.myVal != this.myVal)
+			return false;
+		if(t.isValid() != this.isValid())
+			return false;
+		
+		return true;
 	}
 }

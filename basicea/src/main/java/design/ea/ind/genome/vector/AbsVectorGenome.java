@@ -12,6 +12,7 @@ import design.ea.ind.genome.Genome;
  */
 public abstract class AbsVectorGenome<E> implements VectorGenome<E>{
 	
+	private static final long serialVersionUID = 3515095939681674018L;
 	protected Random r = new Random();
 	protected final int size;
 

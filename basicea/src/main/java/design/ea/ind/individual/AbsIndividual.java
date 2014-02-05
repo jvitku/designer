@@ -6,6 +6,7 @@ import design.ea.ind.genome.Genome;
 
 public abstract class AbsIndividual implements Individual{
 
+	private static final long serialVersionUID = 3515010047199787932L;
 	protected Genome genome;
 	protected Fitness fitness;
 	protected Encoding e;
@@ -33,8 +34,16 @@ public abstract class AbsIndividual implements Individual{
 		genome.reset(randomize);
 		fitness.reset(randomize);
 	}
-	
+
 	@Override
 	public abstract Individual clone();
 
+	@Override
+	public boolean equalsTo(Individual target){
+		if(!genome.equalsTo(target.getGenome()))
+			return false;
+		if(fitness.equals(target.getFitness()))
+			return false;
+		return true;
+	}
 }
