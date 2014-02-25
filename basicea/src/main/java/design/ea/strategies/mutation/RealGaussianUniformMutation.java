@@ -15,6 +15,9 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 	public static final double DEF_STDEV = 1.0;
 	protected double stdev;
 
+	private Float []vec;
+	private RealVector genome;
+	
 	public RealGaussianUniformMutation(){
 		this.stdev = DEF_STDEV;
 	}
@@ -31,22 +34,39 @@ public class RealGaussianUniformMutation extends AbstractUniformMutation{
 
 	@Override
 	public void mutate(Individual[] individuals){
-		Float[] vec;
+		
 		for(int j=0; j<individuals.length; j++){
 			if(!(individuals[j].getGenome() instanceof RealVector)){
 				System.err.println("ERROR Mutation: genome of the individual no "+j+
 						" not an instance of RealVector, ignoring!");
 				continue;
 			}
-			vec = ((RealVector)individuals[j].getGenome()).getVector();
+			genome = (RealVector)individuals[j].getGenome();
+			vec = genome.getVector();
 			// add a Gaussian for each gene with pMut
 			for(int i=0; i<vec.length; i++){
 				if(r.nextDouble() < super.pMut){
-					vec[i] = (float) (vec[i] + r.nextGaussian()*stdev);
+					//vec[i] = (float) (vec[i] + r.nextGaussian()*stdev); // no boundary checking
+					vec[i] = this.applyBoundaries(vec[i] + r.nextGaussian()*stdev, genome);
 					individuals[j].getFitness().setValid(false);
 				}
 			}
 		}
+	}
+	
+	/**
+	 * get new value of a gene, if value is out of boundaries, place it there.
+	 * @param newValue new value to the gene
+	 * @return value which is in boundaries 
+	 */
+	private float applyBoundaries(double newValue, RealVector genome){
+		if(newValue>genome.getMaxVal())
+			return genome.getMaxVal();
+		
+		if(newValue<genome.getMinVal())
+			return genome.getMinVal();
+		
+		return (float)newValue;
 	}
 
 	/*

@@ -40,9 +40,10 @@ In case of any problems, the best way how to use these nodes is by means of the 
 TODO
 ---------
 
-* Add mutation support for binary vectors
-* Implement and use interface Encoding
-
+* Parallel processing of arbitrary (<popSize) models
+* Implement and use the interface Encoding
 
 Chagelog 
 ---------------------
+
+* After mutation, the resulting values of genes are set into the interval [min,max]  (realVectorGenome)

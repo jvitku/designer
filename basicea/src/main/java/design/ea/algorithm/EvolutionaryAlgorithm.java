@@ -89,4 +89,5 @@ public interface EvolutionaryAlgorithm {
 	 */
 	public Individual getIndNo(int no);
 
+	
 }

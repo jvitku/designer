@@ -1,4 +1,4 @@
-# First attempt to find RL parameters by the EA.
+# Nengo will not run entire EA because of too many created threads. There is need for restarting the Nengo (TODO)
 #
 # Everything is printed-out to files.
 # 
@@ -36,7 +36,7 @@ class ProsperitySaver(nef.SimpleNode):
 		f.close()
 
 # build configuration of the experiment with given RL parameters
-def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0',indNo=1):
+def buildSimulation(alpha, gamma, lambdaa, importance, expName='test0', indNo=1):
 	net=nef.Network('HandWired parameters of RL node to bias')
 	net.add_to_nengo()  
 
@@ -69,8 +69,8 @@ def buildSimulation(alpha, gamma, lambdaa, importance,expName='test0',indNo=1):
 	return net
 	
 # build configuration and run the eperiment for given amount of time, return the prosperity
-def evalConfiguration(alpha,gamma, lambdaa, importance,t,dt,name,indNo=1):
-	net = buildSimulation(alpha, gamma, lambdaa, importance,name,indNo)
+def evalConfiguration(alpha, gamma, lambdaa, importance, t, dt, name, indNo=1):
+	net = buildSimulation(alpha, gamma, lambdaa, importance, name, indNo)
 	
 	rl = net.get("RL_QLambda")
 	net.reset()
@@ -126,19 +126,6 @@ while(ea.wantsEval()):
 # Should be something about 2-3000
 fitness = ea.getBestInd().getFitness().getValue();
 print "==== The result is: "+ea.getBestInd().toString()
-
-
-# run the experiment several times, plot average in the matlab
-#for j in range(len(vals)):
-#	print 'xxxxxxx testing the value: '+str(vals[j])
-#	for i in range(runs):
-#		name = base + '_%d'%i;
-#		print '----------------- starting experiment named: '+name
-#		prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt,name+"_"+str(vals[j]))
-#		print '----------------- exp named: '+name+' done, the value is '+str(prosp[0])
-	
-#prosp = evalConfiguration(QLambda.DEF_ALPHA,QLambda.DEF_GAMMA,QLambda.DEF_LAMBDA,QLambda.DEF_IMPORTANCE,t,dt)#0.01)#
-
 
 
 
