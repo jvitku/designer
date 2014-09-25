@@ -36,11 +36,11 @@ public class RosenbrockTask {
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
-		assertTrue(ea.currentOne()==0);
+		assertTrue(ea.getCurrentIndex()==0);
 
 		while(ea.wantsEval()){
 
-			Individual ind = ea.getCurrentInd();
+			Individual ind = ea.getCurrent();
 			Float[] val = ((RealVector)ind.getGenome()).getVector();
 			double f = Rosenbrock.eval(val[0], val[1]);
 			((RealValFitness)ind.getFitness()).setValue(f);
@@ -49,10 +49,10 @@ public class RosenbrockTask {
 		}
 
 		// Should be something about 2-3000
-		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
 		assertTrue(fitness>1000);
 
-		System.out.println("==== The result is: "+ea.getBestInd().toString());
+		System.out.println("==== The result is: "+ea.getBest().toString());
 	}
 
 	/**
@@ -73,11 +73,11 @@ public class RosenbrockTask {
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
-		assertTrue(ea.currentOne()==0);
+		assertTrue(ea.getCurrentIndex()==0);
 
 		while(ea.wantsEval()){
 
-			Individual ind = ea.getCurrentInd();
+			Individual ind = ea.getCurrent();
 			Float[] val = ((RealVector)ind.getGenome()).getVector();
 			double f = Rosenbrock.eval(val[0], val[1]);
 			((RealValFitness)ind.getFitness()).setValue(f);
@@ -86,11 +86,11 @@ public class RosenbrockTask {
 		}
 
 		//Float[] genome = ((RealVector)ea.getBestInd().getGenome()).getVector();
-		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
 
 		// This should be 0, but typically something under 1.5
 		assertTrue(fitness < 4);
-		System.out.println("==== The result is: "+ea.getBestInd().toString());
+		System.out.println("==== The result is: "+ea.getBest().toString());
 	}
 
 	/**
@@ -111,11 +111,11 @@ public class RosenbrockTask {
 		ea.setProbabilities(0.5, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
-		assertTrue(ea.currentOne()==0);
+		assertTrue(ea.getCurrentIndex()==0);
 
 		while(ea.wantsEval()){
 
-			Individual ind = ea.getCurrentInd();
+			Individual ind = ea.getCurrent();
 			Float[] val = ((RealVector)ind.getGenome()).getVector();
 			float[] decoded = decodeGenmoe(val);
 
@@ -125,12 +125,12 @@ public class RosenbrockTask {
 			ea.nextIndividual();
 		}
 
-		Float[] genome = ((RealVector)ea.getBestInd().getGenome()).getVector();
-		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		Float[] genome = ((RealVector)ea.getBest().getGenome()).getVector();
+		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
 		float[] decoded = decodeGenmoe(genome);
 
 		assertTrue(fitness < 4);
-		System.out.println("==== The result is: "+ea.getBestInd().toString());
+		System.out.println("==== The result is: "+ea.getBest().toString());
 		System.out.println("Found value is: "+decoded[0]+","+decoded[1]);
 	}
 

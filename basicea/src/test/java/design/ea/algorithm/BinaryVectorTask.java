@@ -41,10 +41,10 @@ public class BinaryVectorTask {
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
-		assertTrue(ea.currentOne()==0);
+		assertTrue(ea.getCurrentIndex()==0);
 
 		while(ea.wantsEval()){
-			Individual ind = ea.getCurrentInd();
+			Individual ind = ea.getCurrent();
 			Boolean[] val = ((BinaryVector)ind.getGenome()).getVector();
 
 			double f = this.computeFitness(val, solution);
@@ -52,10 +52,10 @@ public class BinaryVectorTask {
 			ea.nextIndividual();
 		}
 		// The optimum is 32
-		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
 		assertTrue(fitness>25);
 
-		System.out.println("==== The result is: "+ea.getBestInd().toString());
+		System.out.println("==== The result is: "+ea.getBest().toString());
 	}
 
 	@Test
@@ -71,10 +71,10 @@ public class BinaryVectorTask {
 		ea.setProbabilities(0.05, 0.8);
 		assertTrue(ea.wantsEval());
 		assertTrue(ea.generation()==0);
-		assertTrue(ea.currentOne()==0);
+		assertTrue(ea.getCurrentIndex()==0);
 
 		while(ea.wantsEval()){
-			Individual ind = ea.getCurrentInd();
+			Individual ind = ea.getCurrent();
 			Boolean[] val = ((BinaryVector)ind.getGenome()).getVector();
 
 			double f = this.computeFitness(val, solution);
@@ -82,10 +82,10 @@ public class BinaryVectorTask {
 			ea.nextIndividual();
 		}
 		// The optimum is 0 here
-		Double fitness = ((RealValFitness)ea.getBestInd().getFitness()).getValue();
+		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
 		assertTrue(fitness<10);
 
-		System.out.println("==== The result is: "+ea.getBestInd().toString());
+		System.out.println("==== The result is: "+ea.getBest().toString());
 	}
 
 	/**

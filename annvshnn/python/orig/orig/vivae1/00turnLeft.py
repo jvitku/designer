@@ -176,8 +176,8 @@ simulator = initVivae(numsensors);    # build simulator and access its controls
 vivae = simulator.getControls();
 
 #controller = net.add(Controller('Agent controller',2*numsensors+1,2,0)); # build controller
-controller = net.add(TurnGenerator('Agent controller',2*numsensors+1,2,3)); # build explicit controller
-summer = net.add(Summer('summation')); # build explicit controller
+controller = net.add(TurnGenerator('Turn',2*numsensors+1,2,3)); # build explicit controller
+summer = net.add(Summer('Go Straight')); # build explicit controller
 c = 0.44
 straight = net.make_input('striaght',[c])
 net.connect(straight,summer.getTermination('inputBias'))

@@ -4,7 +4,7 @@ import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
 
 /**
- * Mutate {@link design.ea.ind.genome.vector.impl.Realvector} Genomes.
+ * Mutate {@link design.ea.ind.genome.vector.impl.RealVector} Genomes.
  * 
  * @author Jaroslav Vitku
  *

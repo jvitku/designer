@@ -12,7 +12,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 
 	public static final boolean DEF_MINIMIZE = true; 
 	protected final boolean minimize;		// maximize or minimize fitness?
-	
+
 	protected final int vectorLength;
 	protected int maxGen, popSize;
 
@@ -21,17 +21,17 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 
 	protected int current = 0;
 	protected int gen;
-	
+
 	protected boolean wantsEval;
 	protected int bestOne;
 
 	protected double pMut = 0.05;
 	protected double pCross = 0.9;
-	
+
 	public Selection select;
 	public Mutation mutate;
 	public Crossover cross; 
-	
+
 	public AbstractEA(int  vectorLength, int generations, int popSize){
 		this.minimize = DEF_MINIMIZE;
 		this.vectorLength = vectorLength;
@@ -64,7 +64,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		gen = 0;
 		wantsEval = true;
 	}
-	
+
 	@Override
 	public void setProbabilities(double pMut, double pCross){
 		this.pMut = pMut;
@@ -74,7 +74,9 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	@Override
 	public void nextIndividual(){
 		// remember the best individual
-		if(pop.get(current).getFitness().betterThan(pop.get(bestOne).getFitness())){
+		if(!pop.get(current).getFitness().isValid()){
+			System.err.println("WARNING: called nextIndividual() and the current individusal ("+current+") is not evaluated!");
+		}else if(pop.get(current).getFitness().betterThan(pop.get(bestOne).getFitness())){
 			bestOne = current;
 		}
 		current++;
@@ -84,7 +86,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	}
 
 	protected void nextGeneration(){
-		if(gen>=maxGen){
+		if(gen >= maxGen){
 			wantsEval = false;
 			System.out.println(me+"evolution ended.");
 		}
@@ -95,7 +97,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		this.applyEAOperators();
 		bestOne = 0;		// reset this 
 	}
-	
+
 
 	/**
 	 * Implement this in order to implement particular behaviour
@@ -153,20 +155,32 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	public int generation(){ return gen; }
 
 	@Override
-	public int currentOne(){ return current; }
+	public int getCurrentIndex(){ return current; }
 
 	@Override
-	public int bestOne(){ return bestOne; }
+	public int getBestIndex(){
+		// if the current one is valid and its fitness is higher that the best one
+		if(pop.get(this.current).getFitness().isValid())
+			if(pop.get(this.current).getFitness().betterThan(
+					pop.get(this.bestOne).getFitness()))
+				return this.current;
 
-	@Override
-	public int getBest(){ return bestOne; }
+		return bestOne;
+	}
 
 	@Override
 	public Individual getIndNo(int no){ return pop.get(no); }
 
 	@Override
-	public Individual getBestInd(){ return pop.get(this.bestOne); }
+	public Individual getBest(){ return pop.get(this.getBestIndex()); }
 
 	@Override
-	public Individual getCurrentInd(){ return pop.get(this.current); }
+	public Individual getCurrent(){ return pop.get(this.current); }
+
+	@Override
+	public boolean isTheLastOne() { return current == pop.size()-1; }
+	
+	@Override
+	public int getMaxGenerations(){ return this.maxGen; }
+
 }
