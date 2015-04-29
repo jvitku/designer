@@ -37,13 +37,16 @@ Installation can be obtained by running the following command
 In case of any problems, the best way how to use these nodes is by means of the NengoRos project (see: [https://github.com/jvitku/nengoros](https://github.com/jvitku/nengoros) )
 
 
-TODO
----------
+### TODO
+
+
 
 * Parallel processing of arbitrary (<popSize) models
 * Implement and use the interface Encoding
 
-Chagelog 
+### Chagelog 
 ---------------------
+
+* Added dependency on the nengo:simulator and its libraries. Added QLambdaTest test case, unfinished
 
 * After mutation, the resulting values of genes are set into the interval [min,max]  (realVectorGenome)
