@@ -37,6 +37,12 @@ public class QLambdaEA {
 		QLambdaTestSim sim = new QLambdaTestSim();
 		sim.defineNetwork();
 
+		// TODO EA here
+		sim.run(0, 1000);
+		sim.reset(false);
+		System.out.println("ending the simulation");
+		sim.cleanup();
+		
 		// EA setup
 		int len = 2;
 		int popSize = 50;
@@ -162,5 +168,4 @@ public class QLambdaEA {
 		}
 	}
 }
-
 
