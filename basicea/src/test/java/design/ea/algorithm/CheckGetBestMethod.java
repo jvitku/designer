@@ -10,7 +10,6 @@ import design.ea.algorithm.impl.RealVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
-import design.ea.tasks.Rosenbrock;
 
 /**
  * It seemed that the getBest method did not work correctly, here, its behaviour is tested.

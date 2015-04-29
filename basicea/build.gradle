@@ -36,8 +36,21 @@ dependencies {
 
 	compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
 	
-	compile 'ctu.nengoros:jroscore:0.0.10-SNAPSHOT' 
-	runtime 'ctu.nengoros:jroscore:0.0.10-SNAPSHOT' 
-    testCompile 'ctu.nengoros:jroscore:0.0.10-SNAPSHOT'
+	compile 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT' 
+	runtime 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT' 
+    testCompile 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT'
+    
+    compile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
+    testCompile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
+    runtime 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
+
+    // TODO realtive path to libraries of the nengo:simulator
+    compile fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
+ 	runtime fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
+ 	testCompile fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
+    
+        
+	//runtime project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
+    //testCompile project('ctu.hanns.environments:statesactions:0.0.5-SNAPSHOT')
 }
 
