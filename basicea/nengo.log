@@ -1,0 +1,4 @@
+2015-05-02 14:59:24,462 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-02 15:01:17,606 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-02 15:54:41,345 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-02 15:55:20,192 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException

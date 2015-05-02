@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import design.ea.algorithm.impl.RealVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
-import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
 
 /**
@@ -47,7 +46,7 @@ public class CheckGetBestMethod {
 		while(ea.wantsEval()){
 
 			Individual ind = ea.getCurrent();
-			Float[] val = ((RealVector)ind.getGenome()).getVector();
+			//Float[] val = ((RealVector)ind.getGenome()).getVector();
 			double f = r.nextDouble();	// generate fitness randomly
 			((RealValFitness)ind.getFitness()).setValue(f);
 

@@ -39,13 +39,13 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### TODO
 
-
-
+* still some printing to console
 * Parallel processing of arbitrary (<popSize) models
 * Implement and use the interface Encoding
 
 ### Chagelog 
----------------------
+
+* Added simple example of evolutionary design of QLambda experiment. It is located under `src/test/java` and is named: `design.ea.algorithm.nengorosHeadlessQLambdaEA`.
 
 * Added dependency on the nengo:simulator and its libraries. Added QLambdaTest test case, unfinished
 
