@@ -57,7 +57,7 @@ public class QLambdaEA {
 		// EA setup
 		int len = genomeLength;
 		int popSize = 30;//50
-		int gens = 70;
+		int gens = 50;//70
 		float minw = 0, maxw = 1;	
 
 		RealVectorEA ea = new RealVectorEA(len, false, gens, popSize, minw, maxw);
