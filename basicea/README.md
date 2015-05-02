@@ -45,7 +45,12 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### Chagelog 
 
-* Added simple example of evolutionary design of QLambda experiment. It is located under `src/test/java` and is named: `design.ea.algorithm.nengorosHeadlessQLambdaEA`.
+* Added simple example of evolutionary design of QLambda experiment. It is located under `src/test/java` and is named: `design.ea.algorithm.nengorosHeadlessQLambdaEA`. Running the example either in Eclipse (press `play` button and choose `unit test`) or by Gradle:
+		
+	cd nengoros/designer/basicea
+	./gradlew -Dtest.single=QLambdaEA test --info
+
+	..The model that is used is under `src.main.java` and is named `design.models.QLambdaTestSim`
 
 * Added dependency on the nengo:simulator and its libraries. Added QLambdaTest test case, unfinished
 
