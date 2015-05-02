@@ -69,5 +69,10 @@ public interface EvolutionaryAlgorithm {
 	 */
 	public Individual getIndNo(int no);
 
+	/**
+	 * Indicates whether the evolution should continue.
+	 * @return false if the current generation is the last one 
+	 */
+	public boolean wantsEval();
 	
 }

@@ -17,12 +17,6 @@ public interface SingleThreadEA extends EvolutionaryAlgorithm{
 	public int getCurrentIndex();
 
 	/**
-	 * Indicates whether the evolution should continue.
-	 * @return false if the current generation is the last one 
-	 */
-	public boolean wantsEval();
-
-	/**
 	 * Iterate to the next individual in the population. This
 	 * typically serves for evaluating the fitness. 
 	 * When the iterator points to the last individual in the 
