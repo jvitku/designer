@@ -1,6 +1,6 @@
 package design.ea.algorithm.impl;
 
-import design.ea.algorithm.AbstractEA;
+import design.ea.algorithm.AbstractSingleThreadEA;
 import design.ea.strategies.crossover.OnePointCrossover;
 import design.ea.strategies.mutation.BinaryUniformMutation;
 import design.ea.strategies.selection.RouletteWheel;
@@ -11,7 +11,7 @@ import design.ea.strategies.selection.RouletteWheel;
  * @author Jaroslav Vitku
  *
  */
-public class BinaryVectorEA extends AbstractEA{
+public class BinaryVectorEA extends AbstractSingleThreadEA{
 
 	public static final String name = "BinaryVectorEA";
 

@@ -1,6 +1,6 @@
 package design.ea.algorithm.impl;
 
-import design.ea.algorithm.AbstractEA;
+import design.ea.algorithm.AbstractSingleThreadEA;
 import design.ea.strategies.crossover.OnePointCrossover;
 import design.ea.strategies.mutation.RealGaussianUniformMutation;
 import design.ea.strategies.selection.RouletteWheel;
@@ -11,7 +11,7 @@ import design.ea.strategies.selection.RouletteWheel;
  * @author Jaroslav Vitku
  *
  */
-public class RealVectorEA extends AbstractEA{
+public class RealVectorEA extends AbstractSingleThreadEA{
 
 	public static final String name = "RealVectorEA";
 	protected float min,max;

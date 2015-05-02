@@ -45,6 +45,8 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### Chagelog 
 
+* refactoring of EA for adding the MultiThread versions
+
 * Added simple example of evolutionary design of QLambda experiment. It is located under `src/test/java` and is named: `design.ea.algorithm.nengorosHeadlessQLambdaEA`. Running the example either in Eclipse (press `play` button and choose `unit test`) or by Gradle:
 		
 	cd nengoros/designer/basicea

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import tools.utils.Resettable;
 
 /**
- * Genome used by the AbstractEA. 
+ * Genome used by the AbstractSingleThreadEA. 
  * 
  * @author Jaroslav Vitku
  *

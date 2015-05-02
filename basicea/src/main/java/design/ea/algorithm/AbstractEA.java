@@ -19,10 +19,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	protected AbsSingleObjPopulation pop;		// source population (eval-select)
 	protected AbsSingleObjPopulation destiny;	// target population (mutate-cross-save)
 
-	protected int current = 0;
 	protected int gen;
-
-	protected boolean wantsEval;
 	protected int bestOne;
 
 	protected double pMut = 0.05;
@@ -57,12 +54,11 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		this.init(generations, popSize);
 	}
 
-	private void init(int generations, int popSize){
+	protected void init(int generations, int popSize){
 		maxGen = generations;
 		this.popSize = popSize;
 		this.bestOne = 0;		// bestInd
 		gen = 0;
-		wantsEval = true;
 	}
 
 	@Override
@@ -70,34 +66,6 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		this.pMut = pMut;
 		this.pCross = pCross;
 	}
-
-	@Override
-	public void nextIndividual(){
-		// remember the best individual
-		if(!pop.get(current).getFitness().isValid()){
-			System.err.println("WARNING: called nextIndividual() and the current individusal ("+current+") is not evaluated!");
-		}else if(pop.get(current).getFitness().betterThan(pop.get(bestOne).getFitness())){
-			bestOne = current;
-		}
-		current++;
-		if(current == pop.size()){
-			this.nextGeneration();
-		}
-	}
-
-	protected void nextGeneration(){
-		if(gen >= maxGen){
-			wantsEval = false;
-			System.out.println(me+"evolution ended.");
-		}
-		System.out.println(me+"Generation ended here, apply operators now!");
-		current = 0;
-		gen++;
-
-		this.applyEAOperators();
-		bestOne = 0;		// reset this 
-	}
-
 
 	/**
 	 * Implement this in order to implement particular behaviour
@@ -108,7 +76,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	 * 
 	 *  @see #nextIndividual()
 	 */
-	private void applyEAOperators() {
+	protected void applyEAOperators() {
 		destiny.setInd(0, pop.get(bestOne).clone());	// copy the best one (elitism=1)
 		select.resetSelection(pop);
 
@@ -149,24 +117,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	}
 
 	@Override
-	public boolean wantsEval(){ return wantsEval; }
-
-	@Override
 	public int generation(){ return gen; }
-
-	@Override
-	public int getCurrentIndex(){ return current; }
-
-	@Override
-	public int getBestIndex(){
-		// if the current one is valid and its fitness is higher that the best one
-		if(pop.get(this.current).getFitness().isValid())
-			if(pop.get(this.current).getFitness().betterThan(
-					pop.get(this.bestOne).getFitness()))
-				return this.current;
-
-		return bestOne;
-	}
 
 	@Override
 	public Individual getIndNo(int no){ return pop.get(no); }
@@ -174,12 +125,6 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	@Override
 	public Individual getBest(){ return pop.get(this.getBestIndex()); }
 
-	@Override
-	public Individual getCurrent(){ return pop.get(this.current); }
-
-	@Override
-	public boolean isTheLastOne() { return current == pop.size()-1; }
-	
 	@Override
 	public int getMaxGenerations(){ return this.maxGen; }
 
