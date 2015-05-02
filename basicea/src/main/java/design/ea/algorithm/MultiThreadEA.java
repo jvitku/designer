@@ -26,7 +26,7 @@ public interface MultiThreadEA extends EvolutionaryAlgorithm{
 	 * 
 	 * @return individual to be evaluated (evaluated ones are skipped) or null, if the population is evaluated.
 	 */
-	public Individual popIndividual();
+	public Individual popIndividual(long threadId);
 	
 	/**
 	 * The EA needs to know the total no. of threads that participate.

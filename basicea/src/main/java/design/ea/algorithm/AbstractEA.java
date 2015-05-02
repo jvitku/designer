@@ -19,6 +19,8 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 	protected AbsSingleObjPopulation pop;		// source population (eval-select)
 	protected AbsSingleObjPopulation destiny;	// target population (mutate-cross-save)
 
+	protected boolean wantsEval;
+	
 	protected int gen;
 	protected int bestOne;
 
@@ -59,6 +61,7 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		this.popSize = popSize;
 		this.bestOne = 0;		// bestInd
 		gen = 0;
+		this.wantsEval = true;
 	}
 
 	@Override
@@ -116,6 +119,9 @@ public abstract class AbstractEA implements EvolutionaryAlgorithm{
 		return individuals.length+startIndex;
 	}
 
+	@Override
+	public boolean wantsEval() { return this.wantsEval; }
+	
 	@Override
 	public int generation(){ return gen; }
 

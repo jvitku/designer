@@ -7,7 +7,6 @@ public abstract class AbstractSingleThreadEA extends AbstractEA implements Singl
 	public static final String name = "AbstractSingleThreadEA";
 
 	protected int current = 0;
-	protected boolean wantsEval;
 
 	public AbstractSingleThreadEA(int  vectorLength, int generations, int popSize){
 		super(vectorLength, generations, popSize);
@@ -20,7 +19,6 @@ public abstract class AbstractSingleThreadEA extends AbstractEA implements Singl
 	@Override
 	protected void init(int generations, int popSize){
 		super.init(generations, popSize);
-		this.wantsEval = false;
 	}
 
 	@Override
@@ -60,9 +58,6 @@ public abstract class AbstractSingleThreadEA extends AbstractEA implements Singl
 
 		return bestOne;
 	}
-
-	@Override
-	public boolean wantsEval(){ return wantsEval; }
 
 	@Override
 	public int getCurrentIndex(){ return current; }
