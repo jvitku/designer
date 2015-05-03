@@ -16,7 +16,6 @@ public class RealVectorEA extends AbstractSingleThreadEA{
 	public static final String name = "RealVectorEA";
 	protected float min,max;
 
-
 	public RealVectorEA(int  vectorLength, boolean minimize, int generations, 
 			int popSize, float minw, float maxw){
 		

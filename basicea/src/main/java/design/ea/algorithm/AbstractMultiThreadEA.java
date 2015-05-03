@@ -52,6 +52,7 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 
 				// some error, not all evaluated, start again
 				if(!this.allEvaluated()){
+					System.err.println("some unevaluated missed! starting again!");
 					return pop.get(this.findNext());
 				}
 
@@ -107,8 +108,9 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 		// search for the first one
 		for(int i=currentInd; i<pop.size; i++){
 			if(!pop.get(i).getFitness().isValid()){
-				this.currentInd = i;
-				return currentInd;
+				this.currentInd = i+1;
+				System.out.println("returning this: "+i);
+				return i;
 			}
 		}
 		// all evaluated

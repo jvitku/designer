@@ -10,7 +10,6 @@ public class RealVectorMultiThreadEA extends AbstractMultiThreadEA{
 	public static final String name = "RealVectorMultiThreadEA";
 	protected float min,max;
 
-
 	public RealVectorMultiThreadEA(int vectorLength, int generations, int popSize,
 			float minw, float maxw){
 
@@ -23,7 +22,6 @@ public class RealVectorMultiThreadEA extends AbstractMultiThreadEA{
 
 		super(vectorLength, minimize, generations, popSize);
 		this.initialize(minw, maxw);
-
 	}
 
 	private void initialize(float minw, float maxw){
