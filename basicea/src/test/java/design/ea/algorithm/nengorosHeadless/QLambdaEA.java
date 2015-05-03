@@ -2,6 +2,7 @@ package design.ea.algorithm.nengorosHeadless;
 
 import org.junit.Test;
 
+import ctu.nengoros.comm.rosutils.RosUtils;
 import ca.nengo.model.StructuralException;
 import design.ea.algorithm.impl.RealVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
@@ -47,7 +48,9 @@ public class QLambdaEA {
 	 */
 	@Test
 	public void qLambdaExampleEvolution(){
-
+		RosUtils.prefferJroscore(true);
+		RosUtils.setRqtAutorun(false);
+		
 		System.out.println("instantiating the simulator");
 		QLambdaTestSim sim = new QLambdaTestSim();
 		sim.defineNetwork();
