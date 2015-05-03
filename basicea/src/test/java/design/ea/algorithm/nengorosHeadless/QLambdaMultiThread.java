@@ -41,7 +41,7 @@ public class QLambdaMultiThread {
 		ea.setProbabilities(0.05, 0.8);
 
 		// setup no of evaluator threads and run them all
-		int noThreads = 2;
+		int noThreads = 10;
 		ea.setNoThreads(noThreads);
 
 		NengoRosEvaluatorThread[] threads = new NengoRosEvaluatorThread[noThreads];
