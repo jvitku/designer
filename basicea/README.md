@@ -39,11 +39,13 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### TODO
 
+* logging of genomes and fitnesses into the file
 * still some printing to console
-* Parallel processing of arbitrary (<popSize) models
 * Implement and use the interface Encoding
 
 ### Chagelog 
+
+* unit tests support multi-treaded evolution, it works
 
 * refactoring of EA for adding the MultiThread versions
 

@@ -11,7 +11,7 @@ import design.ea.ind.individual.Individual;
  *
  */
 public interface MultiThreadEA extends EvolutionaryAlgorithm{
-	
+
 	/**
 	 * Each thread can asynchronously pop own individual to be evaluated. 
 	 * 
@@ -24,17 +24,18 @@ public interface MultiThreadEA extends EvolutionaryAlgorithm{
 	 * 
 	 * If all threads are waiting for new individuals, the population is evaluated and new generation is triggered.
 	 * 
+	 * @param threadId each thread has to sign with unique ID (if all wait, new volution step is made)
 	 * @return individual to be evaluated (evaluated ones are skipped) or null, if the population is evaluated.
 	 */
 	public Individual popIndividual(long threadId);
-	
+
 	/**
 	 * The EA needs to know the total no. of threads that participate.
 	 * 
 	 * @param no
 	 */
 	public void setNoThreads(int no);
-	
+
 	/**
 	 * @return current number of threads
 	 */
