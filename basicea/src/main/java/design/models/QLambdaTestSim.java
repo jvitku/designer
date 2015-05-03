@@ -133,7 +133,8 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 			BasicWeights.pseudoEye(w, 1);
 			cdd.setWeights(w);
 
-
+			this.networkDefined = true;
+			
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			fail();
@@ -163,7 +164,7 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 		}
 	}
 
-	
+
 	/**
 	 * Use either only interlayer 0 or both, 0 and 1.
 	 * The InterLayer connects the motivation source to the reward, do not use it 

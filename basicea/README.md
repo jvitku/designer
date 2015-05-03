@@ -40,10 +40,14 @@ In case of any problems, the best way how to use these nodes is by means of the 
 ### TODO
 
 * logging of genomes and fitnesses into the file
+
 * still some printing to console
+
 * Implement and use the interface Encoding
 
 ### Chagelog 
+
+* multi-thread `QLambda` example works, only the `jroscore` crashes often for more than 2 threads, test with `roscore`
 
 * unit tests support multi-treaded evolution, it works
 

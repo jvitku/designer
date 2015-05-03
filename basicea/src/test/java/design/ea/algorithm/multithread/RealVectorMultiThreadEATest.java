@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import design.ea.algorithm.impl.RealVectorMultiThreadEA;
@@ -19,7 +18,7 @@ public class RealVectorMultiThreadEATest {
 	/**
 	 * New multi-thread version of EA tested with a single thread
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void singleThread(){
 		// EA setup
