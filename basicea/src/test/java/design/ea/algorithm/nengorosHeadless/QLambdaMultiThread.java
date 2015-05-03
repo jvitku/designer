@@ -30,6 +30,7 @@ public class QLambdaMultiThread {
 
 		// run the core, the original (non-java) preferably
 		RosUtils.prefferJroscore(true);
+		RosUtils.setRqtAutorun(false);		// show the RQT window automatically? 
 		RosUtils.utilsShallStart();
 
 		try {
