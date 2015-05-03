@@ -47,7 +47,9 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### Chagelog 
 
-* multi-thread `QLambda` example works, only the `jroscore` crashes often for more than 2 threads, test with `roscore`
+* multi-thread `QLambda` example works, only the `jroscore` crashes often for more than 2 threads, test with `roscore`:
+
+	design.ea.algorithm.nengorosHeadless.QLambdaMultiThread under the `src/test/java`
 
 * unit tests support multi-treaded evolution, it works
 
