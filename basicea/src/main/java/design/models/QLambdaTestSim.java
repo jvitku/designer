@@ -84,57 +84,48 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 
 			//float[][] w;
 
-			// world [r,state] ~> motivation [r]
+			// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
 			Connection cddd = this.connect(
 					gw.getOrigin(GridWorldNode.topicDataIn),
-					ms.getTermination(BasicMotivation.topicDataIn), 2);	// this does not have to be changed
-			//w = cddd.getWeights();
-			//w[0][0] = 1;			// connect only reward to the source
+					ms.getTermination(BasicMotivation.topicDataIn), 2);
 
-			// motivation [R+mot] ~> importance [i] 
+			// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
 			Connection c = this.connect(
 					ms.getOrigin(BasicMotivation.topicDataOut),
 					ql.getTermination(QLambda.topicImportance), 0);
 
-			//w = c.getWeights();
-			//w[0][0] = 1;			// connect only motivation (not reward) to the importance
-
-			// Q-Learning [actions] ~> world [actions]
+			// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
 			Connection cd = this.connect(
 					ql.getOrigin(QLambda.topicDataOut),
 					gw.getTermination(GridWorldNode.topicDataOut), 1);
-			//w = cd.getWeights();
-			//BasicWeights.pseudoEye(w,1);	// one to one connections
 
-			// world [r, state] ~> Q-learning [state]
+			// world [r, state] ~> Q-learning [r, state]	// input 1 -> output 1 (3x3) interlayer 0
 			Connection cdd = this.connect(
 					gw.getOrigin(GridWorldNode.topicDataIn),
 					ql.getTermination(QLambda.topicDataIn), 0);
-			//w = cdd.getWeights();
-			//BasicWeights.pseudoEye(w,1);	// also one to one connections [r,x,y]
 
 			////////////////////
 			this.designFinished();
 			float[][] w;
 
 			w = cddd.getWeights();
-			w[0][0] = 1;
+			w[0][0] = 1;			// connect only reward to the source
 			cddd.setWeights(w);
 
 			w = c.getWeights();
-			w[0][0] = 1;
+			w[0][0] = 1;			// connect only motivation (not reward) to the importance
 			c.setWeights(w);
 
 			w = cd.getWeights();
-			BasicWeights.pseudoEye(w, 1);
+			BasicWeights.pseudoEye(w, 1);	// one to one connections
 			cd.setWeights(w);
 
 			w = cdd.getWeights();
-			BasicWeights.pseudoEye(w, 1);
+			BasicWeights.pseudoEye(w, 1);	// also one to one connections [r,x,y]
 			cdd.setWeights(w);
 
 			this.networkDefined = true;
-			
+
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			fail();

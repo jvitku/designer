@@ -1,9 +1,12 @@
 package design.ea.algorithm.nengorosHeadless;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
-import ca.nengo.model.StructuralException;
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengorosHeadless.network.connections.impl.IOGroup;
+import ca.nengo.model.StructuralException;
 import design.ea.algorithm.impl.RealVectorEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
@@ -11,12 +14,12 @@ import design.ea.ind.individual.Individual;
 import design.models.QLambdaTestSim;
 
 /**
- * First attempt to design the QLambda network by the EA by use of pure java and NengorosHeadless. 
+ * How to use structured connections of the simulator for the HyperNEAT evolution. 
  * 
  * @author Jaroslav Vitku
  *
  */
-public class QLambdaEA {
+public class QLambdaEAConnectionsDemo {
 
 	/**
 	 * Evaluates one individual 
@@ -59,7 +62,47 @@ public class QLambdaEA {
 
 		int genomeLength = sim.getInterLayerNo(0).getVector().length;	// only interlayer 0 for the start
 		
-		//ArrayList<IOGroup> outputs = sim.getInterLayerNo(0).getOutputs();
+		// how to get list of inptus and outputs
+		ArrayList<IOGroup> inputs = sim.getInterLayerNo(0).getInputs();
+		ArrayList<IOGroup> outputs = sim.getInterLayerNo(0).getOutputs();
+		
+		// weight matrix representing full connections (no input units * no output units)
+		// unit ~ neuron in classical ANN (one dimensional input/output)
+		float[][] weightMatrix = sim.getInterLayerNo(0).getWeightMatrix();
+		// just a flattened weight matrix
+		float[] vector = sim.getInterLayerNo(0).getVector();
+
+		
+		// structured inputs outputs demo
+		for(int i=0; i<inputs.size(); i++){
+			
+			int startIndex = inputs.get(i).getStartingIndex();
+			int noUnits = inputs.get(i).getNoUnits();
+			
+			System.out.println("I am input no: "+i+" and I have starting index"
+					+ " at the weight matrix: "+startIndex+" and I have "+noUnits+" units");
+		}
+		
+		// how to use it to get connection weights between input(1) and output(0)
+		int inStartInd = inputs.get(1).getStartingIndex();
+		int inNoUnits = inputs.get(1).getNoUnits();
+		
+		int outStartInd = outputs.get(0).getStartingIndex();
+		int outNoUnits = outputs.get(0).getNoUnits();
+		
+		System.out.println("OK, the input 1 has "+inNoUnits+" and is connected to "+
+				" the output 0 by "+(inNoUnits+outNoUnits)+" connection weights");
+		
+		// this submatrix of the weightMatrix defines connections only between these two 
+		float[][] submatrix = new float[inNoUnits][outNoUnits];
+		
+		int pi = 0, pj = 0;
+		for(int i=inStartInd; i<inStartInd+inNoUnits; i++){
+			pj = 0;
+			for(int j=outStartInd; j<outStartInd+outNoUnits; j++){
+				submatrix[pi][pj] = weightMatrix[i][j]; 
+			}
+		}
 		
 
 		// EA setup
