@@ -47,7 +47,7 @@ public class QLambdaMultiThread {
 
 		// EA setup
 		int popSize = 30;
-		int gens = 10;
+		int gens = 20;
 		float minw = 0, maxw = 1;	
 
 		RealVectorMultiThreadEA ea = new RealVectorMultiThreadEA(len, false, gens, popSize, minw, maxw);

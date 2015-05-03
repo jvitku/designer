@@ -52,6 +52,8 @@ public class QLambdaEA {
 		RosUtils.setRqtAutorun(false);
 		
 		System.out.println("instantiating the simulator");
+		
+		QLambdaTestSim.log = 10000;		// completely disables the logging
 		QLambdaTestSim sim = new QLambdaTestSim();
 		sim.defineNetwork();
 
@@ -60,7 +62,7 @@ public class QLambdaEA {
 		// EA setup
 		int len = genomeLength;
 		int popSize = 30;//50
-		int gens = 50;//70
+		int gens = 30;//70
 		float minw = 0, maxw = 1;	
 
 		RealVectorEA ea = new RealVectorEA(len, false, gens, popSize, minw, maxw);
