@@ -4267,3 +4267,4 @@ Caused by: java.net.ConnectException: Connection refused
 	at java.lang.Thread.run(Thread.java:724)
 2015-05-03 14:45:35,721 ERROR [org.ros.internal.node.topic.UpdatePublisherRunnable] java.lang.RuntimeException: java.net.ConnectException: Connection refused
 2015-05-03 16:23:51,861 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-03 16:39:30,760 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException

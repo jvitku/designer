@@ -39,7 +39,8 @@ public class QLambdaMultiThread {
 			e1.printStackTrace();
 		}
 
-		// one instance of the simulator in order to get genome length 
+		// one instance of the simulator in order to get genome length
+		QLambdaTestSim.log = 10000;		// completely disables the logging
 		QLambdaTestSim sim = new QLambdaTestSim();
 		sim.defineNetwork();
 		int len = sim.getInterLayerNo(0).getVector().length;

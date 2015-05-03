@@ -55,7 +55,7 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 	}
 
 	// change this to get more logging and less speed
-	public static final int log = 500; 	
+	public static int log = 500; 	
 	public static final boolean file = false;
 
 	public NeuralModule ms, ql, gw;
