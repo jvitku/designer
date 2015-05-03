@@ -16,6 +16,9 @@ import design.ea.ind.genome.vector.impl.RealVector;
 
 public class RealVectorMultiThreadEATest {
 
+	/**
+	 * New multi-thread version of EA tested with a single thread
+	 */
 	@Test
 	public void singleThread(){
 		// EA setup
@@ -61,7 +64,7 @@ public class RealVectorMultiThreadEATest {
 
 	@Ignore
 	@Test
-	public void twoThread(){
+	public void twoThreads(){
 		// EA setup
 		int len = 2;
 		int popSize = 50;

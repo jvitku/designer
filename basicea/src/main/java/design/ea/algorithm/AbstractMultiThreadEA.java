@@ -19,8 +19,7 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 	private int currentInd;
 
 	// number of threads that are waiting (if all are waiting, all individuals are evaluated)
-	//private int noWaitingThreads;
-	private HashMap<Long, Long> waitingThreadIds;	// unique IDs of threads that are waiging
+	private HashMap<Long, Long> waitingThreadIds;	// unique IDs of threads that are waiting
 
 	public AbstractMultiThreadEA(int vectorLength, int generations, int popSize) {
 		super(vectorLength, generations, popSize);
@@ -66,6 +65,7 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 				// new generation should be here
 				System.out.println(me+"Generation ended here, apply operators now!");
 				gen++;
+				super.bestOne = this.getBestIndex();
 				this.applyEAOperators();
 				return pop.get(this.findNext());	// start again (possibly from the first one)
 
@@ -86,7 +86,6 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 		}
 		return true;
 	}
-
 
 	private boolean allWaiting(Long threadId){
 		if(this.waitingThreadIds.containsKey(threadId)){
@@ -109,7 +108,6 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 		for(int i=currentInd; i<pop.size; i++){
 			if(!pop.get(i).getFitness().isValid()){
 				this.currentInd = i+1;
-				System.out.println("returning this: "+i);
 				return i;
 			}
 		}
@@ -122,12 +120,13 @@ public class AbstractMultiThreadEA extends AbstractEA implements MultiThreadEA{
 		int bestInd = 0;
 
 		if(!pop.get(bestInd).getFitness().isValid()){
-			System.out.println("First individual not evaluated, probably non of the population");
+			System.out.println("First individual not evaluated, probably none of the population");
 			return -1;
 		}
 		for(int i=1; i<this.popSize; i++){
-			if(pop.get(i).getFitness().isValid()
-					&& pop.get(i).getFitness().betterThan(pop.get(bestInd).getFitness())){
+			if(!pop.get(i).getFitness().isValid()){
+				System.out.println("ind no: "+i+" not evaluated");
+			}else if(pop.get(i).getFitness().betterThan(pop.get(bestInd).getFitness())){
 				bestInd = i;
 			}
 		}
