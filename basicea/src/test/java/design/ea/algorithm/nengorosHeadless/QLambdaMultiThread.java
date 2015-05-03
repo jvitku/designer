@@ -17,22 +17,33 @@ import design.models.QLambdaTestSim;
 
 public class QLambdaMultiThread {
 
+	/**
+	 * Runs given no of evaluator threads. 
+	 * Each evaluator pops one individual for evaluation, evaluates, writes the fitness back.
+	 * 
+	 * After evaluating the entire population, EA operators are applied and evaluators continue.
+	 * 
+	 * Each thread has own instance of the simulator, the core is launched separately. 
+	 */
 	@Test
 	public void multiThreadedEA(){
-		
-		RosUtils.prefferJroscore(false);
+
+		// run the core, the original (non-java) preferably
+		RosUtils.prefferJroscore(true);
 		RosUtils.utilsShallStart();
-		
+
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		
+
+		// one instance of the simulator in order to get genome length 
 		QLambdaTestSim sim = new QLambdaTestSim();
 		sim.defineNetwork();
 		int len = sim.getInterLayerNo(0).getVector().length;
 
+		// EA setup
 		int popSize = 30;
 		int gens = 10;
 		float minw = 0, maxw = 1;	
@@ -41,12 +52,13 @@ public class QLambdaMultiThread {
 		ea.setProbabilities(0.05, 0.8);
 
 		// setup no of evaluator threads and run them all
-		int noThreads = 10;
+		int noThreads = 2;
 		ea.setNoThreads(noThreads);
 
 		NengoRosEvaluatorThread[] threads = new NengoRosEvaluatorThread[noThreads];
 		for(int i = 0; i < threads.length; i++){
 			if(i==0){
+				// the first one has already created instance..
 				threads[i] = new NengoRosEvaluatorThread(ea, sim);
 			}else{
 				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaTestSim());
@@ -66,7 +78,7 @@ public class QLambdaMultiThread {
 
 		// Read the results, should be something about 2-3000
 		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
-		
+
 		assertTrue(fitness>0.2);	// some reasonable fitness should be found
 		RosUtils.utilsShallStop();
 		System.out.println("==== The result is: "+ea.getBest().toString());
