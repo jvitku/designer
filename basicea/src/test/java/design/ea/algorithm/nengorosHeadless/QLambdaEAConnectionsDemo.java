@@ -71,7 +71,6 @@ public class QLambdaEAConnectionsDemo {
 		float[][] weightMatrix = sim.getInterLayerNo(0).getWeightMatrix();
 		// just a flattened weight matrix
 		float[] vector = sim.getInterLayerNo(0).getVector();
-
 		
 		// structured inputs outputs demo
 		for(int i=0; i<inputs.size(); i++){
@@ -81,6 +80,14 @@ public class QLambdaEAConnectionsDemo {
 			
 			System.out.println("I am input no: "+i+" and I have starting index"
 					+ " at the weight matrix: "+startIndex+" and I have "+noUnits+" units");
+		}
+		
+		// OR the same matrix can be obtained by:
+		try {
+			float[][] submatrixII = 
+					sim.getInterLayerNo(0).getWeightsBetween(inputs.get(1).getMyIndex(), outputs.get(0).getMyIndex());
+		} catch (StructuralException e) {
+			e.printStackTrace();
 		}
 		
 		// how to use it to get connection weights between input(1) and output(0)
