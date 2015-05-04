@@ -16,7 +16,7 @@ import design.ea.ind.genome.vector.impl.RealVector;
 import design.models.QLambdaTestSim;
 import design.models.QLambdaTestSimSmall;
 
-public class QLambdaMultiThread {
+public class QLambdaMultiThreadEA {
 
 	/**
 	 * Runs given no of evaluator threads. 
@@ -41,7 +41,7 @@ public class QLambdaMultiThread {
 		}
 
 		// one instance of the simulator in order to get genome length
-		QLambdaTestSim.log = 50000;		
+		QLambdaTestSim.log = 5000;		
 		QLambdaTestSim sim = new QLambdaTestSimSmall();
 		sim.defineNetwork();
 		int len = sim.getInterLayerNo(0).getVector().length;
@@ -95,7 +95,7 @@ public class QLambdaMultiThread {
 		private final long myId;
 		public static final int waitTimeNanos = 100;
 
-		public static final int DEF_STEPS = 100;
+		public static final int DEF_STEPS = 1000;
 		private int steps = DEF_STEPS;
 
 		public NengoRosEvaluatorThread(RealVectorMultiThreadEA ea, EALayeredSimulator sim)
@@ -109,14 +109,13 @@ public class QLambdaMultiThread {
 		{
 			if(!mySim.networkDefined()){
 				mySim.defineNetwork();
-				
-				
+				/*
 				// test if it does something
 				try {
 					((QLambdaTestSim)mySim).setInitWeights();
 				} catch (StructuralException e) {
 					e.printStackTrace();
-				}
+				}*/
 			}
 
 			while(true)

@@ -69,12 +69,7 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 		}
 		
 		float[][] w;
-
-		// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
-		w = cddd.getWeights();
-		w[0][0] = 1;			// connect only reward to the source
-		cddd.setWeights(w);
-
+		
 		// fully connect the interlayer 0
 		this.makeFullConnections(0);
 		
@@ -101,10 +96,7 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 				gw.getOrigin(GridWorldNode.topicDataIn),
 				ql.getTermination(QLambda.topicDataIn), w);
 		
-		// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
-		w = cd.getWeights();
-		BasicWeights.pseudoEye(w, 1);	// one to one connections
-		cd.setWeights(w);
+
 	}
 	
 	protected int[] pos;
@@ -163,6 +155,18 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 			this.designFinished();
 			this.networkDefined = true;
 
+			float[][] w;
+
+			// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
+			w = cddd.getWeights();
+			w[0][0] = 1;			// connect only reward to the source
+			cddd.setWeights(w);
+
+			// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
+			w = cd.getWeights();
+			BasicWeights.pseudoEye(w, 1);	// one to one connections
+			cd.setWeights(w);
+			
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			fail();
