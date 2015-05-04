@@ -7,6 +7,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import ctu.nengoros.comm.rosutils.RosUtils;
+import ctu.nengorosHeadless.simulator.EALayeredSimulator;
 import ctu.nengorosHeadless.simulator.EASimulator;
 import ca.nengo.model.StructuralException;
 import design.ea.algorithm.impl.RealVectorMultiThreadEA;
@@ -90,14 +91,14 @@ public class QLambdaMultiThread {
 	public class NengoRosEvaluatorThread extends Thread
 	{
 		private RealVectorMultiThreadEA ea;
-		private EASimulator mySim;
+		private EALayeredSimulator mySim;
 		private final long myId;
 		public static final int waitTimeNanos = 100;
 
 		public static final int DEF_STEPS = 100;
 		private int steps = DEF_STEPS;
 
-		public NengoRosEvaluatorThread(RealVectorMultiThreadEA ea, EASimulator sim)
+		public NengoRosEvaluatorThread(RealVectorMultiThreadEA ea, EALayeredSimulator sim)
 		{
 			this.mySim = sim;
 			this.myId  = new Random().nextLong();

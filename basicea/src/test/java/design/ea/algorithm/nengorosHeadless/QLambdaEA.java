@@ -9,6 +9,7 @@ import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.ea.ind.individual.Individual;
 import design.models.QLambdaTestSim;
+import design.models.QLambdaTestSimSmall;
 
 /**
  * First attempt to design the QLambda network by the EA by use of pure java and NengorosHeadless. 
@@ -53,14 +54,11 @@ public class QLambdaEA {
 		
 		System.out.println("instantiating the simulator");
 		
-		QLambdaTestSim.log = 10000;		// completely disables the logging
-		QLambdaTestSim sim = new QLambdaTestSim();
+		QLambdaTestSim.log = 100;		// completely disables the logging
+		QLambdaTestSim sim = new QLambdaTestSimSmall();
 		sim.defineNetwork();
 
 		int genomeLength = sim.getInterLayerNo(0).getVector().length;	// only interlayer 0 for the start
-		
-		//ArrayList<IOGroup> outputs = sim.getInterLayerNo(0).getOutputs();
-		
 
 		// EA setup
 		int len = genomeLength;

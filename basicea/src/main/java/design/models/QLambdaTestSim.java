@@ -11,9 +11,7 @@ import ctu.nengoros.exceptions.ConnectionException;
 import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.connections.Connection;
-import ctu.nengorosHeadless.network.connections.InterLayerWeights;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
-import ctu.nengorosHeadless.simulator.EASimulator;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
@@ -40,7 +38,7 @@ import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
  *  
  * @author Jaroslav Vitku
  */
-public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimulator{
+public class QLambdaTestSim extends AbstractLayeredSimulator{
 
 
 	public QLambdaTestSim() {
@@ -60,70 +58,109 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 
 	public NeuralModule ms, ql, gw;
 
+
+	/**
+	 * This method sets the weights so that the model works as expected (evolution sould find this solution).
+	 * @throws StructuralException 
+	 */
+	public void setInitWeights() throws StructuralException{
+		if(!this.networkDefined){
+			throw new StructuralException("network must be defined first!");
+		}
+		
+		float[][] w;
+
+		// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
+		w = cddd.getWeights();
+		w[0][0] = 1;			// connect only reward to the source
+		cddd.setWeights(w);
+
+		// fully connect the interlayer 0
+		this.makeFullConnections(0);
+		
+		// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
+		w = this.interlayers[0].getWeightsBetween(
+				ms.getOrigin(BasicMotivation.topicDataOut),
+				ql.getTermination(QLambda.topicImportance));
+		//w = c.getWeights();
+		w[0][0] = 1;			// connect only motivation (not reward) to the importance
+		
+		// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
+		this.interlayers[0].setWeightsBetween(
+				ms.getOrigin(BasicMotivation.topicDataOut),
+				ql.getTermination(QLambda.topicImportance), w);
+		
+		// world [r, state] ~> Q-learning [r, state]	// input 1 -> output 1 (3x3) interlayer 0
+		w = this.interlayers[0].getWeightsBetween(
+				gw.getOrigin(GridWorldNode.topicDataIn),
+				ql.getTermination(QLambda.topicDataIn));
+		
+		BasicWeights.pseudoEye(w, 1);	// also one to one connections [r,x,y]
+		
+		this.interlayers[0].setWeightsBetween(
+				gw.getOrigin(GridWorldNode.topicDataIn),
+				ql.getTermination(QLambda.topicDataIn), w);
+		
+		// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
+		w = cd.getWeights();
+		BasicWeights.pseudoEye(w, 1);	// one to one connections
+		cd.setWeights(w);
+	}
+	
+	protected int[] pos;
+	protected int[] size;
+	protected int noValues;		// world dimensions
+	protected int[] obstacles;	// list of obstacles in the world
+	protected int[] rewards;	// list of rewards in the world
+	
+	public void defineMap(){
+		this.noValues = 10;
+		size = new int[]{noValues,noValues};
+		pos = new int[]{6,6};
+		obstacles = new int[]{1,1,2,2,7,7};
+		rewards = new int[]{7,6,0,1,5,5,0,1};
+	}
+	
+	private Connection cddd, cd; 
+	
 	@Override
 	public void defineNetwork() {
 
 		try {
-
 			// Motivation source
 			ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
 			this.nodes.add(ms);
 
+			this.defineMap();
+			
 			// Q-Learning
-			ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, 10, log, 1, 3);
+			ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, this.noValues, log, 1, 3);
 			this.nodes.add(ql);
-
+			
 			// GridWorld
-			int[] size = new int[]{10,10};
-			int[] pos = new int[]{6,6};
-			int[] obstacles = new int[]{1,1,2,2,7,7};
-			int[] rewards = new int[]{7,6,0,1,5,5,0,1};
-
 			gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
 			this.nodes.add(gw);
 
-			//float[][] w;
-
 			// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
-			Connection cddd = this.connect(
+			cddd = this.connect(
 					gw.getOrigin(GridWorldNode.topicDataIn),
 					ms.getTermination(BasicMotivation.topicDataIn), 2);
 
 			// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
-			Connection c = this.connect(
-					ms.getOrigin(BasicMotivation.topicDataOut),
-					ql.getTermination(QLambda.topicImportance), 0);
-
+			this.registerOrigin(ms.getOrigin(BasicMotivation.topicDataOut), 0);
+			this.registerTermination(ql.getTermination(QLambda.topicImportance), 0);
+			
 			// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
-			Connection cd = this.connect(
+			cd = this.connect(
 					ql.getOrigin(QLambda.topicDataOut),
 					gw.getTermination(GridWorldNode.topicDataOut), 1);
 
 			// world [r, state] ~> Q-learning [r, state]	// input 1 -> output 1 (3x3) interlayer 0
-			Connection cdd = this.connect(
-					gw.getOrigin(GridWorldNode.topicDataIn),
-					ql.getTermination(QLambda.topicDataIn), 0);
+			this.registerOrigin(gw.getOrigin(GridWorldNode.topicDataIn), 0);
+			this.registerTermination(ql.getTermination(QLambda.topicDataIn), 0);
 
 			////////////////////
 			this.designFinished();
-			float[][] w;
-
-			w = cddd.getWeights();
-			w[0][0] = 1;			// connect only reward to the source
-			cddd.setWeights(w);
-
-			w = c.getWeights();
-			w[0][0] = 1;			// connect only motivation (not reward) to the importance
-			c.setWeights(w);
-
-			w = cd.getWeights();
-			BasicWeights.pseudoEye(w, 1);	// one to one connections
-			cd.setWeights(w);
-
-			w = cdd.getWeights();
-			BasicWeights.pseudoEye(w, 1);	// also one to one connections [r,x,y]
-			cdd.setWeights(w);
-
 			this.networkDefined = true;
 
 		} catch (ConnectionException e) {
@@ -154,20 +191,6 @@ public class QLambdaTestSim extends AbstractLayeredSimulator implements EASimula
 			return 0.0f;
 		}
 	}
-
-
-	/**
-	 * Use either only interlayer 0 or both, 0 and 1.
-	 * The InterLayer connects the motivation source to the reward, do not use it 
-	 * (changes the fitness definition).
-	 */
-	@Override
-	public InterLayerWeights getInterLayerNo(int no) {
-		if(no<0 || no>this.interlayers.length){
-			System.err.println("Incorrect no. of interlayer");
-			return null;
-		}
-		return interlayers[no];
-	}
+	
 }
 
