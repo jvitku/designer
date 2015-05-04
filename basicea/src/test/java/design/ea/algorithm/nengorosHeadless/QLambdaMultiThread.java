@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengorosHeadless.simulator.EALayeredSimulator;
-import ctu.nengorosHeadless.simulator.EASimulator;
 import ca.nengo.model.StructuralException;
 import design.ea.algorithm.impl.RealVectorMultiThreadEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.models.QLambdaTestSim;
+import design.models.QLambdaTestSimSmall;
 
 public class QLambdaMultiThread {
 
@@ -41,14 +41,14 @@ public class QLambdaMultiThread {
 		}
 
 		// one instance of the simulator in order to get genome length
-		QLambdaTestSim.log = 10000;		// completely disables the logging
-		QLambdaTestSim sim = new QLambdaTestSim();
+		QLambdaTestSim.log = 50000;		
+		QLambdaTestSim sim = new QLambdaTestSimSmall();
 		sim.defineNetwork();
 		int len = sim.getInterLayerNo(0).getVector().length;
 
 		// EA setup
-		int popSize = 30;
-		int gens = 20;
+		int popSize = 50;
+		int gens = 70;
 		float minw = 0, maxw = 1;	
 
 		RealVectorMultiThreadEA ea = new RealVectorMultiThreadEA(len, false, gens, popSize, minw, maxw);
@@ -64,7 +64,7 @@ public class QLambdaMultiThread {
 				// the first one has already created instance..
 				threads[i] = new NengoRosEvaluatorThread(ea, sim);
 			}else{
-				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaTestSim());
+				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaTestSimSmall());
 			}
 			threads[i].start();
 		}
@@ -109,6 +109,14 @@ public class QLambdaMultiThread {
 		{
 			if(!mySim.networkDefined()){
 				mySim.defineNetwork();
+				
+				
+				// test if it does something
+				try {
+					((QLambdaTestSim)mySim).setInitWeights();
+				} catch (StructuralException e) {
+					e.printStackTrace();
+				}
 			}
 
 			while(true)

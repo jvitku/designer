@@ -4268,3 +4268,9 @@ Caused by: java.net.ConnectException: Connection refused
 2015-05-03 14:45:35,721 ERROR [org.ros.internal.node.topic.UpdatePublisherRunnable] java.lang.RuntimeException: java.net.ConnectException: Connection refused
 2015-05-03 16:23:51,861 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
 2015-05-03 16:39:30,760 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-04 18:31:21,840 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-04 18:32:19,727 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-04 18:36:47,676 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-04 18:36:47,683 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.io.IOException: Connection reset by peer
+2015-05-04 18:55:09,699 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-04 18:58:09,574 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException

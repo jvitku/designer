@@ -42,7 +42,6 @@ public class QLambdaEA {
 		System.out.println("Fitness read is this: "+fitness);
 		return fitness;
 	}
-
 	
 	/**
 	 * This to be used in single-threaded HyperNEAT evolution

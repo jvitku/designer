@@ -53,7 +53,7 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 	}
 
 	// change this to get more logging and less speed
-	public static int log = 500; 	
+	public static int log = 50; 	
 	public static final boolean file = false;
 
 	public NeuralModule ms, ql, gw;
