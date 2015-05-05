@@ -4275,3 +4275,14 @@ Caused by: java.net.ConnectException: Connection refused
 2015-05-04 18:55:09,699 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
 2015-05-04 18:58:09,574 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
 2015-05-04 19:29:52,458 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 00:11:37,051 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 00:19:06,067 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 00:57:00,940 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 01:03:36,878 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 10:07:25,651 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 10:21:12,611 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 10:22:12,395 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 10:29:27,738 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 11:19:39,341 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 11:24:46,290 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-05 11:25:04,810 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException

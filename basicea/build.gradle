@@ -40,9 +40,13 @@ dependencies {
 	runtime 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT' 
     testCompile 'ctu.nengoros:jroscore:0.0.12-SNAPSHOT'
     
-    compile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
-    testCompile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
-    runtime 'ctu.nengoros:simulator:0.0.10-SNAPSHOT' //works, probably
+    compile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT'
+    testCompile 'ctu.nengoros:simulator:0.0.10-SNAPSHOT'
+    runtime 'ctu.nengoros:simulator:0.0.10-SNAPSHOT'
+
+	compile 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
+	testCompile 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
+	runtime 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
 
     // TODO realtive path to libraries of the nengo:simulator
     compile fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
