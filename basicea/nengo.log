@@ -4286,3 +4286,5 @@ Caused by: java.net.ConnectException: Connection refused
 2015-05-05 11:19:39,341 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
 2015-05-05 11:24:46,290 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
 2015-05-05 11:25:04,810 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-06 12:00:56,577 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException
+2015-05-06 12:40:01,177 ERROR [org.ros.internal.transport.ConnectionTrackingHandler] Channel exception: java.nio.channels.ClosedChannelException

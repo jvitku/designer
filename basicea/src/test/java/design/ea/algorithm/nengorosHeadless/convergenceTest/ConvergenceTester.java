@@ -6,7 +6,8 @@ import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.junit.Test;
 
 import ca.nengo.model.StructuralException;
-import design.models.QLambdaPaperSmaller;
+import design.models.QLambdaPaper;
+import design.models.QLambdaPaperComplex;
 import design.models.QLambdaTestSim;
 import design.models.QLambdaTestSimSmall;
 
@@ -20,11 +21,13 @@ public class ConvergenceTester{
 
 	@Test
 	public void testConvergence(){
-		int maxSteps = 20000;
+		int maxSteps = 40000;
 		int logPeriod = 100;
 
-		QLambdaTestSim map= new QLambdaTestSimSmall();
-		map.log = 50000;
+		//QLambdaTestSim map= new QLambdaTestSimSmall();
+		//QLambdaTestSim map= new MyMap();
+		QLambdaTestSim map= new QLambdaPaperComplex();
+		map.log = 500;
 		
 		float fitness = this.eval(map, maxSteps, logPeriod);
 
