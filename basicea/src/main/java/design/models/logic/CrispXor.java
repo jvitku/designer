@@ -3,6 +3,9 @@ package design.models.logic;
 import static org.junit.Assert.*;
 
 import org.hanns.environments.discrete.ros.GridWorldNode;
+import org.hanns.logic.crisp.gates.impl.AND;
+import org.hanns.logic.crisp.gates.impl.NAND;
+import org.hanns.logic.crisp.gates.impl.OR;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -117,47 +120,38 @@ public class CrispXor {
 
 			try {
 				// Motivation source
-				ms = NodeBuilder.basicMotivationSource("motSource", 1, 0.1f, log);
+				
+				ms = NodeBuilder.nandGate("nand");
 				this.nodes.add(ms);
-
-				this.defineMap();
-
-				// Q-Learning
-				ql = NodeBuilder.qlambdaASM("qLambda", 2, 4, this.noValues, log, 1, 3);
-				this.nodes.add(ql);
-
-				// GridWorld
-				gw = NodeBuilder.gridWorld("world", log, file, size, 4, pos, obstacles, rewards);
+				this.registerOrigin(ms.getOrigin(NAND.outAT), 1);
+				
+				this.registerTermination(ms.getTermination(NAND.inAT), 0);
+				this.registerTermination(ms.getTermination(NAND.inBT), 0);
+				
+				gw = NodeBuilder.orGate("or");
 				this.nodes.add(gw);
-
-				// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
+				this.registerOrigin(ms.getOrigin(OR.outAT), 1);
+				this.registerTermination(ms.getTermination(OR.inAT), 0);
+				this.registerTermination(ms.getTermination(OR.inBT), 0);
+				
+				ql = NodeBuilder.andGate("and");
+				this.nodes.add(ql);
+				this.registerOrigin(ms.getOrigin(AND.outAT), 0);
+				this.registerTermination(ms.getTermination(AND.inAT), 1);
+				this.registerTermination(ms.getTermination(AND.inBT), 1);
+				
+				
+				// TODO connect something?
 				cddd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
 						ms.getTermination(BasicMotivation.topicDataIn), 2);
 
-				// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
-				this.registerOrigin(ms.getOrigin(BasicMotivation.topicDataOut), 0);
-				this.registerTermination(ql.getTermination(QLambda.topicImportance), 0);
-
-				// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
-				cd = this.connect(
-						ql.getOrigin(QLambda.topicDataOut),
-						gw.getTermination(GridWorldNode.topicDataOut), 1);
-
-				// world [r, state] ~> Q-learning [r, state]	// input 1 -> output 1 (3x3) interlayer 0
-				this.registerOrigin(gw.getOrigin(GridWorldNode.topicDataIn), 0);
-				this.registerTermination(ql.getTermination(QLambda.topicDataIn), 0);
-
+				
 				////////////////////
 				this.designFinished();
 				this.networkDefined = true;
 
 				float[][] w;
-
-				// world [r,state] ~> motivation [r] 						(3x1) interlayer 2 - do not change
-				w = cddd.getWeights();
-				w[0][0] = 1;			// connect only reward to the source
-				cddd.setWeights(w);
 
 				// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
 				w = cd.getWeights();

@@ -48,6 +48,11 @@ dependencies {
 	testCompile 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
 	runtime 'ctu.hanns.rl:smdp:0.0.5-SNAPSHOT'
 
+	// TODO unify this to ctu.hanns..
+	compile 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+	testCompile 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+	runtime 'org.hanns.logic:gates:0.0.4-SNAPSHOT'
+
     // TODO realtive path to libraries of the nengo:simulator
     compile fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
  	runtime fileTree(dir: '../../nengo/simulator/lib', include: '**/*.jar')
