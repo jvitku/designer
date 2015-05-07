@@ -1,4 +1,4 @@
-package design.models;
+	package design.models;
 
 import static org.junit.Assert.*;
 
@@ -69,9 +69,6 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 		}
 
 		float[][] w;
-
-		// fully connect the interlayer 0
-		this.makeFullConnections(0);
 
 		// motivation [R+mot] ~> importance [i] 	// input 0 -> output 0	(2x1) interlayer 0
 		w = this.interlayers[0].getWeightsBetween(
@@ -177,6 +174,9 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 			w = cd.getWeights();
 			BasicWeights.pseudoEye(w, 1);	// one to one connections
 			cd.setWeights(w);
+			
+			// fully connect the interlayer 0
+			this.makeFullConnections(0);
 
 		} catch (ConnectionException e) {
 			e.printStackTrace();
