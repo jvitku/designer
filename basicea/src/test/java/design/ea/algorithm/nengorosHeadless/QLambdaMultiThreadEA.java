@@ -73,13 +73,13 @@ public class QLambdaMultiThreadEA {
 				// the first one has already created instance..
 				threads[i] = new NengoRosEvaluatorThread(ea, sim, el, true);
 			}else{
-				
+				/*
 				// communication asynchronous
 				try {
 					Thread.sleep(new Random().nextInt(1000));
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-				}
+				}*/
 				
 				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaPaperSmaller(), el, false);
 			}
