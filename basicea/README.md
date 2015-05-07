@@ -47,6 +47,8 @@ In case of any problems, the best way how to use these nodes is by means of the 
 
 ### Chagelog 
 
+* multithreaded evolution changed so that there is decode() method, which converts genome of length 14 (viz paper) to the model.
+
 * added demo file into the `src/test/java` under: `design.ea.algorithm.nengorosHeadless.QLambdaEAConnectionsDemo`
 
 * multi-thread `QLambda` example works, only the `jroscore` crashes often for more than 2 threads, test with `roscore`:

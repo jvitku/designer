@@ -189,6 +189,31 @@ public class QLambdaTestSim extends AbstractLayeredSimulator{
 			fail();
 		}
 	}
+	
+	/**
+	 * Expects genome of length of 14, see the paper and builds the vector of complete interlayer
+	 * weights of length 20, as discussed.
+	 * @param genome
+	 */
+	public static Float[] decode(Float[] genome){
+		Float[] out = new Float[20];
+		for(int i=0; i<out.length; i++){
+			out[i] = 0.0f;
+		}
+		for(int i=0; i<8; i++){
+			out[i] = genome[i];
+		}
+		int pos = 8;
+		out[12] = genome[pos++];
+		
+		out[14] = genome[pos++];
+		out[15] = genome[pos++];
+		out[16] = genome[pos++];
+		
+		out[18] = genome[pos++];
+		out[19] = genome[pos++];
+		return out;
+	}
 
 	/**
 	 * Defined as a prosperity of the MotivationSource (that is: MSD from optimal conditions), 

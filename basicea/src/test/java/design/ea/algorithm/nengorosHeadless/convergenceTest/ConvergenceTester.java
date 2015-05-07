@@ -24,9 +24,9 @@ public class ConvergenceTester{
 		int maxSteps = 40000;
 		int logPeriod = 100;
 
-		//QLambdaTestSim map= new QLambdaTestSimSmall();
+		QLambdaTestSim map= new QLambdaTestSimSmall();
 		//QLambdaTestSim map= new MyMap();
-		QLambdaTestSim map= new QLambdaPaperComplex();
+		//QLambdaTestSim map= new QLambdaPaperComplex();
 		map.log = 500;
 		
 		float fitness = this.eval(map, maxSteps, logPeriod);
