@@ -15,6 +15,7 @@ import ctu.nengoros.model.transformMultiTermination.impl.BasicWeights;
 import ctu.nengoros.network.common.exceptions.StartupDelayException;
 import ctu.nengorosHeadless.network.connections.Connection;
 import ctu.nengorosHeadless.network.modules.NeuralModule;
+import ctu.nengorosHeadless.simulator.InterLayerBuilder;
 import ctu.nengorosHeadless.simulator.NodeBuilder;
 import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
@@ -115,37 +116,23 @@ public class CrispXor {
 
 		private Connection cddd, cd; 
 
+		
+		
 		@Override
 		public void defineNetwork() {
 
 			try {
-				// Motivation source
+				// add OR between interlayers no 0,1
+				InterLayerBuilder.addOR(0, 1, this);
+				InterLayerBuilder.addNAND(0, 1, this);
+				InterLayerBuilder.addAND(1, 2, this);
 				
-				ms = NodeBuilder.nandGate("nand");
-				this.nodes.add(ms);
-				this.registerOrigin(ms.getOrigin(NAND.outAT), 1);
-				
-				this.registerTermination(ms.getTermination(NAND.inAT), 0);
-				this.registerTermination(ms.getTermination(NAND.inBT), 0);
-				
-				gw = NodeBuilder.orGate("or");
-				this.nodes.add(gw);
-				this.registerOrigin(ms.getOrigin(OR.outAT), 1);
-				this.registerTermination(ms.getTermination(OR.inAT), 0);
-				this.registerTermination(ms.getTermination(OR.inBT), 0);
-				
-				ql = NodeBuilder.andGate("and");
-				this.nodes.add(ql);
-				this.registerOrigin(ms.getOrigin(AND.outAT), 0);
-				this.registerTermination(ms.getTermination(AND.inAT), 1);
-				this.registerTermination(ms.getTermination(AND.inBT), 1);
-				
-				
+				/**
 				// TODO connect something?
 				cddd = this.connect(
 						gw.getOrigin(GridWorldNode.topicDataIn),
-						ms.getTermination(BasicMotivation.topicDataIn), 2);
-
+					ms.getTermination(BasicMotivation.topicDataIn), 2);
+					*/
 				
 				////////////////////
 				this.designFinished();
