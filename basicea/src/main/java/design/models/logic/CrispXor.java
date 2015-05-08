@@ -3,9 +3,6 @@ package design.models.logic;
 import static org.junit.Assert.*;
 
 import org.hanns.environments.discrete.ros.GridWorldNode;
-import org.hanns.logic.crisp.gates.impl.AND;
-import org.hanns.logic.crisp.gates.impl.NAND;
-import org.hanns.logic.crisp.gates.impl.OR;
 import org.hanns.logic.utils.evaluators.ros.MSENode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
@@ -26,7 +23,7 @@ public class CrispXor {
 	/**
 	 * @author Jaroslav Vitku
 	 */
-	public class CrispXorSim extends AbstractLayeredSimulator{
+	public static class CrispXorSim extends AbstractLayeredSimulator{
 
 
 		public CrispXorSim() {
@@ -37,7 +34,7 @@ public class CrispXor {
 		}
 
 		// change this to get more logging and less speed
-		public static final int log = 50; 	
+		public static int log = 50; 	
 		public static final boolean file = false;
 
 		public NeuralModule ms, ql, gw;
@@ -127,6 +124,34 @@ public class CrispXor {
 				InterLayerBuilder.addOR(0, 1, this);
 				InterLayerBuilder.addNAND(0, 1, this);
 				InterLayerBuilder.addAND(1, 2, this);
+
+
+				// add the MSE node, which has prosperity defined as 1-MSE (smaller MSE, better prosperity=fitness)
+				NeuralModule ev = NodeBuilder.mseNode("mse", 2,log);
+				// read supervised data here
+				this.registerTermination(ev.getTermination(MSENode.topicDataInSupervised), 0);
+				// read result of the network here
+				this.registerTermination(ev.getTermination(MSENode.topicDataIn), 2);
+				// publishes the prosperity = fitness 
+				this.registerOrigin(ev.getOrigin(MSENode.topicProsperity), 3);
+				
+				
+				/**
+				 * Komentare pro Pala:
+				 * 
+				 * budou tam 3 hradla, viz obrazek: http://www.physics.udel.edu/~watson/scen103/xor.gif
+				 * 
+				 * OR, NAND, AND
+				 * 
+				 * generator data a evaluator (MSENode)
+				 * 
+				 * 2-3 interlayers (viz schema na mailu), celkem zhruba 12 vah.
+				 * 
+				 * Pokud bude experiment moc jednoduchy, muzeme uz uplne jednoduse pridat spoustu dalsich hradel (z nichz evoluce musi postavit to samy) 
+				 * nebo zkusit scitacku: http://en.wikipedia.org/wiki/Adder_%28electronics%29
+				 *  
+				 *  
+				 */
 				
 				/**
 				// TODO connect something?
@@ -141,14 +166,6 @@ public class CrispXor {
 
 				float[][] w;
 
-				NeuralModule ev = NodeBuilder.mseNode("mse", 2,log);
-				// read supervised data here
-				this.registerTermination(ev.getTermination(MSENode.topicDataInSupervised), 0);
-				// read result of the network here
-				this.registerTermination(ev.getTermination(MSENode.topicDataIn), 2);
-				// publishes the prosperity = fitness 
-				this.registerOrigin(ev.getOrigin(MSENode.topicProsperity), 3);
-				
 				// TODO connect it
 				
 				// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
