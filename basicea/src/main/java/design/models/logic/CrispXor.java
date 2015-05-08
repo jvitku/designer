@@ -6,6 +6,7 @@ import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.logic.crisp.gates.impl.AND;
 import org.hanns.logic.crisp.gates.impl.NAND;
 import org.hanns.logic.crisp.gates.impl.OR;
+import org.hanns.logic.utils.evaluators.ros.MSENode;
 import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.hanns.rl.discrete.ros.srp.QLambda;
 
@@ -140,6 +141,16 @@ public class CrispXor {
 
 				float[][] w;
 
+				NeuralModule ev = NodeBuilder.mseNode("mse", 2,log);
+				// read supervised data here
+				this.registerTermination(ev.getTermination(MSENode.topicDataInSupervised), 0);
+				// read result of the network here
+				this.registerTermination(ev.getTermination(MSENode.topicDataIn), 2);
+				// publishes the prosperity = fitness 
+				this.registerOrigin(ev.getOrigin(MSENode.topicProsperity), 3);
+				
+				// TODO connect it
+				
 				// Q-Learning [actions] ~> world [actions]					(4x4) interlayer 1 - can be changed too
 				w = cd.getWeights();
 				BasicWeights.pseudoEye(w, 1);	// one to one connections

@@ -31,7 +31,7 @@ public class QLambdaMultiThreadEA {
 	public void multiThreadedEA(){
 		EvolutionLogger el;
 		try {
-			el = new EvolutionLogger("data/fitness.txt","data/bestInds.txt");
+			el = new EvolutionLogger("../../data/fitness.txt","../../data/bestInds.txt");
 		} catch (IOException e2) {
 			System.err.println("could not access files for writing!");
 			return;
