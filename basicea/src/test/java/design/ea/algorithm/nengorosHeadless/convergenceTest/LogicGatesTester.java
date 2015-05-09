@@ -25,15 +25,15 @@ public class LogicGatesTester{
 
 	@Test
 	public void testConvergence(){
-		int maxSteps = 4;
+		int maxSteps = 120;
 		int logPeriod = 1;
 
 		CrispXor.CrispXorSim map= new CrispXor.CrispXorSim();
+		map.log = 1;
 
 		float fitness = this.eval(map, maxSteps, logPeriod);
 
 		assertTrue(fitness > 0.1);
-
 	}
 
 	public float eval(CrispXor.CrispXorSim simulator, int maxSteps, int logPeriod){
@@ -50,11 +50,9 @@ public class LogicGatesTester{
 			e.printStackTrace();
 		}
 		
-		
 		simulator.getInterLayerNo(0).printMatrix(simulator.getInterLayerNo(0).getWeightMatrix());
 		simulator.getInterLayerNo(1).printMatrix(simulator.getInterLayerNo(1).getWeightMatrix());
 		simulator.getInterLayerNo(2).printMatrix(simulator.getInterLayerNo(2).getWeightMatrix());
-		
 		
 		System.err.println("model built");
 		simulator.reset(false);
@@ -64,17 +62,15 @@ public class LogicGatesTester{
 			System.out.println("making step now "+step);
 			//simulator.dg.getOrigin(DataGeneratorNode.topicDataIn);
 			try {
-				simulator.dg.getTermination(DataGeneratorNode.topicDataIn).sendValue(1, 0);
+				simulator.dg.getTermination(DataGeneratorNode.topicDataIn).sendValue(11, 0);
 				
 				simulator.makeStep();
 
 				float mse = simulator.ev.getOrigin(MSENode.topicProsperity).getValues()[0];
 				System.out.println("prosperity is "+mse);
-				//float r = simulator.ms.getOrigin(BasicMotivation.topicDataOut).getValues()[0];
-				//rewards += r;
+				
 			} catch (StructuralException e) {
 				e.printStackTrace();
-				
 			}
 
 			/*

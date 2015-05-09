@@ -2,13 +2,10 @@ package design.models.logic;
 
 import static org.junit.Assert.*;
 
-import org.hanns.environments.discrete.ros.GridWorldNode;
 import org.hanns.logic.crisp.gates.impl.AND;
 import org.hanns.logic.crisp.gates.impl.NAND;
 import org.hanns.logic.utils.evaluators.ros.DataGeneratorNode;
 import org.hanns.logic.utils.evaluators.ros.MSENode;
-import org.hanns.physiology.statespace.ros.BasicMotivation;
-import org.hanns.rl.discrete.ros.srp.QLambda;
 
 import ca.nengo.model.StructuralException;
 import ctu.nengoros.exceptions.ConnectionException;
@@ -59,11 +56,12 @@ public class CrispXor {
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inAT));
-			w[0][0] = 1;
+			BasicWeights.pseudoEye(w, 1);
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inAT),w);
 			
+			/*
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inBT));
@@ -71,16 +69,16 @@ public class CrispXor {
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inBT),w);
-			
+			*/
 			// generator -> NAND
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inAT));
-			w[0][0] = 1;
+			BasicWeights.pseudoEye(w, 1);
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inAT),w);
-			
+			/*
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inBT));
@@ -88,7 +86,7 @@ public class CrispXor {
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inBT),w);
-			
+			*/
 			
 			// OR -> AND
 			w = this.getInterLayerNo(1).getWeightsBetween(
@@ -103,7 +101,7 @@ public class CrispXor {
 			w = this.getInterLayerNo(1).getWeightsBetween(
 					nand.getOrigin(NAND.outAT),
 					and.getTermination(AND.inAT));
-			w[0][0] = 1;
+			w[0][1] = 1;
 			this.getInterLayerNo(1).setWeightsBetween(
 					nand.getOrigin(NAND.outAT),
 					and.getTermination(AND.inAT),w);
@@ -132,24 +130,22 @@ public class CrispXor {
 
 			try {
 				// add OR between interlayers no 0,1
-				or = InterLayerBuilder.addOR(0, 1, this);
-				nand = InterLayerBuilder.addNAND(0, 1, this);
-				and = InterLayerBuilder.addAND(1, 2, this);
+				or = InterLayerBuilder.addSOR(0, 1, this);
+				nand = InterLayerBuilder.addSNAND(0, 1, this);
+				and = InterLayerBuilder.addSAND(1, 2, this);
 
 				// add the MSE node, which has prosperity defined as 1-MSE (smaller MSE, better prosperity=fitness)
-				ev = NodeBuilder.mseNode("mse", 2,log);
+				ev = NodeBuilder.mseNode("mse", 1, 2,log);
+				this.nodes.add(ev);
 				
-				// read supervised data here
-				//this.registerTermination(ev.getTermination(MSENode.topicDataInSupervised), 0);
-				// read result of the network here
 				this.registerTermination(ev.getTermination(MSENode.topicDataIn), 2);	// gates should be connected here
-				// publishes the prosperity = fitness 
-				// this.registerOrigin(ev.getOrigin(MSENode.topicProsperity), 4);
 				
 				int[] data = new int[]{0,0,0,1,1,0,1,1};
 				int[] dataSol = new int[]{0,1,1,0};
 				
 				dg = NodeBuilder.dataGeneratorNode("generator",2,1,data, dataSol, log);
+				this.nodes.add(dg);
+				
 				this.registerOrigin(dg.getOrigin(DataGeneratorNode.topicDataOut), 0);	// input to the gates
 				this.registerTermination(dg.getTermination(DataGeneratorNode.topicDataIn), 3);
 				
@@ -166,7 +162,6 @@ public class CrispXor {
 				this.makeFullConnections(0);		// generator -> gates
 				this.makeFullConnections(1);		// gates -> gate
 				this.makeFullConnections(2);		// gate -> evaluator
-				
 				
 				float[][] w = cd.getWeights();
 				BasicWeights.pseudoEye(w, 1);	// one to one connections (one dimension)
