@@ -32,17 +32,18 @@ public class CrispXor {
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSNAND(0, 1, this);
-			InterLayerBuilder.addSNAND(0, 1, this);
+			//InterLayerBuilder.addSNAND(0, 1, this);
 
 
 			nand = InterLayerBuilder.addSNAND(0, 1, this);
+			/*
 			InterLayerBuilder.addSNAND(0, 1, this);
 
 			InterLayerBuilder.addSOR(0, 1, this);
 			InterLayerBuilder.addSOR(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
-
+			 */
 			and = InterLayerBuilder.addSAND(1, 2, this);
 			InterLayerBuilder.addSAND(1, 2, this);
 			InterLayerBuilder.addSOR(1, 2, this);

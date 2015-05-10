@@ -31,7 +31,7 @@ public class LogicGatesTester{
 
 		float fitness = this.eval(map, maxSteps, logPeriod);
 
-		assertTrue(fitness == 1.0);
+		assertTrue(fitness == MSENode.DEF_ZERO_ERROR); // not a single mistake on data
 	}
 
 	public float eval(CrispXor.CrispXorSim simulator, int maxSteps, int logPeriod){

@@ -14,6 +14,7 @@ import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.models.logic.CrispXor.CrispXorSim;
+import design.models.logic.CrispXor.CrispXorSimBig;
 import design.models.logic.CrispXor.CrispXorSimMoreGates;
 
 public class XorMultiThreadEA {
@@ -50,7 +51,8 @@ public class XorMultiThreadEA {
 		// one instance of the simulator in order to get genome length
 		CrispXorSim.log = 50000;		
 		//CrispXorSim sim = new CrispXorSim();
-		CrispXorSim sim = new CrispXorSimMoreGates();	// change the model HERE
+		//CrispXorSim sim = new CrispXorSimMoreGates();	// change the model HERE
+		CrispXorSim sim = new CrispXorSimBig();
 		sim.defineNetwork();
 
 		// all interlayers are here
@@ -68,7 +70,7 @@ public class XorMultiThreadEA {
 		ea.setProbabilities(0.05, 0.8);
 
 		// setup no of evaluator threads and run them all
-		int noThreads = 2;
+		int noThreads = 1;
 		ea.setNoThreads(noThreads);
 
 		NengoRosEvaluatorThread[] threads = new NengoRosEvaluatorThread[noThreads];
@@ -77,15 +79,15 @@ public class XorMultiThreadEA {
 				// the first one has already created instance..
 				threads[i] = new NengoRosEvaluatorThread(ea, sim, el, true);
 			}else{
-				/*
+				
 				// communication asynchronous
 				try {
-					Thread.sleep(new Random().nextInt(1000));
+					Thread.sleep(new Random().nextInt(100));
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-				}*/
+				}/**/
 
-				threads[i] = new NengoRosEvaluatorThread(ea, new CrispXorSim(), el, false);
+				threads[i] = new NengoRosEvaluatorThread(ea, new CrispXorSimBig(), el, false);
 			}
 			threads[i].start();
 		}
@@ -195,7 +197,7 @@ public class XorMultiThreadEA {
 					} catch (StructuralException e) {
 						e.printStackTrace();
 					}
-					System.out.println("genome: "+SL.toStr(genome));
+					//System.out.println("genome: "+SL.toStr(genome));
 					double fitness = this.eval(genome);
 					// write the fitness
 					((RealValFitness)ind.getFitness()).setValue(fitness);
