@@ -61,15 +61,6 @@ public class CrispXor {
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inAT),w);
 			
-			/*
-			w = this.getInterLayerNo(0).getWeightsBetween(
-					dg.getOrigin(DataGeneratorNode.topicDataOut),
-					or.getTermination(OR.inBT));
-			w[1][0] = 1;
-			this.getInterLayerNo(0).setWeightsBetween(
-					dg.getOrigin(DataGeneratorNode.topicDataOut),
-					or.getTermination(OR.inBT),w);
-			*/
 			// generator -> NAND
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
@@ -78,15 +69,6 @@ public class CrispXor {
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inAT),w);
-			/*
-			w = this.getInterLayerNo(0).getWeightsBetween(
-					dg.getOrigin(DataGeneratorNode.topicDataOut),
-					nand.getTermination(NAND.inBT));
-			w[1][0] = 1;
-			this.getInterLayerNo(0).setWeightsBetween(
-					dg.getOrigin(DataGeneratorNode.topicDataOut),
-					nand.getTermination(NAND.inBT),w);
-			*/
 			
 			// OR -> AND
 			w = this.getInterLayerNo(1).getWeightsBetween(

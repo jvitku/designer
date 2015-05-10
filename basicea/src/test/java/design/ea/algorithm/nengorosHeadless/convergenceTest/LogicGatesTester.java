@@ -4,15 +4,9 @@ import static org.junit.Assert.*;
 
 import org.hanns.logic.utils.evaluators.ros.DataGeneratorNode;
 import org.hanns.logic.utils.evaluators.ros.MSENode;
-import org.hanns.physiology.statespace.ros.BasicMotivation;
 import org.junit.Test;
 
-import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 import ca.nengo.model.StructuralException;
-import design.models.QLambdaPaper;
-import design.models.QLambdaPaperComplex;
-import design.models.QLambdaTestSim;
-import design.models.QLambdaTestSimSmall;
 import design.models.logic.CrispXor;
 
 /**
@@ -23,9 +17,13 @@ import design.models.logic.CrispXor;
 public class LogicGatesTester{
 
 
+	/**
+	 * Runs the test with the target model (with setInitWeights called), so the fitness is 1.0,
+	 * which means no sample missed.
+	 */
 	@Test
-	public void testConvergence(){
-		int maxSteps = 120;
+	public void testZeroErrorOnTargetModel(){
+		int maxSteps = 20;
 		int logPeriod = 1;
 
 		CrispXor.CrispXorSim map= new CrispXor.CrispXorSim();
@@ -33,7 +31,7 @@ public class LogicGatesTester{
 
 		float fitness = this.eval(map, maxSteps, logPeriod);
 
-		assertTrue(fitness > 0.1);
+		assertTrue(fitness == 1.0);
 	}
 
 	public float eval(CrispXor.CrispXorSim simulator, int maxSteps, int logPeriod){
