@@ -15,6 +15,7 @@ import design.ea.ind.individual.Individual;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.models.logic.CrispXor.CrispXorSim;
 import design.models.logic.CrispXor.CrispXorSimBig;
+import design.models.logic.CrispXor.CrispXorSimBigger;
 import design.models.logic.CrispXor.CrispXorSimMoreGates;
 
 public class XorMultiThreadEA {
@@ -52,9 +53,11 @@ public class XorMultiThreadEA {
 		CrispXorSim.log = 50000;		
 		//CrispXorSim sim = new CrispXorSim();
 		//CrispXorSim sim = new CrispXorSimMoreGates();	// change the model HERE
-		CrispXorSim sim = new CrispXorSimBig();
+		//CrispXorSim sim = new CrispXorSimBig();
+		CrispXorSim sim = new CrispXorSimBigger();
 		sim.defineNetwork();
 
+		
 		// all interlayers are here
 		int len = sim.getInterLayerNo(0).getVector().length+
 				sim.getInterLayerNo(1).getVector().length+
@@ -87,7 +90,7 @@ public class XorMultiThreadEA {
 					e1.printStackTrace();
 				}/**/
 
-				threads[i] = new NengoRosEvaluatorThread(ea, new CrispXorSimBig(), el, false);
+				threads[i] = new NengoRosEvaluatorThread(ea, new CrispXorSimBigger(), el, false);
 			}
 			threads[i].start();
 		}
