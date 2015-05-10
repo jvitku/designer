@@ -163,24 +163,11 @@ public class CrispXor {
 		protected NeuralModule or, nand, and;
 		
 		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
+			
 			// add OR between interlayers no 0,1
 			or = InterLayerBuilder.addSOR(0, 1, this);
-			
-			/*
-			InterLayerBuilder.addSOR(0, 1, this);
-			InterLayerBuilder.addSOR(0, 1, this);
-			*/
 			nand = InterLayerBuilder.addSNAND(0, 1, this);
-			/*
-			InterLayerBuilder.addSNAND(0, 1, this);
-			InterLayerBuilder.addSNAND(0, 1, this);
-			InterLayerBuilder.addSNAND(0, 1, this);
-			InterLayerBuilder.addSNAND(0, 1, this);
-			*/
 			and = InterLayerBuilder.addSAND(1, 2, this);
-			//InterLayerBuilder.addSAND(1, 2, this);
-			//InterLayerBuilder.addSNAND(1, 2, this);
-
 		}
 		
 		@Override
