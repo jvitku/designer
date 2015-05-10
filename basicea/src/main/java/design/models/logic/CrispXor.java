@@ -21,6 +21,62 @@ import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
 public class CrispXor {
 
+	
+	public static class CrispXorSimBig extends CrispXorSim{
+		
+		@Override
+		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
+			// add OR between interlayers no 0,1
+			or = InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			
+			
+			nand = InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			
+			InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			
+			and = InterLayerBuilder.addSAND(1, 2, this);
+			InterLayerBuilder.addSAND(1, 2, this);
+			InterLayerBuilder.addSOR(1, 2, this);
+			InterLayerBuilder.addSOR(1, 2, this);
+			InterLayerBuilder.addSNAND(1, 2, this);
+			InterLayerBuilder.addSNAND(1, 2, this);
+		}
+	}
+	
+	/**
+	 * Only more gates in each layer.
+	 * 
+	 * @author Jaroslav Vitku
+	 */
+	public static class CrispXorSimModeGates extends CrispXorSim{
+		
+		@Override
+		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
+			// add OR between interlayers no 0,1
+			or = InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			
+			nand = InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSAND(0, 1, this);
+			InterLayerBuilder.addSOR(0, 1, this);
+			
+			and = InterLayerBuilder.addSAND(1, 2, this);
+			InterLayerBuilder.addSNAND(1, 2, this);
+			InterLayerBuilder.addSOR(1, 2, this);
+		}
+	}
+
+	
 	/**
 	 * @author Jaroslav Vitku
 	 */
@@ -104,29 +160,34 @@ public class CrispXor {
 
 		private Connection cd; 
 		public NeuralModule ev, dg;
-		private NeuralModule or, nand, and;
+		protected NeuralModule or, nand, and;
 		
+		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
+			// add OR between interlayers no 0,1
+			or = InterLayerBuilder.addSOR(0, 1, this);
+			
+			/*
+			InterLayerBuilder.addSOR(0, 1, this);
+			InterLayerBuilder.addSOR(0, 1, this);
+			*/
+			nand = InterLayerBuilder.addSNAND(0, 1, this);
+			/*
+			InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			InterLayerBuilder.addSNAND(0, 1, this);
+			*/
+			and = InterLayerBuilder.addSAND(1, 2, this);
+			//InterLayerBuilder.addSAND(1, 2, this);
+			//InterLayerBuilder.addSNAND(1, 2, this);
+
+		}
 		
 		@Override
 		public void defineNetwork() {
 
 			try {
-				// add OR between interlayers no 0,1
-				or = InterLayerBuilder.addSOR(0, 1, this);
-				
-				//InterLayerBuilder.addSOR(0, 1, this);
-				//InterLayerBuilder.addSOR(0, 1, this);
-				
-				nand = InterLayerBuilder.addSNAND(0, 1, this);
-				InterLayerBuilder.addSNAND(0, 1, this);
-				InterLayerBuilder.addSNAND(0, 1, this);
-				InterLayerBuilder.addSNAND(0, 1, this);
-				InterLayerBuilder.addSNAND(0, 1, this);
-				
-				and = InterLayerBuilder.addSAND(1, 2, this);
-				//InterLayerBuilder.addSAND(1, 2, this);
-				//InterLayerBuilder.addSNAND(1, 2, this);
-
+				this.addGates();
 				// add the MSE node, which has prosperity defined as 1-MSE (smaller MSE, better prosperity=fitness)
 				ev = NodeBuilder.mseNode("mse", 1, 2,log);
 				this.nodes.add(ev);

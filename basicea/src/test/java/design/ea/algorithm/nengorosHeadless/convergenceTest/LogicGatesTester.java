@@ -23,10 +23,10 @@ public class LogicGatesTester{
 	 */
 	@Test
 	public void testZeroErrorOnTargetModel(){
-		int maxSteps = 10020;
+		int maxSteps = 20;
 		int logPeriod = 1;
 
-		CrispXor.CrispXorSim map= new CrispXor.CrispXorSim();
+		CrispXor.CrispXorSim map= new CrispXor.CrispXorSimBig();
 		map.log = 1;
 
 		float fitness = this.eval(map, maxSteps, logPeriod);
