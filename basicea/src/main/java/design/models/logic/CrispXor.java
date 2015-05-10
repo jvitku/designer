@@ -113,8 +113,19 @@ public class CrispXor {
 			try {
 				// add OR between interlayers no 0,1
 				or = InterLayerBuilder.addSOR(0, 1, this);
+				
+				//InterLayerBuilder.addSOR(0, 1, this);
+				//InterLayerBuilder.addSOR(0, 1, this);
+				
 				nand = InterLayerBuilder.addSNAND(0, 1, this);
+				InterLayerBuilder.addSNAND(0, 1, this);
+				InterLayerBuilder.addSNAND(0, 1, this);
+				InterLayerBuilder.addSNAND(0, 1, this);
+				InterLayerBuilder.addSNAND(0, 1, this);
+				
 				and = InterLayerBuilder.addSAND(1, 2, this);
+				//InterLayerBuilder.addSAND(1, 2, this);
+				//InterLayerBuilder.addSNAND(1, 2, this);
 
 				// add the MSE node, which has prosperity defined as 1-MSE (smaller MSE, better prosperity=fitness)
 				ev = NodeBuilder.mseNode("mse", 1, 2,log);
