@@ -21,9 +21,9 @@ import ctu.nengorosHeadless.simulator.impl.AbstractLayeredSimulator;
 
 public class CrispXor {
 
-	
+
 	public static class CrispXorSimBig extends CrispXorSim{
-		
+
 		@Override
 		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
 			// add OR between interlayers no 0,1
@@ -33,16 +33,16 @@ public class CrispXor {
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSNAND(0, 1, this);
 			InterLayerBuilder.addSNAND(0, 1, this);
-			
-			
+
+
 			nand = InterLayerBuilder.addSNAND(0, 1, this);
 			InterLayerBuilder.addSNAND(0, 1, this);
-			
+
 			InterLayerBuilder.addSOR(0, 1, this);
 			InterLayerBuilder.addSOR(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
-			
+
 			and = InterLayerBuilder.addSAND(1, 2, this);
 			InterLayerBuilder.addSAND(1, 2, this);
 			InterLayerBuilder.addSOR(1, 2, this);
@@ -51,32 +51,31 @@ public class CrispXor {
 			InterLayerBuilder.addSNAND(1, 2, this);
 		}
 	}
-	
+
 	/**
 	 * Only more gates in each layer.
 	 * 
 	 * @author Jaroslav Vitku
 	 */
-	public static class CrispXorSimModeGates extends CrispXorSim{
-		
+	public static class CrispXorSimMoreGates extends CrispXorSim{
+
 		@Override
 		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
 			// add OR between interlayers no 0,1
 			or = InterLayerBuilder.addSOR(0, 1, this);
 			InterLayerBuilder.addSNAND(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
-			
+
 			nand = InterLayerBuilder.addSNAND(0, 1, this);
 			InterLayerBuilder.addSAND(0, 1, this);
 			InterLayerBuilder.addSOR(0, 1, this);
-			
+
 			and = InterLayerBuilder.addSAND(1, 2, this);
 			InterLayerBuilder.addSNAND(1, 2, this);
 			InterLayerBuilder.addSOR(1, 2, this);
 		}
 	}
 
-	
 	/**
 	 * @author Jaroslav Vitku
 	 */
@@ -116,7 +115,7 @@ public class CrispXor {
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					or.getTermination(OR.inAT),w);
-			
+
 			// generator -> NAND
 			w = this.getInterLayerNo(0).getWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
@@ -125,7 +124,7 @@ public class CrispXor {
 			this.getInterLayerNo(0).setWeightsBetween(
 					dg.getOrigin(DataGeneratorNode.topicDataOut),
 					nand.getTermination(NAND.inAT),w);
-			
+
 			// OR -> AND
 			w = this.getInterLayerNo(1).getWeightsBetween(
 					or.getOrigin(OR.outAT),
@@ -134,7 +133,7 @@ public class CrispXor {
 			this.getInterLayerNo(1).setWeightsBetween(
 					or.getOrigin(OR.outAT),
 					and.getTermination(AND.inAT),w);
-			
+
 			// NAND -> AND
 			w = this.getInterLayerNo(1).getWeightsBetween(
 					nand.getOrigin(NAND.outAT),
@@ -143,7 +142,7 @@ public class CrispXor {
 			this.getInterLayerNo(1).setWeightsBetween(
 					nand.getOrigin(NAND.outAT),
 					and.getTermination(AND.inAT),w);
-			
+
 			// AND -> MSENode
 			w = this.getInterLayerNo(2).getWeightsBetween(
 					and.getOrigin(AND.outAT),
@@ -155,21 +154,21 @@ public class CrispXor {
 		}
 
 		public void defineSupervisedDataSet(){
-			
+
 		}
 
 		private Connection cd; 
 		public NeuralModule ev, dg;
 		protected NeuralModule or, nand, and;
-		
+
 		public void addGates() throws ConnectionException, StructuralException, StartupDelayException{
-			
+
 			// add OR between interlayers no 0,1
 			or = InterLayerBuilder.addSOR(0, 1, this);
 			nand = InterLayerBuilder.addSNAND(0, 1, this);
 			and = InterLayerBuilder.addSAND(1, 2, this);
 		}
-		
+
 		@Override
 		public void defineNetwork() {
 
@@ -178,23 +177,23 @@ public class CrispXor {
 				// add the MSE node, which has prosperity defined as 1-MSE (smaller MSE, better prosperity=fitness)
 				ev = NodeBuilder.mseNode("mse", 1, 2,log);
 				this.nodes.add(ev);
-				
+
 				this.registerTermination(ev.getTermination(MSENode.topicDataIn), 2);	// gates should be connected here
-				
+
 				int[] data = new int[]{0,0,0,1,1,0,1,1};
 				int[] dataSol = new int[]{0,1,1,0};
-				
+
 				dg = NodeBuilder.dataGeneratorNode("generator",2,1,data, dataSol, log);
 				this.nodes.add(dg);
-				
+
 				this.registerOrigin(dg.getOrigin(DataGeneratorNode.topicDataOut), 0);	// input to the gates
 				this.registerTermination(dg.getTermination(DataGeneratorNode.topicDataIn), 3);
-				
+
 				// supervised data
 				cd = this.connect(
 						dg.getOrigin(DataGeneratorNode.topicDataSolution),
 						ev.getTermination(MSENode.topicDataInSupervised),3);
-				
+
 				////////////////////
 				this.designFinished();
 				this.networkDefined = true;
@@ -203,11 +202,11 @@ public class CrispXor {
 				this.makeFullConnections(0);		// generator -> gates
 				this.makeFullConnections(1);		// gates -> gate
 				this.makeFullConnections(2);		// gate -> evaluator
-				
+
 				float[][] w = cd.getWeights();
 				BasicWeights.pseudoEye(w, 1);	// one to one connections (one dimension)
 				cd.setWeights(w);
-				
+
 
 				this.setInitWeights();
 			} catch (ConnectionException e) {
@@ -237,6 +236,42 @@ public class CrispXor {
 				e.printStackTrace();
 				return 0.0f;
 			}
+		}
+
+		public void decode(Float[] genome) throws StructuralException{
+			int a = this.getInterLayerNo(0).getVector().length;
+			int b = this.getInterLayerNo(1).getVector().length;
+			int c = this.getInterLayerNo(2).getVector().length;
+
+			if(genome.length != a+b+c){
+				System.err.println("incorrect length of the genome!");
+				return;
+			}
+
+			float[] avec = new float[a];
+			for(int i=0; i<avec.length; i++){
+				avec[i] = genome[i];
+			}
+
+			float[] bvec = new float[b];
+			for(int i=0; i<bvec.length; i++){
+				bvec[i] = genome[i+a];
+			}
+
+			float[] cvec = new float[c];
+			for(int i=0; i<cvec.length; i++){
+				cvec[i] = genome[i+a+b];
+			}
+
+			this.getInterLayerNo(0).setVector(avec);
+			this.getInterLayerNo(1).setVector(bvec);
+			this.getInterLayerNo(2).setVector(cvec);
+
+			/*
+			this.getInterLayerNo(0).printMatrix(this.getInterLayerNo(0).getWeightMatrix());
+			this.getInterLayerNo(1).printMatrix(this.getInterLayerNo(1).getWeightMatrix());
+			this.getInterLayerNo(2).printMatrix(this.getInterLayerNo(2).getWeightMatrix());
+			 */
 		}
 	}
 }

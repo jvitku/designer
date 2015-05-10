@@ -8,16 +8,13 @@ import org.junit.Test;
 
 import ctu.nengoros.comm.rosutils.RosUtils;
 import ctu.nengoros.util.SL;
-import ctu.nengorosHeadless.simulator.EALayeredSimulator;
 import ca.nengo.model.StructuralException;
 import design.ea.algorithm.impl.RealVectorMultiThreadEA;
 import design.ea.ind.fitness.simple.impl.RealValFitness;
 import design.ea.ind.individual.Individual;
 import design.ea.ind.genome.vector.impl.RealVector;
-import design.models.QLambdaPaperSmaller;
-import design.models.QLambdaTestSim;
-import design.models.logic.CrispXor;
 import design.models.logic.CrispXor.CrispXorSim;
+import design.models.logic.CrispXor.CrispXorSimMoreGates;
 
 public class XorMultiThreadEA {
 
@@ -38,7 +35,7 @@ public class XorMultiThreadEA {
 			System.err.println("could not access files for writing!");
 			return;
 		}
-		
+
 		// run the core, the original (non-java) preferably
 		RosUtils.prefferJroscore(true);
 		RosUtils.setRqtAutorun(false);		// show the RQT window automatically? 
@@ -52,10 +49,15 @@ public class XorMultiThreadEA {
 
 		// one instance of the simulator in order to get genome length
 		CrispXorSim.log = 50000;		
-		CrispXorSim sim = new CrispXorSim();
+		//CrispXorSim sim = new CrispXorSim();
+		CrispXorSim sim = new CrispXorSimMoreGates();	// change the model HERE
 		sim.defineNetwork();
-		int len = sim.getInterLayerNo(0).getVector().length;
-		
+
+		// all interlayers are here
+		int len = sim.getInterLayerNo(0).getVector().length+
+				sim.getInterLayerNo(1).getVector().length+
+				sim.getInterLayerNo(2).getVector().length;
+
 
 		// EA setup
 		int popSize = 50;
@@ -66,7 +68,7 @@ public class XorMultiThreadEA {
 		ea.setProbabilities(0.05, 0.8);
 
 		// setup no of evaluator threads and run them all
-		int noThreads = 3;
+		int noThreads = 2;
 		ea.setNoThreads(noThreads);
 
 		NengoRosEvaluatorThread[] threads = new NengoRosEvaluatorThread[noThreads];
@@ -82,7 +84,7 @@ public class XorMultiThreadEA {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}*/
-				
+
 				threads[i] = new NengoRosEvaluatorThread(ea, new CrispXorSim(), el, false);
 			}
 			threads[i].start();
@@ -100,27 +102,37 @@ public class XorMultiThreadEA {
 
 		// Read the results, should be something about 2-3000
 		Double fitness = ((RealValFitness)ea.getBest().getFitness()).getValue();
-		
+
 		//assertTrue(fitness>0.2);	// some reasonable fitness should be found
 		RosUtils.utilsShallStop();
 		System.out.println("==== The result is: "+ea.getBest().toString());
+
+		try {
+			sim.decode(((RealVector)ea.getBest().getGenome()).getVector());
+
+			sim.getInterLayerNo(0).printMatrix(sim.getInterLayerNo(0).getWeightMatrix());
+			sim.getInterLayerNo(1).printMatrix(sim.getInterLayerNo(1).getWeightMatrix());
+			sim.getInterLayerNo(2).printMatrix(sim.getInterLayerNo(2).getWeightMatrix());
+		} catch (StructuralException e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	public class NengoRosEvaluatorThread extends Thread
 	{
 		private RealVectorMultiThreadEA ea;
-		private EALayeredSimulator mySim;
+		private CrispXorSim mySim;
 		private final long myId;
 		private EvolutionLogger el;
 		public static final int waitTimeNanos = 100;
 
-		public static final int DEF_STEPS = 15000;
+		public static final int DEF_STEPS = 20;	// Is more than ok
 		private int steps = DEF_STEPS;
 
 		private boolean iLogBest = false;
-		
-		public NengoRosEvaluatorThread(RealVectorMultiThreadEA ea, EALayeredSimulator sim, EvolutionLogger el, boolean iLogBest)
+
+		public NengoRosEvaluatorThread(RealVectorMultiThreadEA ea, CrispXorSim sim, EvolutionLogger el, boolean iLogBest)
 		{
 			this.mySim = sim;
 			this.myId  = new Random().nextLong();
@@ -133,7 +145,7 @@ public class XorMultiThreadEA {
 		{
 			if(!mySim.networkDefined()){
 				mySim.defineNetwork();
-				
+
 				/*
 				// test if it does something
 				try {
@@ -144,12 +156,12 @@ public class XorMultiThreadEA {
 			}
 
 			int gen = 0;
-			
+
 			while(true)
 			{
 				Individual ind = ea.popIndividual(myId);
 				if(ind == null){
-					
+
 					if(!ea.wantsEval()){
 						System.out.println(myId+ " OK, evolution ends, exiting");
 						return;
@@ -162,17 +174,27 @@ public class XorMultiThreadEA {
 					}
 				}else{
 					if(gen!=ea.generation() && iLogBest){
-						
-						Float[] g = QLambdaTestSim.decode(((RealVector)ea.getIndNo(0).getGenome()).getVector());
-						
+
+						Float[] g = ((RealVector)ea.getIndNo(0).getGenome()).getVector();
+						try {
+							mySim.decode(((RealVector)ea.getIndNo(0).getGenome()).getVector());
+						} catch (StructuralException e) {
+							e.printStackTrace();
+						}
+
 						el.writeBestInd(ea.generation()-1, 
 								((RealValFitness)ea.getIndNo(0).getFitness()).getValue(), 
 								g);
-						
+
 						gen = ea.generation();
 					}
 					// run the simulation
-					Float[] genome = QLambdaTestSim.decode(((RealVector)ind.getGenome()).getVector());
+					Float[] genome = ((RealVector)ind.getGenome()).getVector();
+					try {
+						mySim.decode(genome);
+					} catch (StructuralException e) {
+						e.printStackTrace();
+					}
 					System.out.println("genome: "+SL.toStr(genome));
 					double fitness = this.eval(genome);
 					// write the fitness
@@ -210,7 +232,8 @@ public class XorMultiThreadEA {
 		}
 
 		public void genomeToModel(Float[] genome) throws StructuralException{
-			mySim.getInterLayerNo(0).setVector(genome); 	// set the connection weights
+			//mySim.getInterLayerNo(0).setVector(genome); 	// set the connection weights
+			mySim.decode(genome);
 		}
 	}
 }
