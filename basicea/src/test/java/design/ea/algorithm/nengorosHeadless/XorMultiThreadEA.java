@@ -19,7 +19,7 @@ import design.models.logic.CrispXor.CrispXorSimBigger;
 import design.models.logic.CrispXor.CrispXorSimMoreGates;
 
 public class XorMultiThreadEA {
-
+	
 	/**
 	 * Runs given no of evaluator threads. 
 	 * Each evaluator pops one individual for evaluation, evaluates, writes the fitness back.

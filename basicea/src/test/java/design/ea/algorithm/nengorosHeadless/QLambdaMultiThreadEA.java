@@ -16,6 +16,7 @@ import design.ea.ind.individual.Individual;
 import design.ea.ind.genome.vector.impl.RealVector;
 import design.models.QLambdaPaperSmaller;
 import design.models.QLambdaTestSim;
+import design.models.QLambdaTestSimSmall;
 
 public class QLambdaMultiThreadEA {
 
@@ -50,7 +51,7 @@ public class QLambdaMultiThreadEA {
 
 		// one instance of the simulator in order to get genome length
 		QLambdaTestSim.log = 50000;		
-		QLambdaTestSim sim = new QLambdaPaperSmaller();
+		QLambdaTestSim sim = new QLambdaTestSimSmall();
 		sim.defineNetwork();
 		//int len = sim.getInterLayerNo(0).getVector().length;
 		int len = 14;
@@ -81,7 +82,7 @@ public class QLambdaMultiThreadEA {
 					e1.printStackTrace();
 				}*/
 				
-				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaPaperSmaller(), el, false);
+				threads[i] = new NengoRosEvaluatorThread(ea, new QLambdaTestSimSmall(), el, false);
 			}
 			threads[i].start();
 		}
